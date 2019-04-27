@@ -11,6 +11,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "question")
 public class Question {
+	
+	// Class variable 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_question", nullable = false)
@@ -19,10 +22,8 @@ public class Question {
 	@Column(name = "question", nullable = false)
 	private String question;
 	
-	@ManyToOne
-	private Category category;
-
-	
+	// Get e set of variables
+		
 	public Integer getId() {
 		return id;
 	}
@@ -38,14 +39,5 @@ public class Question {
 	public void setQuestion(String question) {
 		this.question = question;
 	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-	
 
 }

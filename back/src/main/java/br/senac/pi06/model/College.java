@@ -17,21 +17,18 @@ import javax.persistence.Table;
 @Table(name = "college")
 public class College {
 	
+	// Class variable 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_college", nullable = false)
 	private Integer id;
 	
-	@Column(name = "name", nullable = false)
+	@Column(name = "name", nullable = false, length = 100)
 	private String name;
 	
-	//cascadeType.All = quando apagar uma facul, apaga os alunos
-	//mappedBy = quem toma conta da relacao
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "college")
-	@JoinColumn(name = "id_student")
-	private List<Student> listStudent;
-
-	
+	// Get e set of variables
+		
 	public Integer getId() {
 		return id;
 	}
@@ -48,15 +45,4 @@ public class College {
 		this.name = name;
 	}
 
-	public List<Student> getStudent() {
-		return listStudent;
-	}
-
-	public void setStudent(Student s) {
-		if (listStudent == null) {
-			listStudent = new ArrayList<Student>();
-		}
-		this.listStudent.add(s);
-	}
-	
 }

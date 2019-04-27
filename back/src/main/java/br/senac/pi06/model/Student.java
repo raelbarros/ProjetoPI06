@@ -15,6 +15,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "student")
 public class Student {
+	
+	// Class variable 
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,9 +35,10 @@ public class Student {
 	@ManyToOne
 	private Course course;
 	
-	@Column(name = "the_class", nullable = false, length = 12)
+	@Column(name = "the_class", nullable = false)
 	private Integer theClass;
-
+	
+	// Get e set of variables
 	
 	public Integer getId() {
 		return id;

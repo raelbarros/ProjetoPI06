@@ -17,6 +17,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "course")
 public class Course {
+	
+	// Class variable 
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,13 +28,8 @@ public class Course {
 	@Column(name = "name", nullable = false)
 	private String name;
 	
-	//cascadeType = ALL quando apagar um curso, apaga os alunos
-	//mappedBy = quem toma conta da relacao
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "course")
-	@JoinColumn(name = "id_student")
-	private List<Student> listStudent;
-
-	
+	// Get e set of variables
+		
 	public Integer getId() {
 		return id;
 	}
@@ -49,15 +46,4 @@ public class Course {
 		this.name = name;
 	}
 
-	public List<Student> getStudent() {
-		return listStudent;
-	}
-
-	public void setStudent(Student s) {
-		if (listStudent == null) {
-			listStudent = new ArrayList<Student>();
-		}
-		this.listStudent.add(s);
-	}
-		
 }

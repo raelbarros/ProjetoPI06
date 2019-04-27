@@ -17,15 +17,22 @@ import javax.persistence.Table;
 @Table(name = "category")
 public class Category {
 	
+	// Class variable 
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_category")
 	private Integer id;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+	@Column(name = "name", nullable = false, length = 50)
+	private String name;
+	
+	// list for save all question of this category
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_question")
 	private List<Question> listQuestion;
 
+	// Get e set of variables
 	
 	public Integer getId() {
 		return id;
@@ -35,11 +42,20 @@ public class Category {
 		this.id = id;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public List<Question> getQuestion() {
 		return listQuestion;
 	}
 
 	public void setQuestion(Question q) {
+		// start the list 
 		if (listQuestion == null) {
 			listQuestion = new ArrayList<Question>();
 		}
