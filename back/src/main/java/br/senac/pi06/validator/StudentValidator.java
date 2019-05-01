@@ -11,18 +11,18 @@ public class StudentValidator {
 		if (!Util.isValidEmailAddress(user.getEmail()))
 			return new StudentException("O endereço de e-mail está inválido.");
 
-
 		// NOT NULL
 		if (Util.empty(user.getFirstName()))
 			return new StudentException("O nome é obrigatório.");
+		
+		if (Util.empty(user.getLastName()))
+			return new StudentException("O sobrenome é obrigatório.");
 
 		if (Util.empty(user.getEmail()))
 			return new StudentException("O email é obrigatório.");
 
 		if (Util.empty(user.getPeriodo()))
-			return new StudentException("O nickname é obrigatório.");
-
-		
+			return new StudentException("O semestre é obrigatório.");
 
 		return null;
 	}

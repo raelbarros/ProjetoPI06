@@ -11,33 +11,25 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import br.senac.pi06.dao.StudentDao;
-import br.senac.pi06.exception.StudentException;
-import br.senac.pi06.model.Student;
-import br.senac.pi06.validator.StudentValidator;
+import br.senac.pi06.dao.CollegeDao;
+import br.senac.pi06.model.College;
+import br.senac.pi06.validator.CollegeValidator;
 
-@Path("/student")
-public class StudentService {
-
+@Path("/college")
+public class CollegeService {
+	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response create(Student user) {
+	public Response create(College college) {
 		try {
-			StudentException studentException = StudentValidator.validate(user);
-			if (studentException != null)
-				throw studentException;
+			Exception Exception = CollegeValidator.validate(college);
+			if (Exception != null)
+				throw Exception;
 
-			StudentDao.getInstance().persist(user);
+			CollegeDao.getInstance().persist(college);
 			return Response
 					.status(Response.Status.NO_CONTENT)
-					.build();
-		} catch (StudentException e) {
-			e.printStackTrace();
-			return Response
-					.status(Response.Status.NOT_ACCEPTABLE)
-					.entity("{\"message\": \""+e.getMessage()+"\"}")
-					.type(MediaType.APPLICATION_JSON)
 					.build();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -52,7 +44,7 @@ public class StudentService {
 	public Response read() {
 		Response response;
 		try {
-			List<Student> list = StudentDao.getInstance().findAll();
+			List<College> list = CollegeDao.getInstance().findAll();
 			response = Response
 					.status(Response.Status.OK)
 					.entity(list)
@@ -70,23 +62,16 @@ public class StudentService {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response update(Student user){
+	public Response update(College college){
 		Response response;
 		try {
-			StudentException userException = StudentValidator.validate(user);
+			Exception userException = CollegeValidator.validate(college);
 			if (userException != null)
 				throw userException;
 
-			StudentDao.getInstance().merge(user);
+			CollegeDao.getInstance().merge(college);
 			response = Response
 					.status(Response.Status.NO_CONTENT)
-					.build();
-		} catch (StudentException e) {
-			e.printStackTrace();
-			response = Response
-					.status(Response.Status.NOT_ACCEPTABLE)
-					.entity("{\"message\": \""+e.getMessage()+"\"}")
-					.type(MediaType.APPLICATION_JSON)
 					.build();
 		} catch (Exception e) {
 			e.printStackTrace();

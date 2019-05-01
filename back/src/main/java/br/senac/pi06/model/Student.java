@@ -2,6 +2,8 @@ package br.senac.pi06.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,14 +12,15 @@ import javax.persistence.Table;
 public class Student {
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	@Column
+	@Column (name = "first_name", nullable = false, length = 50)
 	private String firstName;
-	@Column
+	@Column (name = "last_name", nullable = false, length = 50)
 	private String lastName;
-	@Column
+	@Column (name = "email", nullable = false, length = 100)
 	private String email;
-	@Column
+	@Column (name = "periodo", nullable = false, length = 2)
 	private String periodo;
 	
 	public int getId() {
