@@ -4,37 +4,37 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import br.senac.pi06.model.College;;
+import br.senac.pi06.model.Course;
 
-public class CollegeDao {
-	
+public class CourseDao {
 
-	private static CollegeDao instance;
+
+	private static CourseDao instance;
 	protected EntityManager em;
 
-	public static CollegeDao getInstance(){
+	public static CourseDao getInstance(){
 		if (instance == null)
-			instance = new CollegeDao();
+			instance = new CourseDao();
 		return instance;
 	}
 
-	private CollegeDao() {
+	private CourseDao() {
 		em = Manager.getInstance().entityManager;
 	}
 
-	public College getById(final int id) {
-		return em.find(College.class, id);
+	public Course getById(final int id) {
+		return em.find(Course.class, id);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<College> findAll() {
-		return em.createQuery("FROM College WHERE enabled = 1").getResultList();
+	public List<Course> findAll() {
+		return em.createQuery("FROM Course WHERE enabled = 1").getResultList();
 	}
 
-	public void persist(College college) {
+	public void persist(Course course) {
 		try {
 			em.getTransaction().begin();
-			em.persist(college);
+			em.persist(course);
 			em.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -42,10 +42,10 @@ public class CollegeDao {
 		}
 	}
 
-	public void merge(College college) {
+	public void merge(Course course) {
 		try {
 			em.getTransaction().begin();
-			em.merge(college);
+			em.merge(course);
 			em.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -53,16 +53,15 @@ public class CollegeDao {
 		}
 	}
 
-	void remove(College college) {
+	void remove(Course course) {
 		try {
 			em.getTransaction().begin();
-			em.remove(college);
+			em.remove(course);
 			em.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			em.getTransaction().rollback();
 		}
 	}
-
-
+	
 }
