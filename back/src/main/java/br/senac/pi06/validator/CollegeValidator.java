@@ -1,5 +1,6 @@
 package br.senac.pi06.validator;
 
+import br.senac.pi06.exception.CollegeException;
 import br.senac.pi06.model.College;
 import br.senac.pi06.util.Util;
 
@@ -9,7 +10,7 @@ public class CollegeValidator {
 
 		// NOT NULL
 		if (Util.empty(college.getName()))
-			return new Exception("O nome é obrigatório.");
+			return new CollegeException("o nome eh obrigatorio.");
 	
 		return null;
 	

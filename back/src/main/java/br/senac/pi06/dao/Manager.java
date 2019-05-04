@@ -9,7 +9,7 @@ public class Manager {
 	private static Manager instance;
 	protected EntityManager entityManager;
 
-	public static Manager getInstance(){
+	public static Manager getInstance() {
 		if (instance == null)
 			instance = new Manager();
 		return instance;
@@ -21,7 +21,7 @@ public class Manager {
 
 	private EntityManager getEntityManager() {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("pi06");
-		if (entityManager == null) 
+		if (entityManager == null)
 			entityManager = factory.createEntityManager();
 		return entityManager;
 	}

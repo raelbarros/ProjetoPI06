@@ -5,24 +5,24 @@ import br.senac.pi06.model.Student;
 import br.senac.pi06.util.Util;
 
 public class StudentValidator {
-	public static StudentException validate(Student user) {
+	public static StudentException validate(Student s) {
 
 		// Email 
-		if (!Util.isValidEmailAddress(user.getEmail()))
-			return new StudentException("O endereço de e-mail está inválido.");
+		if (!Util.isValidEmailAddress(s.getEmail()))
+			return new StudentException("O endereco de e-mail esta invalido.");
 
 		// NOT NULL
-		if (Util.empty(user.getFirstName()))
-			return new StudentException("O nome é obrigatório.");
+		if (Util.empty(s.getFirstName()))
+			return new StudentException("O nome eh obrigatorio.");
 		
-		if (Util.empty(user.getLastName()))
-			return new StudentException("O sobrenome é obrigatório.");
+		if (Util.empty(s.getLastName()))
+			return new StudentException("O sobrenome eh obrigatorio.");
 
-		if (Util.empty(user.getEmail()))
-			return new StudentException("O email é obrigatório.");
+		if (Util.empty(s.getEmail()))
+			return new StudentException("O email eh obrigatorio.");
 
-		if (Util.empty(user.getPeriodo()))
-			return new StudentException("O semestre é obrigatório.");
+		if (Util.empty(s.getPeriodo()))
+			return new StudentException("O semestre eh obrigatorio.");
 
 		return null;
 	}
