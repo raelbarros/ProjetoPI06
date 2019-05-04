@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import br.senac.pi06.dao.CourseDao;
+import br.senac.pi06.exception.CourseException;
 import br.senac.pi06.model.Course;
 import br.senac.pi06.validator.CourseValidator;
 
@@ -23,19 +24,18 @@ public class CourseService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response create(Course course) {
 		try {
-			Exception Exception = CourseValidator.validate(course);
-			if (Exception != null)
-				throw Exception;
+			CourseException ex = CourseValidator.validate(course);
+			if (ex != null)
+				throw ex;
 
 			CourseDao.getInstance().persist(course);
-			return Response
-					.status(Response.Status.NO_CONTENT)
-					.build();
+			return Response.status(Response.Status.NO_CONTENT).build();
+		} catch (CourseException e) {
+			e.printStackTrace();
+			return Response.status(Response.Status.NOT_ACCEPTABLE).entity("{\"message\": \"" + e.getMessage() + "\"}").type(MediaType.APPLICATION_JSON).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response
-					.status(Response.Status.BAD_REQUEST)
-					.build();
+			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
 	}
 
@@ -45,16 +45,10 @@ public class CourseService {
 		Response response;
 		try {
 			List<Course> list = CourseDao.getInstance().findAll();
-			response = Response
-					.status(Response.Status.OK)
-					.entity(list)
-					.type(MediaType.APPLICATION_JSON)
-					.build();
+			response = Response.status(Response.Status.OK).entity(list).type(MediaType.APPLICATION_JSON).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			response  = Response
-					.status(Response.Status.BAD_REQUEST)
-					.build();
+			response  = Response.status(Response.Status.BAD_REQUEST).build();
 		}
 		return response;
 	}
@@ -65,20 +59,18 @@ public class CourseService {
 	public Response update(Course course){
 		Response response;
 		try {
-			Exception userException = CourseValidator.validate(course);
-			if (userException != null)
-				throw userException;
+			CourseException ex = CourseValidator.validate(course);
+			if (ex != null)
+				throw ex;
 
 			CourseDao.getInstance().merge(course);
-			response = Response
-					.status(Response.Status.NO_CONTENT)
-					.build();
+			response = Response.status(Response.Status.NO_CONTENT).build();
+		} catch (CourseException e) {
+			e.printStackTrace();
+			response = Response.status(Response.Status.NOT_ACCEPTABLE).entity("{\"message\": \""+e.getMessage()+"\"}").type(MediaType.APPLICATION_JSON).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			response = Response
-					.status(Response.Status.BAD_REQUEST)
-					.entity(null)
-					.build();
+			response = Response.status(Response.Status.BAD_REQUEST).entity(null).build();
 		}
 
 		return response;

@@ -12,30 +12,30 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import br.senac.pi06.dao.CollegeDao;
+import br.senac.pi06.exception.CollegeException;
 import br.senac.pi06.model.College;
 import br.senac.pi06.validator.CollegeValidator;
 
 @Path("/college")
 public class CollegeService {
-	
+
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response create(College college) {
 		try {
-			Exception Exception = CollegeValidator.validate(college);
-			if (Exception != null)
-				throw Exception;
+			CollegeException ex = CollegeValidator.validate(college);
+			if (ex != null)
+				throw ex;
 
 			CollegeDao.getInstance().persist(college);
-			return Response
-					.status(Response.Status.NO_CONTENT)
-					.build();
+			return Response.status(Response.Status.NO_CONTENT).build();
+		} catch (CollegeException e) {
+			e.printStackTrace();
+			return Response.status(Response.Status.NOT_ACCEPTABLE).entity("{\"message\": \"" + e.getMessage() + "\"}").type(MediaType.APPLICATION_JSON).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response
-					.status(Response.Status.BAD_REQUEST)
-					.build();
+			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
 	}
 
@@ -45,16 +45,10 @@ public class CollegeService {
 		Response response;
 		try {
 			List<College> list = CollegeDao.getInstance().findAll();
-			response = Response
-					.status(Response.Status.OK)
-					.entity(list)
-					.type(MediaType.APPLICATION_JSON)
-					.build();
+			response = Response.status(Response.Status.OK).entity(list).type(MediaType.APPLICATION_JSON).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			response  = Response
-					.status(Response.Status.BAD_REQUEST)
-					.build();
+			response = Response.status(Response.Status.BAD_REQUEST).build();
 		}
 		return response;
 	}
@@ -62,23 +56,21 @@ public class CollegeService {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response update(College college){
+	public Response update(College college) {
 		Response response;
 		try {
-			Exception userException = CollegeValidator.validate(college);
-			if (userException != null)
-				throw userException;
+			CollegeException ex = CollegeValidator.validate(college);
+			if (ex != null)
+				throw ex;
 
 			CollegeDao.getInstance().merge(college);
-			response = Response
-					.status(Response.Status.NO_CONTENT)
-					.build();
+			response = Response.status(Response.Status.NO_CONTENT).build();
+		} catch (CollegeException e) {
+			e.printStackTrace();
+			response = Response.status(Response.Status.NOT_ACCEPTABLE).entity("{\"message\": \"" + e.getMessage() + "\"}").type(MediaType.APPLICATION_JSON).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			response = Response
-					.status(Response.Status.BAD_REQUEST)
-					.entity(null)
-					.build();
+			response = Response.status(Response.Status.BAD_REQUEST).entity(null).build();
 		}
 
 		return response;

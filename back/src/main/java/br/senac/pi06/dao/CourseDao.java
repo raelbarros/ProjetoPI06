@@ -3,6 +3,7 @@ package br.senac.pi06.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import br.senac.pi06.model.Course;
 
@@ -30,6 +31,17 @@ public class CourseDao {
 	public List<Course> findAll() {
 		return em.createQuery("FROM Course WHERE enabled = 1").getResultList();
 	}
+	
+	public Course getByName(final String name) {
+		Query query = em.createQuery("FROM Course WHERE enabled = 1 AND name=:name");
+		query.setParameter("name", name);
+
+		try {
+			return (Course) query.getSingleResult();
+		} catch (Exception e) {
+			return null;
+		}
+	}
 
 	public void persist(Course course) {
 		try {
@@ -53,7 +65,7 @@ public class CourseDao {
 		}
 	}
 
-	void remove(Course course) {
+	public void remove(Course course) {
 		try {
 			em.getTransaction().begin();
 			em.remove(course);

@@ -11,28 +11,29 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import br.senac.pi06.dao.StudentDao;
-import br.senac.pi06.exception.StudentException;
-import br.senac.pi06.model.Student;
-import br.senac.pi06.validator.StudentValidator;
+import br.senac.pi06.dao.CategoryDao;
+import br.senac.pi06.exception.CategoryException;
+import br.senac.pi06.model.Category;
+import br.senac.pi06.validator.CategoryValidator;
 
-@Path("/student")
-public class StudentService {
+@Path("/category")
+public class CategoryService {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	//@Produces(MediaType.APPLICATION_JSON)
-	public Response create(Student s) {
+	// @Produces(MediaType.APPLICATION_JSON)
+	public Response create(Category c) {
 		try {
-			StudentException ex = StudentValidator.validate(s);
+			CategoryException ex = CategoryValidator.validate(c);
 			if (ex != null)
 				throw ex;
 
-			StudentDao.getInstance().persist(s);
+			CategoryDao.getInstance().persist(c);
 			return Response.status(Response.Status.NO_CONTENT).build();
-		} catch (StudentException e) {
+		} catch (CategoryException e) {
 			e.printStackTrace();
-			return Response.status(Response.Status.NOT_ACCEPTABLE).entity("{\"message\": \""+e.getMessage()+"\"}").type(MediaType.APPLICATION_JSON).build();
+			return Response.status(Response.Status.NOT_ACCEPTABLE).entity("{\"message\": \"" + e.getMessage() + "\"}")
+					.type(MediaType.APPLICATION_JSON).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(Response.Status.BAD_REQUEST).build();
@@ -44,11 +45,11 @@ public class StudentService {
 	public Response read() {
 		Response response;
 		try {
-			List<Student> list = StudentDao.getInstance().findAll();
+			List<Category> list = CategoryDao.getInstance().findAll();
 			response = Response.status(Response.Status.OK).entity(list).type(MediaType.APPLICATION_JSON).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			response  = Response.status(Response.Status.BAD_REQUEST).build();
+			response = Response.status(Response.Status.BAD_REQUEST).build();
 		}
 		return response;
 	}
@@ -56,18 +57,19 @@ public class StudentService {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response update(Student s){
+	public Response update(Category c) {
 		Response response;
 		try {
-			StudentException ex = StudentValidator.validate(s);
+			CategoryException ex = CategoryValidator.validate(c);
 			if (ex != null)
 				throw ex;
 
-			StudentDao.getInstance().merge(s);
+			CategoryDao.getInstance().merge(c);
 			response = Response.status(Response.Status.NO_CONTENT).build();
-		} catch (StudentException e) {
+		} catch (CategoryException e) {
 			e.printStackTrace();
-			response = Response.status(Response.Status.NOT_ACCEPTABLE).entity("{\"message\": \""+e.getMessage()+"\"}").type(MediaType.APPLICATION_JSON).build();
+			response = Response.status(Response.Status.NOT_ACCEPTABLE)
+					.entity("{\"message\": \"" + e.getMessage() + "\"}").type(MediaType.APPLICATION_JSON).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			response = Response.status(Response.Status.BAD_REQUEST).entity(null).build();

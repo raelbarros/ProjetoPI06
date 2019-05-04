@@ -27,15 +27,17 @@ public class Survey {
 	@Temporal(TemporalType.DATE)
 	private Calendar date;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_student")
+	@Column(name = "result")
+	private int result;
+	
+	@Column(name = "enabled", nullable = false)
+	boolean enabled = true;
+	
+	@ManyToOne
 	private Student student;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_category")
+	@ManyToOne
 	private Category category;
-	
-	// Get e set of variables
 
 	public Integer getId() {
 		return id;
@@ -51,6 +53,22 @@ public class Survey {
 
 	public void setDate(Calendar date) {
 		this.date = date;
+	}
+
+	public int getResult() {
+		return result;
+	}
+
+	public void setResult(int result) {
+		this.result = result;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public Student getStudent() {

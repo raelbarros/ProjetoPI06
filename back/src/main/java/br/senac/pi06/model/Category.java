@@ -1,15 +1,10 @@
 package br.senac.pi06.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -24,13 +19,9 @@ public class Category {
 
 	@Column(name = "name", nullable = false, length = 50)
 	private String name;
-
-	// list for save all question of this category
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_question")
-	private List<Question> listQuestion;
-
-	// Get e set of variables
+	
+	@Column(name = "enabled", nullable = false)
+	boolean enabled = true;
 
 	public Integer getId() {
 		return id;
@@ -48,16 +39,13 @@ public class Category {
 		this.name = name;
 	}
 
-	public List<Question> getQuestion() {
-		return listQuestion;
+	public boolean isEnabled() {
+		return enabled;
 	}
 
-	public void setQuestion(Question q) {
-		// start the list
-		if (listQuestion == null) {
-			listQuestion = new ArrayList<Question>();
-		}
-		this.listQuestion.add(q);
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
+	
 
 }

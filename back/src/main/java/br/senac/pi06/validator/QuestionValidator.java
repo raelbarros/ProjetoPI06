@@ -7,7 +7,7 @@ import br.senac.pi06.util.Util;
 
 public class QuestionValidator {
 
-	public static Exception validate(Question q) {
+	public static QuestionException validate(Question q) {
 
 		// NOT NULL
 		if (Util.empty(q.getQuestion()))

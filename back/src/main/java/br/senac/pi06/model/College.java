@@ -20,7 +20,7 @@ public class College {
 	private String name;
 
 	@Column(name = "enabled", nullable = false)
-	boolean enabled;
+	boolean enabled = true;
 
 	public int getId() {
 		return id;
@@ -45,5 +45,7 @@ public class College {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+
+
 
 }

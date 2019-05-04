@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,8 +20,12 @@ public class Question {
 
 	@Column(name = "question", nullable = false)
 	private String question;
-
-	// Get e set of variables
+	
+	@Column(name = "enabled", nullable = false)
+	boolean enabled = true;
+	
+//	@ManyToOne
+//	private Category category;
 
 	public Integer getId() {
 		return id;
@@ -38,4 +43,22 @@ public class Question {
 		this.question = question;
 	}
 
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+//	public Category getCategory() {
+//		return category;
+//	}
+//
+//	public void setCategory(Category category) {
+//		this.category = category;
+//	}
+
+	
+	
 }

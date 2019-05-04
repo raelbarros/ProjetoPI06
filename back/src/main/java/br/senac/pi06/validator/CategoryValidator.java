@@ -6,7 +6,7 @@ import br.senac.pi06.util.Util;
 
 public class CategoryValidator {
 
-	public static Exception validate(Category c) {
+	public static CategoryException validate(Category c) {
 
 		// NOT NULL
 		if (Util.empty(c.getName()))

@@ -7,7 +7,7 @@ import br.senac.pi06.util.Util;
 
 public class SurveyValidator {
 
-	public static Exception validate(Survey s) {
+	public static SurveyException validate(Survey s) {
 
 		// NOT NULL
 		if (Util.isDate(s.getDate()))

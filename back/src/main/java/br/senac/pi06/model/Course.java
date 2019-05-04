@@ -8,41 +8,43 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="course")
+@Table(name = "course")
 
 public class Course {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 	
-		@Id
-		@GeneratedValue(strategy=GenerationType.IDENTITY)
-		private int id;
-		@Column (name = "name", nullable = false, length = 100)
-		private String name;
-		
-		@Column(name = "enabled", nullable = false)
-		boolean enabled;
+	@Column(name = "name", nullable = false, length = 100)
+	private String name;
 
-		public int getId() {
-			return id;
-		}
+	@Column(name = "enabled", nullable = false)
+	boolean enabled = true;
 
-		public void setId(int id) {
-			this.id = id;
-		}
+	public int getId() {
+		return id;
+	}
 
-		public String getName() {
-			return name;
-		}
+	public void setId(int id) {
+		this.id = id;
+	}
 
-		public void setName(String name) {
-			this.name = name;
-		}
+	public String getName() {
+		return name;
+	}
 
-		public boolean isEnabled() {
-			return enabled;
-		}
+	public void setName(String name) {
+		this.name = name;
+	}
 
-		public void setEnabled(boolean enabled) {
-			this.enabled = enabled;
-		}
-	
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+
 }

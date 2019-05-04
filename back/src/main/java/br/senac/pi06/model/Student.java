@@ -1,5 +1,6 @@
 package br.senac.pi06.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,13 +30,13 @@ public class Student {
 	private String periodo;
 
 	@Column(name = "enabled", nullable = false)
-	boolean enabled;
+	boolean enabled = true;
 	
-	@ManyToOne
-	private College college;
-	
-	@ManyToOne
-	private Course course;
+//	@ManyToOne(cascade = CascadeType.ALL
+//	private College college;
+//	
+//	@ManyToOne(cascade = CascadeType.ALL
+//	private Course course;
 
 	public int getId() {
 		return id;
@@ -85,20 +86,21 @@ public class Student {
 		this.enabled = enabled;
 	}
 
-	public College getCollege() {
-		return college;
-	}
+//	public College getCollege() {
+//		return college;
+//	}
+//
+//	public void setCollege(College college) {
+//		this.college = college;
+//	}
+//
+//	public Course getCourse() {
+//		return course;
+//	}
+//
+//	public void setCourse(Course course) {
+//		this.course = course;
+//	}
 
-	public void setCollege(College college) {
-		this.college = college;
-	}
-
-	public Course getCourse() {
-		return course;
-	}
-
-	public void setCourse(Course course) {
-		this.course = course;
-	}
 
 }

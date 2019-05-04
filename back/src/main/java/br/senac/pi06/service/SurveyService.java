@@ -11,26 +11,26 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import br.senac.pi06.dao.StudentDao;
-import br.senac.pi06.exception.StudentException;
-import br.senac.pi06.model.Student;
-import br.senac.pi06.validator.StudentValidator;
+import br.senac.pi06.dao.SurveyDao;
+import br.senac.pi06.exception.SurveyException;
+import br.senac.pi06.model.Survey;
+import br.senac.pi06.validator.SurveyValidator;
 
-@Path("/student")
-public class StudentService {
+@Path("/survey")
+public class SurveyService {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	//@Produces(MediaType.APPLICATION_JSON)
-	public Response create(Student s) {
+	public Response create(Survey survey) {
 		try {
-			StudentException ex = StudentValidator.validate(s);
+			SurveyException ex = SurveyValidator.validate(survey);
 			if (ex != null)
 				throw ex;
 
-			StudentDao.getInstance().persist(s);
+			SurveyDao.getInstance().persist(survey);
 			return Response.status(Response.Status.NO_CONTENT).build();
-		} catch (StudentException e) {
+		} catch (SurveyException e) {
 			e.printStackTrace();
 			return Response.status(Response.Status.NOT_ACCEPTABLE).entity("{\"message\": \""+e.getMessage()+"\"}").type(MediaType.APPLICATION_JSON).build();
 		} catch (Exception e) {
@@ -44,7 +44,7 @@ public class StudentService {
 	public Response read() {
 		Response response;
 		try {
-			List<Student> list = StudentDao.getInstance().findAll();
+			List<Survey> list = SurveyDao.getInstance().findAll();
 			response = Response.status(Response.Status.OK).entity(list).type(MediaType.APPLICATION_JSON).build();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -56,16 +56,16 @@ public class StudentService {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response update(Student s){
+	public Response update(Survey survey){
 		Response response;
 		try {
-			StudentException ex = StudentValidator.validate(s);
+			SurveyException ex = SurveyValidator.validate(survey);
 			if (ex != null)
 				throw ex;
 
-			StudentDao.getInstance().merge(s);
+			SurveyDao.getInstance().merge(survey);
 			response = Response.status(Response.Status.NO_CONTENT).build();
-		} catch (StudentException e) {
+		} catch (SurveyException e) {
 			e.printStackTrace();
 			response = Response.status(Response.Status.NOT_ACCEPTABLE).entity("{\"message\": \""+e.getMessage()+"\"}").type(MediaType.APPLICATION_JSON).build();
 		} catch (Exception e) {
@@ -75,5 +75,6 @@ public class StudentService {
 
 		return response;
 	}
+
 
 }

@@ -6,7 +6,7 @@ import br.senac.pi06.util.Util;
 
 public class CourseValidator {
 	
-	public static Exception validate(Course course) {
+	public static CourseException validate(Course course) {
 
 		// NOT NULL
 		if (Util.empty(course.getName()))

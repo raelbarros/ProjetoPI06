@@ -1,51 +1,51 @@
 package br.senac.pi06.dao;
 
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import br.senac.pi06.model.Student;
-
-public class StudentDao {
+import br.senac.pi06.model.Category;
 
 
-	private static StudentDao instance;
+public class CategoryDao {
+	private static CategoryDao instance;
 	protected EntityManager em;
 
-	public static StudentDao getInstance(){
+	public static CategoryDao getInstance() {
 		if (instance == null)
-			instance = new StudentDao();
+			instance = new CategoryDao();
 		return instance;
 	}
 
-	private StudentDao() {
+	private CategoryDao() {
 		em = Manager.getInstance().entityManager;
 	}
 
-	public Student getById(final int id) {
-		return em.find(Student.class, id);
+	public Category getById(final int id) {
+		return em.find(Category.class, id);
 	}
 
-	public Student getByEmail(final String email) {
-		Query query = em.createQuery("FROM Student WHERE enabled = 1 AND email=:email");
-		query.setParameter("email", email);
+	@SuppressWarnings("unchecked")
+	public List<Category> findAll() {
+		return em.createQuery("FROM Category WHERE enabled = 1").getResultList();
+	}
+
+	public Category getByName(final String name) {
+		Query query = em.createQuery("FROM Category WHERE enabled = 1 AND name=:name");
+		query.setParameter("name", name);
 
 		try {
-			return (Student) query.getSingleResult();
+			return (Category) query.getSingleResult();
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Student> findAll() {
-		return em.createQuery("FROM Student WHERE enabled = 1").getResultList();
-	}
-
-	public void persist(Student s) {
+	public void persist(Category c) {
 		try {
 			em.getTransaction().begin();
-			em.persist(s);
+			em.persist(c);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -53,10 +53,10 @@ public class StudentDao {
 		}
 	}
 
-	public void merge(Student s) {
+	public void merge(Category c) {
 		try {
 			em.getTransaction().begin();
-			em.merge(s);
+			em.merge(c);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -64,15 +64,14 @@ public class StudentDao {
 		}
 	}
 
-	public void remove(Student s) {
+	public void remove(Category c) {
 		try {
 			em.getTransaction().begin();
-			em.remove(s);
+			em.remove(c);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 			em.getTransaction().rollback();
 		}
 	}
-
 }
