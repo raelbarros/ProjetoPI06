@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import br.senac.pi06.model.College;;
+import br.senac.pi06.model.College;
 
 public class CollegeDao {
 	
@@ -73,6 +73,16 @@ public class CollegeDao {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			em.getTransaction().rollback();
+		}
+	}
+	
+	public void removeById(int id) {
+		try {
+			College s = getById(id);
+			s.setEnabled(false);
+			merge(s);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

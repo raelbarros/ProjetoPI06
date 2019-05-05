@@ -3,6 +3,7 @@ package br.senac.pi06.service;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -14,6 +15,7 @@ import javax.ws.rs.core.Response;
 import br.senac.pi06.dao.CourseDao;
 import br.senac.pi06.exception.CourseException;
 import br.senac.pi06.model.Course;
+import br.senac.pi06.util.Util;
 import br.senac.pi06.validator.CourseValidator;
 
 @Path("/course")
@@ -29,51 +31,60 @@ public class CourseService {
 				throw ex;
 
 			CourseDao.getInstance().persist(course);
-			return Response.status(Response.Status.NO_CONTENT).build();
+			return Util.printOk();
 		} catch (CourseException e) {
 			e.printStackTrace();
-			return Response.status(Response.Status.NOT_ACCEPTABLE).entity("{\"message\": \"" + e.getMessage() + "\"}").type(MediaType.APPLICATION_JSON).build();
+			return Util.printNotAccept(e.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.status(Response.Status.BAD_REQUEST).build();
+			return Util.printBadRequest();
 		}
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response read() {
-		Response response;
 		try {
 			List<Course> list = CourseDao.getInstance().findAll();
-			response = Response.status(Response.Status.OK).entity(list).type(MediaType.APPLICATION_JSON).build();
+			return Response.status(Response.Status.OK).entity(list).type(MediaType.APPLICATION_JSON).build();
 		} catch (Exception e) {
 			e.printStackTrace();
-			response  = Response.status(Response.Status.BAD_REQUEST).build();
+			return Util.printBadRequest();
 		}
-		return response;
+
 	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
+//	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(Course course){
-		Response response;
 		try {
 			CourseException ex = CourseValidator.validate(course);
 			if (ex != null)
 				throw ex;
 
 			CourseDao.getInstance().merge(course);
-			response = Response.status(Response.Status.NO_CONTENT).build();
+			return Util.printOk();
 		} catch (CourseException e) {
 			e.printStackTrace();
-			response = Response.status(Response.Status.NOT_ACCEPTABLE).entity("{\"message\": \""+e.getMessage()+"\"}").type(MediaType.APPLICATION_JSON).build();
+			return Util.printNotAccept(e.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
-			response = Response.status(Response.Status.BAD_REQUEST).entity(null).build();
+			return Util.printBadRequest();
 		}
 
-		return response;
 	}
+	
+	@DELETE
+	public Response delete(Course course) {
+		try {
+			CourseDao.getInstance().remove(course);
+			return Util.printOk();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Util.printBadRequest();
+		}
+	}
+
 
 }

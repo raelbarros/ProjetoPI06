@@ -74,4 +74,14 @@ public class CategoryDao {
 			em.getTransaction().rollback();
 		}
 	}
+	
+	public void removeById(int id) {
+		try {
+			Category s = getById(id);
+			s.setEnabled(false);
+			merge(s);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

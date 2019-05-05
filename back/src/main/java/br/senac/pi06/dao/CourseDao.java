@@ -76,4 +76,14 @@ public class CourseDao {
 		}
 	}
 	
+	public void removeById(int id) {
+		try {
+			Course s = getById(id);
+			s.setEnabled(false);
+			merge(s);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

@@ -8,11 +8,10 @@ import br.senac.pi06.model.Student;
 
 public class StudentDao {
 
-
 	private static StudentDao instance;
 	protected EntityManager em;
 
-	public static StudentDao getInstance(){
+	public static StudentDao getInstance() {
 		if (instance == null)
 			instance = new StudentDao();
 		return instance;
@@ -72,6 +71,16 @@ public class StudentDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 			em.getTransaction().rollback();
+		}
+	}
+
+	public void removeById(int id) {
+		try {
+			Student s = getById(id);
+			s.setEnabled(false);
+			merge(s);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

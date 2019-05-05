@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import br.senac.pi06.model.Course;
 import br.senac.pi06.model.Question;
 
 public class QuestionDao {
@@ -73,6 +72,16 @@ public class QuestionDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 			em.getTransaction().rollback();
+		}
+	}
+	
+	public void removeById(int id) {
+		try {
+			Question s = getById(id);
+			s.setEnabled(false);
+			merge(s);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }
