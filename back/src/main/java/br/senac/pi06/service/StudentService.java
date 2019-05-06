@@ -8,7 +8,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -23,7 +25,6 @@ public class StudentService {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	// @Produces(MediaType.APPLICATION_JSON)
 	public Response create(Student s) {
 		try {
 			StudentException ex = StudentValidator.validate(s);
@@ -53,9 +54,37 @@ public class StudentService {
 		}
 	}
 
+	@GET
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response readById(@PathParam("id") int id) {
+		try {
+			Student s = StudentDao.getInstance().getById(id);
+			return Response.status(Response.Status.OK).entity(s).type(MediaType.APPLICATION_JSON).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Util.printBadRequest();
+		}
+	}
+
+	// ***** ARRUMAR *****
+//	@GET
+//	@Path("/email")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	@Consumes(MediaType.TEXT_PLAIN)
+//	public Response readByEmail(@QueryParam("email") String email) {
+//		System.out.println("email: " + email);
+//		try {
+//			Student s = StudentDao.getInstance().getByEmail(email);
+//			return Response.status(Response.Status.OK).entity(s).type(MediaType.APPLICATION_JSON).build();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return Util.printBadRequest();
+//		}
+//	}
+
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-//	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(Student s) {
 		try {
 			StudentException ex = StudentValidator.validate(s);
@@ -78,6 +107,18 @@ public class StudentService {
 	public Response delete(Student s) {
 		try {
 			StudentDao.getInstance().remove(s);
+			return Util.printOk();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Util.printBadRequest();
+		}
+	}
+
+	@DELETE
+	@Path("/{id}")
+	public Response deleteById(@PathParam("id") int id) {
+		try {
+			StudentDao.getInstance().removeById(id);
 			return Util.printOk();
 		} catch (Exception e) {
 			e.printStackTrace();

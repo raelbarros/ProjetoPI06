@@ -9,11 +9,11 @@ import javax.persistence.Query;
 import br.senac.pi06.model.Survey;
 
 public class SurveyDao {
-	
+
 	private static SurveyDao instance;
 	protected EntityManager em;
 
-	public static SurveyDao getInstance(){
+	public static SurveyDao getInstance() {
 		if (instance == null)
 			instance = new SurveyDao();
 		return instance;
@@ -23,11 +23,11 @@ public class SurveyDao {
 		em = Manager.getInstance().entityManager;
 	}
 
-	public Survey getById(final int id) {
+	public Survey getById(int id) {
 		return em.find(Survey.class, id);
 	}
 
-	public Survey getByStudent(final int id) {
+	public Survey getByStudent(int id) {
 		Query query = em.createQuery("FROM Survey WHERE enabled = 1 AND id_student=:id_student");
 		query.setParameter("id_student", id);
 
@@ -37,7 +37,7 @@ public class SurveyDao {
 			return null;
 		}
 	}
-	
+
 	public Survey getByDate(final Date sDate) {
 		Query query = em.createQuery("FROM Survey WHERE enabled = 1 AND date_survey=:date_survey");
 		query.setParameter("date_survey", sDate);
@@ -48,19 +48,17 @@ public class SurveyDao {
 			return null;
 		}
 	}
-	
-	/*
-	public Survey getByResult(final int id) {
-		Query query = em.createQuery("FROM survey WHERE AND result=:id_student");
-		query.setParameter("id_student", id);
 
-		try {
-			return (Survey) query.getSingleResult();
-		} catch (Exception e) {
-			return null;
-		}
-	}
-	*/
+//	public Survey getByResult(final int id) {
+//		Query query = em.createQuery("FROM survey WHERE AND result=:id_student");
+//		query.setParameter("id_student", id);
+//
+//		try {
+//			return (Survey) query.getSingleResult();
+//		} catch (Exception e) {
+//			return null;
+//		}
+//	}
 
 	@SuppressWarnings("unchecked")
 	public List<Survey> findAll() {
@@ -99,7 +97,7 @@ public class SurveyDao {
 			em.getTransaction().rollback();
 		}
 	}
-	
+
 	public void removeById(int id) {
 		try {
 			Survey s = getById(id);

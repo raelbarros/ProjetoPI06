@@ -8,11 +8,11 @@ import javax.persistence.Query;
 import br.senac.pi06.model.Question;
 
 public class QuestionDao {
-	
+
 	private static QuestionDao instance;
 	protected EntityManager em;
 
-	public static QuestionDao getInstance(){
+	public static QuestionDao getInstance() {
 		if (instance == null)
 			instance = new QuestionDao();
 		return instance;
@@ -22,7 +22,7 @@ public class QuestionDao {
 		em = Manager.getInstance().entityManager;
 	}
 
-	public Question getById(final int id) {
+	public Question getById(int id) {
 		return em.find(Question.class, id);
 	}
 
@@ -30,8 +30,8 @@ public class QuestionDao {
 	public List<Question> findAll() {
 		return em.createQuery("FROM Question WHERE enabled = 1").getResultList();
 	}
-	
-	public Question getByName(final String name) {
+
+	public Question getByName(String name) {
 		Query query = em.createQuery("FROM Question WHERE enabled = 1 AND name=:name");
 		query.setParameter("name", name);
 
@@ -74,7 +74,7 @@ public class QuestionDao {
 			em.getTransaction().rollback();
 		}
 	}
-	
+
 	public void removeById(int id) {
 		try {
 			Question s = getById(id);

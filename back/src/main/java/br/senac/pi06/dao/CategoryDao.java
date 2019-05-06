@@ -7,8 +7,8 @@ import javax.persistence.Query;
 
 import br.senac.pi06.model.Category;
 
-
 public class CategoryDao {
+	
 	private static CategoryDao instance;
 	protected EntityManager em;
 
@@ -22,7 +22,7 @@ public class CategoryDao {
 		em = Manager.getInstance().entityManager;
 	}
 
-	public Category getById(final int id) {
+	public Category getById(int id) {
 		return em.find(Category.class, id);
 	}
 
@@ -31,7 +31,7 @@ public class CategoryDao {
 		return em.createQuery("FROM Category WHERE enabled = 1").getResultList();
 	}
 
-	public Category getByName(final String name) {
+	public Category getByName(String name) {
 		Query query = em.createQuery("FROM Category WHERE enabled = 1 AND name=:name");
 		query.setParameter("name", name);
 
@@ -74,7 +74,7 @@ public class CategoryDao {
 			em.getTransaction().rollback();
 		}
 	}
-	
+
 	public void removeById(int id) {
 		try {
 			Category s = getById(id);

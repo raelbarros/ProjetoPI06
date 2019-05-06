@@ -8,6 +8,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -23,7 +24,6 @@ public class CollegeService {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response create(College college) {
 		try {
 			CollegeException ex = CollegeValidator.validate(college);
@@ -54,9 +54,21 @@ public class CollegeService {
 		}
 	}
 
+	@GET
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response readById(@PathParam("id") int id) {
+		try {
+			College c = CollegeDao.getInstance().getById(id);
+			return Response.status(Response.Status.OK).entity(c).type(MediaType.APPLICATION_JSON).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Util.printBadRequest();
+		}
+	}
+
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-//	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(College college) {
 		try {
 			CollegeException ex = CollegeValidator.validate(college);
@@ -73,11 +85,23 @@ public class CollegeService {
 			return Util.printBadRequest();
 		}
 	}
-	
+
 	@DELETE
 	public Response delete(College college) {
 		try {
 			CollegeDao.getInstance().remove(college);
+			return Util.printOk();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Util.printBadRequest();
+		}
+	}
+
+	@DELETE
+	@Path("/{id}")
+	public Response deleteById(@PathParam("id") int id) {
+		try {
+			CollegeDao.getInstance().removeById(id);
 			return Util.printOk();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -8,6 +8,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -23,7 +24,6 @@ public class SurveyService {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	//@Produces(MediaType.APPLICATION_JSON)
 	public Response create(Survey survey) {
 		try {
 			SurveyException ex = SurveyValidator.validate(survey);
@@ -53,10 +53,22 @@ public class SurveyService {
 		}
 	}
 
+	@GET
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response readById(@PathParam("id") int id) {
+		try {
+			Survey s = SurveyDao.getInstance().getById(id);
+			return Response.status(Response.Status.OK).entity(s).type(MediaType.APPLICATION_JSON).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Util.printBadRequest();
+		}
+	}
+
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-//	@Produces(MediaType.APPLICATION_JSON)
-	public Response update(Survey survey){
+	public Response update(Survey survey) {
 		try {
 			SurveyException ex = SurveyValidator.validate(survey);
 			if (ex != null)
@@ -72,7 +84,7 @@ public class SurveyService {
 			return Util.printBadRequest();
 		}
 	}
-	
+
 	@DELETE
 	public Response delete(Survey s) {
 		try {
@@ -84,5 +96,16 @@ public class SurveyService {
 		}
 	}
 
+	@DELETE
+	@Path("/{id}")
+	public Response deleteById(@PathParam("id") int id) {
+		try {
+			SurveyDao.getInstance().removeById(id);
+			return Util.printOk();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Util.printBadRequest();
+		}
+	}
 
 }

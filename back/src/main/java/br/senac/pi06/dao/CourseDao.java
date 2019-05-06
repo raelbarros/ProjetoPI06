@@ -9,7 +9,6 @@ import br.senac.pi06.model.Course;
 
 public class CourseDao {
 
-
 	private static CourseDao instance;
 	protected EntityManager em;
 
@@ -23,7 +22,7 @@ public class CourseDao {
 		em = Manager.getInstance().entityManager;
 	}
 
-	public Course getById(final int id) {
+	public Course getById(int id) {
 		return em.find(Course.class, id);
 	}
 	
@@ -32,7 +31,7 @@ public class CourseDao {
 		return em.createQuery("FROM Course WHERE enabled = 1").getResultList();
 	}
 	
-	public Course getByName(final String name) {
+	public Course getByName(String name) {
 		Query query = em.createQuery("FROM Course WHERE enabled = 1 AND name=:name");
 		query.setParameter("name", name);
 

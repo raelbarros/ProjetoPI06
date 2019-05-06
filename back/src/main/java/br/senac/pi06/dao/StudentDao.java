@@ -21,11 +21,11 @@ public class StudentDao {
 		em = Manager.getInstance().entityManager;
 	}
 
-	public Student getById(final int id) {
+	public Student getById(int id) {
 		return em.find(Student.class, id);
 	}
 
-	public Student getByEmail(final String email) {
+	public Student getByEmail(String email) {
 		Query query = em.createQuery("FROM Student WHERE enabled = 1 AND email=:email");
 		query.setParameter("email", email);
 

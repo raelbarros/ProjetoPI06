@@ -8,12 +8,11 @@ import javax.persistence.Query;
 import br.senac.pi06.model.College;
 
 public class CollegeDao {
-	
 
 	private static CollegeDao instance;
 	protected EntityManager em;
 
-	public static CollegeDao getInstance(){
+	public static CollegeDao getInstance() {
 		if (instance == null)
 			instance = new CollegeDao();
 		return instance;
@@ -23,16 +22,16 @@ public class CollegeDao {
 		em = Manager.getInstance().entityManager;
 	}
 
-	public College getById(final int id) {
+	public College getById(int id) {
 		return em.find(College.class, id);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<College> findAll() {
 		return em.createQuery("FROM College WHERE enabled = 1").getResultList();
 	}
-	
-	public College getByName(final String name) {
+
+	public College getByName(String name) {
 		Query query = em.createQuery("FROM College WHERE enabled = 1 AND name=:name");
 		query.setParameter("name", name);
 
@@ -75,7 +74,7 @@ public class CollegeDao {
 			em.getTransaction().rollback();
 		}
 	}
-	
+
 	public void removeById(int id) {
 		try {
 			College s = getById(id);
@@ -85,6 +84,5 @@ public class CollegeDao {
 			e.printStackTrace();
 		}
 	}
-
 
 }
