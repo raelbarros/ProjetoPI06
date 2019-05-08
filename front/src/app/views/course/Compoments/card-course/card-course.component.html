@@ -1,11 +1,11 @@
 <!-- Card Course-->
-<div class="col-lg-6 col-md-12 ">
 
   <mdb-card>
+    <h2 class="title">Curso</h2>
     <mdb-card-body class="card-body scrollbar scrollbar-primary">
-      <mdb-card-title>
+      <!-- <mdb-card-title>
         <h4>Cursos</h4>
-      </mdb-card-title>
+      </mdb-card-title> -->
       <mdb-card-text class="force-overflow">
 
         <ul class="list-group list-group-flush teste-1" *ngFor="let course of listCourse; let i=index">
@@ -38,8 +38,7 @@
               <div class="modal-body">
 
                 <div class="md-form">
-                  <input mdbInput type="text" id="name" class="form-control" formControlName="name">
-                  <label for="name" class="">Nome do Courso</label>
+                  <input mdbInput type="text" id="name" class="form-control" placeholder="Nome do Courso">
 
                   <div *ngIf="submitted && f.name.errors" class="invalidFeedback">
                     <div *ngIf="f.name.errors.required">Nome é obrigatorio</div>
@@ -49,7 +48,7 @@
               </div>
 
               <div class="modal-footer">
-                <button type="button" mdbBtn color="secondary" class="waves-light" outline="true" aria-label="Close"
+                <button type="button" mdbBtn color="danger" class="waves-light" outline="true" aria-label="Close"
                   (click)="courseModal.hide()" mdbWavesEffect>Cancelar</button>
                 <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
                   type="submit">Salvar</button>
@@ -71,4 +70,3 @@
 
 
   </mdb-card>
-</div>

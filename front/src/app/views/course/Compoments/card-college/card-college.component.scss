@@ -50,15 +50,9 @@
   color: red;
 }
 
-.card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0px !important;
-  min-width: 300px !important;
-  word-wrap: break-word;
-  background-color: #fff;
-  background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.25rem;
+.title {
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: center;
+  margin-top: 2%;
 }
