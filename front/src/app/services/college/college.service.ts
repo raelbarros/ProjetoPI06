@@ -15,7 +15,7 @@ export class CollegeService {
 
   persist(c: Course): Observable<any> {
     return this.http.post(this.url, c);
-    console.log('inseriu')
+    console.log('inseriu');
   }
 
   read(): Observable<Course[]> {

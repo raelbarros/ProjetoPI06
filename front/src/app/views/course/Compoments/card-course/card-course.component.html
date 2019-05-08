@@ -1,16 +1,16 @@
 <!-- Card Course-->
-<div class="col-lg-6 col-md-12">
+<div class="col-lg-6 col-md-12 ">
 
   <mdb-card>
-    <mdb-card-body class="card-body scrollbar scrollbar-primary" >
+    <mdb-card-body class="card-body scrollbar scrollbar-primary">
       <mdb-card-title>
         <h4>Cursos</h4>
       </mdb-card-title>
-      <mdb-card-text class="force-overflow" >   
+      <mdb-card-text class="force-overflow">
 
         <ul class="list-group list-group-flush teste-1" *ngFor="let course of listCourse; let i=index">
-          <li class="list-group-item list-group-item list-group-item-action waves-light" >
-                    {{course.name}}
+          <li class="list-group-item list-group-item list-group-item-action waves-light">
+            {{course.name}}
             <mdb-badge primary="true">
               <mdb-icon fas icon="pen"></mdb-icon>
             </mdb-badge>
@@ -18,11 +18,13 @@
         </ul>
 
       </mdb-card-text>
-
+    </mdb-card-body>
       <!-- Modal Course-->
-      <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="courseModal.show()" mdbWavesEffect>Adicionar</button>
+      <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="courseModal.show()"
+        mdbWavesEffect>Adicionar</button>
 
-      <div mdbModal #courseModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mybasicModalLabel" aria-hidden="true">
+      <div mdbModal #courseModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="mybasicModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -37,18 +39,20 @@
 
                 <div class="md-form">
                   <input mdbInput type="text" id="name" class="form-control" formControlName="name">
-                  <label for="name" class="">Nome do Courso</label>   
-                  
+                  <label for="name" class="">Nome do Courso</label>
+
                   <div *ngIf="submitted && f.name.errors" class="invalidFeedback">
-                      <div *ngIf="f.name.errors.required">Nome é obrigatorio</div>
+                    <div *ngIf="f.name.errors.required">Nome é obrigatorio</div>
                   </div>
                 </div>
-              
+
               </div>
 
               <div class="modal-footer">
-                <button type="button" mdbBtn color="secondary" class="waves-light" outline="true" aria-label="Close" (click)="courseModal.hide()" mdbWavesEffect>Cancelar</button>
-                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect type="submit">Salvar</button>
+                <button type="button" mdbBtn color="secondary" class="waves-light" outline="true" aria-label="Close"
+                  (click)="courseModal.hide()" mdbWavesEffect>Cancelar</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                  type="submit">Salvar</button>
               </div>
 
               <div #alert class="alert alert-success fade show" role="alert" *ngIf="success">
@@ -58,13 +62,13 @@
                 <strong>Sucesso!</strong> Curso inserido.
               </div>
 
-            </form> 
+            </form>
 
           </div>
         </div>
       </div>
 
 
-    </mdb-card-body>
+
   </mdb-card>
 </div>
