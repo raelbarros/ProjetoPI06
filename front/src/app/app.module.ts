@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CardCourseComponent } from './views/course/Compoments/card-course/card-course.component';
 import { CardCollegeComponent } from './views/course/Compoments/card-college/card-college.component';
 import { MainPageComponent } from './views/main-page/main-page.component';
+import { NavegationComponent } from './views/main-layout/navegation/navegation.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { MainPageComponent } from './views/main-page/main-page.component';
     CourseComponent,
     CardCourseComponent,
     CardCollegeComponent,
-    MainPageComponent
+    MainPageComponent,
+    NavegationComponent,
   ],
   imports: [
     BrowserModule,

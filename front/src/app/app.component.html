@@ -1,1 +1,8 @@
-<router-outlet></router-outlet>
+<app-navegation></app-navegation>
+
+<main [ngClass]="{'py-0 px-0 my-0 mx-0': page}"  class="mx-lg-6" >
+    
+  <div class="mt-5">
+    <router-outlet></router-outlet>
+  </div>
+</main>

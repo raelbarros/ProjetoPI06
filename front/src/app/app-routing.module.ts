@@ -5,7 +5,7 @@ import { MainPageComponent } from './views/main-page/main-page.component';
 
 const routes: Routes = [
   {path: '', component: CourseComponent},
-  //{path: 'curso', component: CourseComponent},
+  {path: 'course', component: CourseComponent},
 ];
 
 @NgModule({
