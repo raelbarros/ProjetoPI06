@@ -39,14 +39,14 @@ export class MainPageComponent implements OnInit {
   }
 
 
-  saveStudent(){
+  saveStudent() {
     let auxCourse = new Course();
-    auxCourse = this.listCourse.find((item) =>{
+    auxCourse = this.listCourse.find((item) => {
       return item.name == this.studentForm.value.course;
     })
 
     let auxCollege = new College();
-    auxCollege = this.listCollege.find((item) =>{
+    auxCollege = this.listCollege.find((item) => {
       return item.name == this.studentForm.value.college;
     })
 
@@ -54,13 +54,14 @@ export class MainPageComponent implements OnInit {
     student.firstName = this.studentForm.value.firstName;
     student.lastName = this.studentForm.value.lastName;
     student.email = this.studentForm.value.email;
-    student.collegeKey = auxCollege;
-    student.courseKey = auxCourse;
+    student.college = auxCollege;
+    student.course = auxCourse;
     student.periodo = this.studentForm.value.periodo
 
     console.log(student)
-    this.studentService.persist(student).subscribe((list) => {
-      console.log('israel eh foda, e o mari e gay')
+    this.studentService.persist(student).subscribe(() => {
+      this.studentForm.reset();
     })
+    
   }
 }

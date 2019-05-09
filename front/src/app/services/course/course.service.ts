@@ -15,10 +15,13 @@ export class CourseService {
 
   persist(c: Course): Observable<any> {
     return this.http.post(this.url, c);
-    console.log('inseriu')
   }
 
   read(): Observable<Course[]> {
     return this.http.get<Course[]>(this.url);
+  }
+
+  remove(c: Course): Observable<any> {
+    return this.http.delete(this.url + '/' + c.id);
   }
 }

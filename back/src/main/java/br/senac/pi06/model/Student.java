@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -18,10 +17,10 @@ public class Student {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "first_name", nullable = false, length = 50)
+	@Column(name = "firstName", nullable = false, length = 50)
 	private String firstName;
 	
-	@Column(name = "last_name", nullable = false, length = 50)
+	@Column(name = "lastName", nullable = false, length = 50)
 	private String lastName;
 	
 	@Column(name = "email", nullable = false, length = 100)
@@ -33,13 +32,11 @@ public class Student {
 	@Column(name = "enabled", nullable = false)
 	boolean enabled = true;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_college", nullable=false)
-	private College collegeKey;
+	@ManyToOne
+	private College college;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_course", nullable=false)
-	private Course courseKey;
+	@ManyToOne
+	private Course course;
 
 	public int getId() {
 		return id;
@@ -90,20 +87,20 @@ public class Student {
 	}
 
 	public College getCollege() {
-		return collegeKey;
+		return college;
 	}
 
 	public void setCollege(College college) {
-		this.collegeKey = college;
+		this.college = college;
 	}
 
 	public Course getCourse() {
-		return courseKey;
+		return course;
 	}
 
 	public void setCourse(Course course) {
-		this.courseKey = course;
+		this.course = course;
 	}
 
-
+	
 }

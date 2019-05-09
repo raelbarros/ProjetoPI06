@@ -6,9 +6,9 @@ export class Student {
     firstName: string;
     lastName: string;
     email: string;
-    collegeKey: College;
-    courseKey: Course;
+    college: College;
+    course: Course;
     periodo: string;
-    enabled: boolean = true;
+    enabled: boolean;
 
 }

@@ -1,13 +1,10 @@
 package br.senac.pi06.model;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -24,9 +21,6 @@ public class College {
 
 	@Column(name = "enabled", nullable = false)
 	boolean enabled = true;
-
-	@OneToMany(mappedBy="collegeKey")
-	private Set<Student> student;
 	
 	public int getId() {
 		return id;
@@ -51,15 +45,5 @@ public class College {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-
-	public Set<Student> getStudent() {
-		return student;
-	}
-
-	public void setStudent(Set<Student> student) {
-		this.student = student;
-	}
-
-
 
 }

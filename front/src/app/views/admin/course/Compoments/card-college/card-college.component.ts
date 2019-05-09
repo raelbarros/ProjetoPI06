@@ -40,7 +40,7 @@ export class CardCollegeComponent implements OnInit {
       this.success = true;
       this.collegeService.persist(c).subscribe(() => {
         this.listCollege.push(c);
-        
+        this.collegeForm.reset();
       })  
     }
   }

@@ -15,7 +15,6 @@ export class StudentService {
 
   persist(c: Student): Observable<any> {
     return this.http.post(this.url, c);
-    console.log('inseriu')
   }
 
   read(): Observable<Student[]> {

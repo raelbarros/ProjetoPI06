@@ -49,13 +49,13 @@
                 <!-- Faculdade -->
 
                 <select class="browser-default custom-select" formControlName="college">
-                  <option selected disabled>Selecione sua Faculdade</option>
+                  <option selected>Selecione sua Faculdade</option>
                   <option *ngFor="let college of listCollege; let i=index">{{college.name}}</option>
                 </select>
 
                 <!-- Curso -->
                 <select  formControlName="course" class="browser-default custom-select">
-                  <option selected disabled>selecionar</option>
+                  <option selected>Selecione seu Curso</option>
                   <option *ngFor="let course of listCourse; let i=index">{{course.name}}</option>
                 </select>
 

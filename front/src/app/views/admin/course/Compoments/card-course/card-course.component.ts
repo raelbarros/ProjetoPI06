@@ -39,7 +39,7 @@ export class CardCourseComponent implements OnInit {
       this.success = true;
       this.courseService.persist(c).subscribe(() => {
         this.listCourse.push(c);
-        
+        this.courseForm.reset();
       })  
     }
   }
