@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { College } from 'src/app/models/college';
 import { CourseService } from 'src/app/services/course/course.service';
+import { CollegeService } from 'src/app/services/college/college.service';
 
 @Component({
   selector: 'app-card-college',
@@ -16,7 +17,7 @@ export class CardCollegeComponent implements OnInit {
   success = false;
   listCollege: College[];
 
-  constructor(private formBuild: FormBuilder, private couseService: CourseService) { 
+  constructor(private formBuild: FormBuilder, private collegeService: CollegeService) { 
     this.listCollege = new Array<College>();
   }
 
@@ -25,7 +26,7 @@ export class CardCollegeComponent implements OnInit {
       name: [null, Validators.required]
     });
     
-    this.couseService.read().subscribe((list) => {
+    this.collegeService.read().subscribe((list) => {
       this.listCollege = list;
     })
   }
@@ -37,7 +38,7 @@ export class CardCollegeComponent implements OnInit {
       const c = new College();
       c.name = this.collegeForm.value.name;
       this.success = true;
-      this.couseService.persist(c).subscribe(() => {
+      this.collegeService.persist(c).subscribe(() => {
         this.listCollege.push(c);
         
       })  

@@ -17,7 +17,7 @@ export class CardCourseComponent implements OnInit {
   success = false;
   listCourse: Course[];
 
-  constructor(private formBuild: FormBuilder, private couseService: CourseService) { 
+  constructor(private formBuild: FormBuilder, private courseService: CourseService) { 
     this.listCourse = new Array<Course>();
   }
 
@@ -26,19 +26,18 @@ export class CardCourseComponent implements OnInit {
       name: [null, Validators.required]
     });
     
-    this.couseService.read().subscribe((list) => {
+    this.courseService.read().subscribe((list) => {
       this.listCourse = list;
     })
   }
 
   saveCourse() {
     this.submitted = true;
-
     if (!this.courseForm.invalid) {
       const c = new Course();
       c.name = this.courseForm.value.name;
       this.success = true;
-      this.couseService.persist(c).subscribe(() => {
+      this.courseService.persist(c).subscribe(() => {
         this.listCourse.push(c);
         
       })  

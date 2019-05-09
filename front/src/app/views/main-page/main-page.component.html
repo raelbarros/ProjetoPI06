@@ -2,11 +2,11 @@
 <main>
   <div class="container">
     <section>
-      <div class="row justify-content-center" >
+      <div class="row justify-content-center">
         <div class="col-lg-8">
 
           <!-- Material form register -->
-          <mdb-card >
+          <mdb-card>
 
             <mdb-card-header class="info-color white-text text-center py-4">
               <h5>
@@ -18,20 +18,22 @@
             <mdb-card-body class="px-lg-5 pt-0">
 
               <!-- Form -->
-              <form class="text-center" style="color: #757575;">
+              <form [formGroup]="studentForm" (ngSubmit)="saveStudent()" class="text-center" style="color: #757575;">
 
                 <div class="form-row">
                   <div class="col">
                     <!-- First name -->
                     <div class="md-form">
-                      <input type="text" id="materialRegisterFormFirstName" class="form-control" mdbInput>
+                      <input type="text" id="materialRegisterFormFirstName" class="form-control" mdbInput
+                        formControlName="firstName">
                       <label for="materialRegisterFormFirstName">Nome</label>
                     </div>
                   </div>
                   <div class="col">
                     <!-- Last name -->
                     <div class="md-form">
-                      <input type="email" id="materialRegisterFormLastName" class="form-control" mdbInput>
+                      <input type="email" id="materialRegisterFormLastName" class="form-control" mdbInput
+                        formControlName="lastName">
                       <label for="materialRegisterFormLastName">Sobre Nome</label>
                     </div>
                   </div>
@@ -39,32 +41,39 @@
 
                 <!-- E-mail -->
                 <div class="md-form mt-0">
-                  <input type="email" id="materialRegisterFormEmail" class="form-control" mdbInput>
+                  <input type="email" id="materialRegisterFormEmail" class="form-control" mdbInput
+                    formControlName="email">
                   <label for="materialRegisterFormEmail">E-mail</label>
                 </div>
 
                 <!-- Faculdade -->
-                <select class="browser-default custom-select">
-                  <option selected>Open this select menu</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+
+                <select class="browser-default custom-select" formControlName="college">
+                  <option selected disabled>Selecione sua Faculdade</option>
+                  <option *ngFor="let college of listCollege; let i=index">{{college.name}}</option>
                 </select>
 
                 <!-- Curso -->
-                <select class="browser-default custom-select">
-                  <option selected>Open this select menu</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                <select  formControlName="course" class="browser-default custom-select">
+                  <option selected disabled>selecionar</option>
+                  <option *ngFor="let course of listCourse; let i=index">{{course.name}}</option>
                 </select>
 
                 <!-- Periodo  -->
-                <select class="browser-default custom-select">
-                  <option selected>Open this select menu</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                <select class="browser-default custom-select" formControlName="periodo">
+                  <option selected>Selecione seu semestre</option>
+                  <option value="1">1º</option>
+                  <option value="2">2º</option>
+                  <option value="3">3º</option>
+                  <option value="4">4º</option>
+                  <option value="5">5º</option>
+                  <option value="6">6º</option>
+                  <option value="7">7º</option>
+                  <option value="8">8º</option>
+                  <option value="9">9º</option>                  
+                  <option value="10">10º</option>
+                  <option value="11">11º</option>
+                  <option value="12">12º</option>
                 </select>
 
                 <!-- Sign up button -->

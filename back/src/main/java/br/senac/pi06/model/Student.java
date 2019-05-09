@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -32,11 +33,13 @@ public class Student {
 	@Column(name = "enabled", nullable = false)
 	boolean enabled = true;
 	
-//	@ManyToOne(cascade = CascadeType.ALL
-//	private College college;
-//	
-//	@ManyToOne(cascade = CascadeType.ALL
-//	private Course course;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_college", nullable=false)
+	private College collegeKey;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_course", nullable=false)
+	private Course courseKey;
 
 	public int getId() {
 		return id;
@@ -86,21 +89,21 @@ public class Student {
 		this.enabled = enabled;
 	}
 
-//	public College getCollege() {
-//		return college;
-//	}
-//
-//	public void setCollege(College college) {
-//		this.college = college;
-//	}
-//
-//	public Course getCourse() {
-//		return course;
-//	}
-//
-//	public void setCourse(Course course) {
-//		this.course = course;
-//	}
+	public College getCollege() {
+		return collegeKey;
+	}
+
+	public void setCollege(College college) {
+		this.collegeKey = college;
+	}
+
+	public Course getCourse() {
+		return courseKey;
+	}
+
+	public void setCourse(Course course) {
+		this.courseKey = course;
+	}
 
 
 }

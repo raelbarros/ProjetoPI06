@@ -38,7 +38,7 @@
               <div class="modal-body">
 
                 <div class="md-form">
-                  <input mdbInput type="text" id="name" class="form-control" placeholder="Nome do Courso">
+                  <input mdbInput type="text" id="name" class="form-control" placeholder="Nome do Courso" formControlName="name">
 
                   <div *ngIf="submitted && f.name.errors" class="invalidFeedback">
                     <div *ngIf="f.name.errors.required">Nome é obrigatorio</div>

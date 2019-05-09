@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class CollegeService {
   url: string
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.url = 'http://localhost:8080/pi06/servicos/college';
   }
 
@@ -22,3 +22,4 @@ export class CollegeService {
     return this.http.get<Course[]>(this.url);
   }
 }
+

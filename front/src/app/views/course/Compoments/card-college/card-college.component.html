@@ -36,7 +36,7 @@
           <form [formGroup]="collegeForm" (ngSubmit)="saveCollege()">
             <div class="modal-body">
               <div class="md-form">
-                <input mdbInput type="text" id="name" class="form-control" placeholder="Nome do Instituição">
+                <input mdbInput type="text" id="name" class="form-control" placeholder="Nome do Instituição" formControlName="name">
 
                 <div *ngIf="submitted && f.name.errors" class="invalidFeedback">
                   <div *ngIf="f.name.errors.required">Nome é obrigatorio</div>
