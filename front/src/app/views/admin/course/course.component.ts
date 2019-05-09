@@ -1,27 +1,27 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef, HostListener, ElementRef } from "@angular/core";
+import { Component, OnInit, ViewChild, ChangeDetectorRef, HostListener, ElementRef } from '@angular/core';
 import { MdbTableDirective, MdbTablePaginationComponent, ModalDirective } from "angular-bootstrap-md";
-import { CourseService } from "src/app/services/course/course.service";
-import { Course } from "src/app/models/course";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { CourseService } from 'src/app/services/course/course.service';
+import { Course } from 'src/app/models/course';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-  selector: "app-course",
-  templateUrl: "./course.component.html",
-  styleUrls: ["./course.component.scss"]
+  selector: 'app-course',
+  templateUrl: './course.component.html',
+  styleUrls: ['./course.component.scss']
 })
 export class CourseComponent implements OnInit {
 
-  @ViewChild("row") row: ElementRef;
-  @ViewChild("editModal") modal: ModalDirective;
-  @ViewChild("alert") alert: ElementRef;
+  @ViewChild('row') row: ElementRef;
+  @ViewChild('editModal') modal: ModalDirective;
+  @ViewChild('alert') alert: ElementRef;
   @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective;
   @ViewChild(MdbTablePaginationComponent)
   mdbTablePagination: MdbTablePaginationComponent;
 
   courseList: any = [];
-  columns = ["id", "name", "Edit", "Remove"];
+  columns = ['id', 'name', 'Edit', 'Remove'];
 
-  searchText: string = "";
+  searchText: string = '';
   previous: string;
 
   maxVisibleItems: number = 8;
@@ -35,7 +35,7 @@ export class CourseComponent implements OnInit {
 
   constructor(private cdRef: ChangeDetectorRef, private courseService: CourseService, private formBuild: FormBuilder) {}
 
-  @HostListener("input") oninput() {
+  @HostListener('input') oninput() {
     this.mdbTablePagination.searchText = this.searchText;
   }
 
@@ -48,10 +48,10 @@ export class CourseComponent implements OnInit {
 
     //----
     this.addForm = this.formBuild.group({
-      name: ["", Validators.required]
+      name: ['', Validators.required]
     });
     this.editForm = this.formBuild.group({
-      name: ["", Validators.required]
+      name: ['', Validators.required]
     });
   }
 
@@ -96,27 +96,10 @@ export class CourseComponent implements OnInit {
       });
       this.submitted = false;
     }
-
-    if (!this.editForm.invalid && this.indexEdit != null) {
-
-      let updateCourse = new Course();
-
-      updateCourse = this.courseList[this.indexEdit];
-      updateCourse.name = this.editForm.value.name;
-      this.courseList[this.indexEdit] = updateCourse;
-      
-      this.courseService.persist(updateCourse).subscribe(() => {
-        this.courseList.push(updateCourse);
-        this.updateTable();
-       
-        this.success = true;
-      });
-      this.submitted = false;
-    }
   }
 
   closeAlert() {
-    this.alert.nativeElement.classList.remove("show");
+    this.alert.nativeElement.classList.remove('show');
     this.addForm.reset();
     this.editForm.reset();
     this.success = false;
@@ -128,13 +111,36 @@ export class CourseComponent implements OnInit {
     c.id = this.courseList[id].id;
     c.name = this.courseList[id].name
 
-    this.courseService.remove(c);
-    this.updateTable();
+    console.log(c)
+    this.courseService.remove(c).subscribe(() => {
+      this.courseList.splice(id, 1);
+      this.updateTable();
+    });
+    
   }
 
   edit(id: any) {
     this.modal.show();
     this.indexEdit = id;
+  }
+
+  updateCourse(){
+    this.submitted = true;
+    if (!this.editForm.invalid && this.indexEdit != null) {
+
+      let updateCourse = new Course();
+
+      updateCourse = this.courseList[this.indexEdit];
+      updateCourse.name = this.editForm.value.name;
+      this.courseList[this.indexEdit] = updateCourse;
+      
+      this.courseService.merge(updateCourse).subscribe(() => {
+        this.success = true;
+        this.updateTable();
+
+      });
+      this.submitted = false;
+    }
   }
 
   get fadd() {

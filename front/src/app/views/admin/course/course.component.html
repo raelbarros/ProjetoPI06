@@ -87,15 +87,13 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" mdbBtn color="danger" class="waves-light" outline="true" aria-label="Close"
-            (click)="addModal.hide()" mdbWavesEffect>Cancelar</button>
-          <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
-            type="submit">Salvar</button>
+          <button type="button" mdbBtn color="danger" class="waves-light" outline="true" aria-label="Close" (click)="addModal.hide()" mdbWavesEffect>Cancelar</button>
+          <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect type="submit">Salvar</button>
         </div>
 
         <div #alert class="alert alert-success fade show" role="alert" *ngIf="success">
           <button type="button" class="close" aria-label="Close" (click)="closeAlert()"><span aria-hidden="true">&times;</span></button>
-          <strong>Sucesso!</strong>Curso inserido.
+          <strong>Sucesso!</strong> Curso inserido.
         </div>
 
       </form>
@@ -106,43 +104,43 @@
 
 
 
-<!-- Modal Adicionar -->
+<!-- Modal Editar -->
 <div mdbModal #editModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mybasicModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-lg" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close pull-right" aria-label="Close" (click)="editModal.hide()">
-        <span aria-hidden="true">×</span>
-      </button>
-      <h4 class="modal-title w-100" id="myModalLabel">Editar Curso</h4>
-    </div>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="editModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Editar Curso</h4>
+      </div>
 
-    <form [formGroup]="editForm" (ngSubmit)="saveCourse()">
-      <div class="modal-body">
+      <form [formGroup]="editForm" (ngSubmit)="updateCourse()">
+        <div class="modal-body">
 
-        <div class="md-form">
-          <input mdbInput type="text" id="name" class="form-control" placeholder="Nome do Courso" formControlName="name">
+          <div class="md-form">
+            <input mdbInput type="text" id="name" class="form-control" placeholder="Nome do Courso" formControlName="name">
 
-          <div *ngIf="submitted && fedit.name.errors" class="invalidFeedback">
-            <div *ngIf="fedit.name.errors.required">Nome é obrigatorio</div>
+            <div *ngIf="submitted && fedit.name.errors" class="invalidFeedback">
+              <div *ngIf="fedit.name.errors.required">Nome é obrigatorio</div>
+            </div>
           </div>
+
         </div>
 
-      </div>
+        <div class="modal-footer">
+            <button type="button" mdbBtn color="danger" class="waves-light" outline="true" aria-label="Close" (click)="editModal.hide()" mdbWavesEffect>Cancelar</button>
+            <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect type="submit">Salvar</button>
+        </div>
 
-      <div class="modal-footer">
-        <button type="button" mdbBtn color="danger" class="waves-light" outline="true" aria-label="Close"(click)="courseForm.hide()" mdbWavesEffect>Cancelar</button>
-        <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffecttype="submit">Salvar</button>
-      </div>
+        <div #alert class="alert alert-success fade show" role="alert" *ngIf="success">
+          <button type="button" class="close" aria-label="Close" (click)="closeAlert()"><span aria-hidden="true">&times;</span></button>
+          <strong>Sucesso!</strong> Curso editado.
+        </div>
 
-      <div #alert class="alert alert-success fade show" role="alert" *ngIf="success">
-        <button type="button" class="close" aria-label="Close" (click)="closeAlert()"><span aria-hidden="true">&times;</span></button>
-        <strong>Sucesso!</strong>Curso inserido.
-      </div>
+      </form>
 
-    </form>
-
+    </div>
   </div>
-</div>
 </div>
 

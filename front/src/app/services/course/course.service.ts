@@ -21,6 +21,10 @@ export class CourseService {
     return this.http.get<Course[]>(this.url);
   }
 
+  merge(c: Course): Observable<any> {
+    return this.http.put(this.url, c);
+  }
+
   remove(c: Course): Observable<any> {
     return this.http.delete(this.url + '/' + c.id);
   }
