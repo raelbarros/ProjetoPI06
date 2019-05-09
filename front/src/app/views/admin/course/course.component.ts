@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, HostListener, ElementRef } from '@angular/core';
 import { MdbTableDirective, MdbTablePaginationComponent, ModalDirective } from "angular-bootstrap-md";
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CourseService } from 'src/app/services/course/course.service';
 import { Course } from 'src/app/models/course';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-course',
