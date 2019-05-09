@@ -1,5 +1,4 @@
 
-
 <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Cursos Cadastrados</h3>
   <div id="table" class="table-editable">
       <span class="table-add float-right mb-3 mr-2">
@@ -37,13 +36,13 @@
           
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
             <span class="table-remove">
-              <button type="button" mdbBtn color="info" size="sm" class="my-0" (click)="edit(i)">Editar</button>
+              <button type="button" mdbBtn color="info" size="sm" class="my-0" (click)="editCourse(i)">Editar</button>
             </span>
           </td>
           
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
             <span class="table-remove">
-              <button type="button" mdbBtn color="danger" size="sm" class="my-0" (click)="remove(i)">Remove</button>
+              <button type="button" mdbBtn color="danger" size="sm" class="my-0" (click)="removeCourse(i)">Remove</button>
             </span>
           </td>
         </tr>

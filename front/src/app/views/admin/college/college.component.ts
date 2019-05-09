@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, HostListener, ElementRef } from '@angular/core';
 import { MdbTableDirective, MdbTablePaginationComponent, ModalDirective } from "angular-bootstrap-md";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CourseService } from 'src/app/services/course/course.service';
-import { Course } from 'src/app/models/course';
+import { CollegeService } from 'src/app/services/college/college.service';
+import { College } from 'src/app/models/college';
 
 @Component({
-  selector: 'app-course',
-  templateUrl: './course.component.html',
-  styleUrls: ['./course.component.scss']
+  selector: 'app-college',
+  templateUrl: './college.component.html',
+  styleUrls: ['./college.component.scss']
 })
-export class CourseComponent implements OnInit {
+export class CollegeComponent implements OnInit {
 
   @ViewChild('row') row: ElementRef;
   @ViewChild('editModal') modal: ModalDirective;
@@ -18,7 +18,7 @@ export class CourseComponent implements OnInit {
   @ViewChild(MdbTablePaginationComponent)
   mdbTablePagination: MdbTablePaginationComponent;
 
-  courseList: any = [];
+  collegeList: any = [];
   columns = ['id', 'name', 'Edit', 'Remove'];
 
   searchText: string = '';
@@ -33,15 +33,15 @@ export class CourseComponent implements OnInit {
 
   indexEdit = null;
 
-  constructor(private courseService: CourseService, private formBuild: FormBuilder) { }
+  constructor(private collegeService: CollegeService, private formBuild: FormBuilder) { }
 
   @HostListener('input') oninput() {
     this.mdbTablePagination.searchText = this.searchText;
   }
 
   ngOnInit() {
-    this.courseService.read().subscribe(list => {
-      this.courseList = list;
+    this.collegeService.read().subscribe(list => {
+      this.collegeList = list;
 
       this.updateTable();
     });
@@ -56,8 +56,8 @@ export class CourseComponent implements OnInit {
   }
 
   updateTable() {
-    this.mdbTable.setDataSource(this.courseList);
-    this.courseList = this.mdbTable.getDataSource();
+    this.mdbTable.setDataSource(this.collegeList);
+    this.collegeList = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();
   }
 
@@ -66,11 +66,11 @@ export class CourseComponent implements OnInit {
 
     if (!this.searchText) {
       this.mdbTable.setDataSource(this.previous);
-      this.courseList = this.mdbTable.getDataSource();
+      this.collegeList = this.mdbTable.getDataSource();
     }
 
     if (this.searchText) {
-      this.courseList = this.mdbTable.searchLocalDataBy(this.searchText);
+      this.collegeList = this.mdbTable.searchLocalDataBy(this.searchText);
       this.mdbTable.setDataSource(prev);
     }
 
@@ -83,17 +83,17 @@ export class CourseComponent implements OnInit {
     });
   }
 
-  saveCourse() {
+  saveCollege() {
     this.submitted = true;
     if (!this.addForm.invalid) {
-      const c = new Course();
+      const c = new College();
       c.name = this.addForm.value.name;
 
-      this.courseService.persist(c).subscribe(() => {
-        this.courseList.push(c);
-        this.updateTable();
-        this.success = true;
-      });
+      // this.collegeService.persist(c).subscribe(() => {
+      //   this.collegeList.push(c);
+      //   this.updateTable();
+      //   this.success = true;
+      // });
       this.submitted = false;
     }
   }
@@ -105,40 +105,40 @@ export class CourseComponent implements OnInit {
     this.success = false;
   }
 
-  removeCourse(id: any) {
-    let c = new Course();
+  removeCollege(id: any) {
+    let c = new College();
 
-    c.id = this.courseList[id].id;
-    c.name = this.courseList[id].name
+    c.id = this.collegeList[id].id;
+    c.name = this.collegeList[id].name
 
     console.log(c)
-    this.courseService.remove(c).subscribe(() => {
-      this.courseList.splice(id, 1);
-      this.updateTable();
-    });
+    // this.collegeService.remove(c).subscribe(() => {
+    //   this.collegeList.splice(id, 1);
+    //   this.updateTable();
+    // });
 
   }
 
-  editCourse(id: any) {
+  editCollege(id: any) {
     this.modal.show();
     this.indexEdit = id;
   }
 
-  updateCourse() {
+  updateCollege() {
     this.submitted = true;
     if (!this.editForm.invalid && this.indexEdit != null) {
 
-      let updateCourse = new Course();
+      let updateCourse = new College();
 
-      updateCourse = this.courseList[this.indexEdit];
+      updateCourse = this.collegeList[this.indexEdit];
       updateCourse.name = this.editForm.value.name;
-      this.courseList[this.indexEdit] = updateCourse;
+      this.collegeList[this.indexEdit] = updateCourse;
 
-      this.courseService.merge(updateCourse).subscribe(() => {
-        this.success = true;
-        this.updateTable();
+      // this.collegeService.merge(updateCourse).subscribe(() => {
+      //   this.success = true;
+      //   this.updateTable();
 
-      });
+      // });
       this.submitted = false;
     }
   }

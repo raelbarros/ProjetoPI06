@@ -1,0 +1,146 @@
+<app-menu-bar-admin></app-menu-bar-admin>
+
+<h3 class="card-header text-center font-weight-bold text-uppercase py-4">Instituição Cadastradas</h3>
+<div id="table" class="table-editable">
+    <span class="table-add float-right mb-3 mr-2">
+      <a class="text-success" (click)="addModal.show()" mdbWavesEffect>
+        <mdb-icon fas icon="plus" size="2x"></mdb-icon>
+      </a>
+    </span>
+</div>  
+
+    
+<div class="container">
+<div class="row">
+
+  <div class="col-md-6 mx-auto">
+    <div class="md-form">
+      <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input"
+             mdbInput>
+      <label for="search-input">Search</label>
+    </div>
+  </div>
+
+  <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" class="z-depth-1">
+      <thead class="sticky-top">
+      <tr>
+        <th *ngFor="let item of columns; let i = index" [mdbTableSort]="collegeList" [sortBy]="columns[i]"
+            scope="col">{{item | titlecase}} <mdb-icon fas icon="sort"></mdb-icon>
+        </th>
+      </tr>
+      </thead>
+
+      <tbody #row>
+      <tr mdbTableCol (rowCreated)="onRowCreate($event)" (rowRemoved)="onRowRemove($event)" *ngFor="let college of collegeList; let i = index">
+        <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">{{college.id}}</th>
+        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">{{college.name}}</td>
+        
+        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+          <span class="table-remove">
+            <button type="button" mdbBtn color="info" size="sm" class="my-0" (click)="editCollege(i)">Editar</button>
+          </span>
+        </td>
+        
+        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+          <span class="table-remove">
+            <button type="button" mdbBtn color="danger" size="sm" class="my-0" (click)="removeCollege(i)">Remove</button>
+          </span>
+        </td>
+      </tr>
+      </tbody>
+
+      <tfoot class="grey lighten-5 w-100">
+      <tr>
+        <td colspan="4">
+          <mdb-table-pagination [tableEl]="tableEl" paginationAlign="" [searchDataSource]="collegeList"></mdb-table-pagination>
+        </td>
+      </tr>
+    </tfoot>
+
+  </table>
+
+</div>
+</div>
+
+
+
+<!-- Modal Adicionar -->
+<div mdbModal #addModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mybasicModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="addModal.hide()"><span aria-hidden="true">×</span></button>
+      <h4 class="modal-title w-100" id="myModalLabel">Adicionar Instituição</h4>
+    </div>
+
+    <form [formGroup]="addForm" (ngSubmit)="saveCollege()">
+      <div class="modal-body">
+
+        <div class="md-form">
+          <input mdbInput type="text" id="name" class="form-control" placeholder="Nome do Courso" formControlName="name">
+
+          <div *ngIf="submitted && fadd.name.errors" class="invalidFeedback">
+            <div *ngIf="fadd.name.errors.required">Nome é obrigatorio</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" mdbBtn color="danger" class="waves-light" outline="true" aria-label="Close" (click)="addModal.hide()" mdbWavesEffect>Cancelar</button>
+        <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect type="submit">Salvar</button>
+      </div>
+
+      <div #alert class="alert alert-success fade show" role="alert" *ngIf="success">
+        <button type="button" class="close" aria-label="Close" (click)="closeAlert()"><span aria-hidden="true">&times;</span></button>
+        <strong>Sucesso!</strong> Instituição inserido.
+      </div>
+
+    </form>
+
+  </div>
+</div>
+</div>
+
+
+
+<!-- Modal Editar -->
+<div mdbModal #editModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mybasicModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="editModal.hide()">
+        <span aria-hidden="true">×</span>
+      </button>
+      <h4 class="modal-title w-100" id="myModalLabel">Editar Instituição</h4>
+    </div>
+
+    <form [formGroup]="editForm" (ngSubmit)="updateCollege()">
+      <div class="modal-body">
+
+        <div class="md-form">
+          <input mdbInput type="text" id="name" class="form-control" placeholder="Nome do Courso" formControlName="name">
+
+          <div *ngIf="submitted && fedit.name.errors" class="invalidFeedback">
+            <div *ngIf="fedit.name.errors.required">Nome é obrigatorio</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+          <button type="button" mdbBtn color="danger" class="waves-light" outline="true" aria-label="Close" (click)="editModal.hide()" mdbWavesEffect>Cancelar</button>
+          <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect type="submit">Salvar</button>
+      </div>
+
+      <div #alert class="alert alert-success fade show" role="alert" *ngIf="success">
+        <button type="button" class="close" aria-label="Close" (click)="closeAlert()"><span aria-hidden="true">&times;</span></button>
+        <strong>Sucesso!</strong> Instituição editado.
+      </div>
+
+    </form>
+
+  </div>
+</div>
+</div>
+

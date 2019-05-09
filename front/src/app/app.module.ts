@@ -7,19 +7,19 @@ import { CourseComponent } from './views/admin/course/course.component';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { CardCollegeComponent } from './views/admin/college/card-college/card-college.component';
 import { MainPageComponent } from './views/student/main-page/main-page.component';
 import { MenuBarAdminComponent } from './views/admin/main-layout/menu-bar-admin/menu-bar-admin.component';
 import { DashboardComponent } from './views/admin/dashboard/dashboard.component';
+import { CollegeComponent } from './views/admin/college/college.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CourseComponent,
-    CardCollegeComponent,
     MainPageComponent,
     MenuBarAdminComponent,
     DashboardComponent,
+    CollegeComponent,
   ],
   imports: [
     BrowserModule,
