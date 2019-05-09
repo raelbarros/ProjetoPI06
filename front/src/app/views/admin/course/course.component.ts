@@ -93,6 +93,7 @@ export class CourseComponent implements OnInit {
         this.courseList.push(c);
         this.updateTable();
         this.success = true;
+        this.addForm.reset();
       });
       this.submitted = false;
     }
@@ -111,7 +112,6 @@ export class CourseComponent implements OnInit {
     c.id = this.courseList[id].id;
     c.name = this.courseList[id].name
 
-    console.log(c)
     this.courseService.remove(c).subscribe(() => {
       this.courseList.splice(id, 1);
       this.updateTable();
@@ -120,8 +120,13 @@ export class CourseComponent implements OnInit {
   }
 
   editCourse(id: any) {
-    this.modal.show();
     this.indexEdit = id;
+
+    let aux = new Course();
+    aux = this.courseList[this.indexEdit];
+    this.editForm.setValue({name: aux.name})
+
+    this.modal.show();
   }
 
   updateCourse() {
@@ -137,7 +142,7 @@ export class CourseComponent implements OnInit {
       this.courseService.merge(updateCourse).subscribe(() => {
         this.success = true;
         this.updateTable();
-
+        this.editForm.reset();
       });
       this.submitted = false;
     }

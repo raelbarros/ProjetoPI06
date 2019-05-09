@@ -17,6 +17,8 @@ export class MainPageComponent implements OnInit {
   listCourse: Array<Course>;
 
   studentForm: FormGroup;
+  submitted = false;
+  success = false;
 
   constructor(private studentService: StudentService, private couseService: CourseService, private collegeService: CollegeService, private fb: FormBuilder) { }
 
@@ -40,6 +42,7 @@ export class MainPageComponent implements OnInit {
 
 
   saveStudent() {
+    this.submitted = true;
     let auxCourse = new Course();
     auxCourse = this.listCourse.find((item) => {
       return item.name == this.studentForm.value.course;
@@ -59,9 +62,14 @@ export class MainPageComponent implements OnInit {
     student.periodo = this.studentForm.value.periodo
 
     console.log(student)
-    this.studentService.persist(student).subscribe(() => {
+/*     this.studentService.persist(student).subscribe(() => {
       this.studentForm.reset();
     })
-    
+ */
+  }
+
+
+  get f() {
+    return this.studentForm.controls;
   }
 }

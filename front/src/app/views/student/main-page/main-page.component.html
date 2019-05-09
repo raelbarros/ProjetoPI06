@@ -27,6 +27,11 @@
                       <input type="text" id="materialRegisterFormFirstName" class="form-control" mdbInput
                         formControlName="firstName">
                       <label for="materialRegisterFormFirstName">Nome</label>
+
+                      <div *ngIf="submitted && f.firstName.errors" class="invalidFeedback">
+                        <div *ngIf="f.firstName.errors.required">Nome é obrigatorio</div>
+                      </div>
+
                     </div>
                   </div>
                   <div class="col">
@@ -35,6 +40,10 @@
                       <input type="email" id="materialRegisterFormLastName" class="form-control" mdbInput
                         formControlName="lastName">
                       <label for="materialRegisterFormLastName">Sobre Nome</label>
+
+                      <div *ngIf="submitted && f.lastName.errors" class="invalidFeedback">
+                        <div *ngIf="f.lastName.errors.required">Sobrenome é obrigatorio</div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -44,41 +53,62 @@
                   <input type="email" id="materialRegisterFormEmail" class="form-control" mdbInput
                     formControlName="email">
                   <label for="materialRegisterFormEmail">E-mail</label>
+
+                  <div *ngIf="submitted && f.email.errors" class="invalidFeedback">
+                    <div *ngIf="f.email.errors.required">E-mail é obrigatorio</div>
+                  </div>
+
                 </div>
 
                 <!-- Faculdade -->
-
-                <select class="browser-default custom-select" formControlName="college">
-                  <option selected>Selecione sua Faculdade</option>
-                  <option *ngFor="let college of listCollege; let i=index">{{college.name}}</option>
-                </select>
+                <div class="md-form mt-0">
+                  <select class="browser-default custom-select" formControlName="college">
+                    <option disabled value="null" selected>Selecione sua Faculdade</option>
+                    <option *ngFor="let college of listCollege; let i=index">{{college.name}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.college.errors" class="invalidFeedback">
+                    <div *ngIf="f.college.errors.required">Faculdade é obrigatorio</div>
+                  </div>
+                </div>
 
                 <!-- Curso -->
-                <select  formControlName="course" class="browser-default custom-select">
-                  <option selected>Selecione seu Curso</option>
-                  <option *ngFor="let course of listCourse; let i=index">{{course.name}}</option>
-                </select>
+                <div class="md-form mt-0">
+                  <select formControlName="course" class="browser-default custom-select">
+                    <option disabled value="null" selected>Selecione seu Curso</option>
+                    <option *ngFor="let course of listCourse; let i=index">{{course.name}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.course.errors" class="invalidFeedback">
+                    <div *ngIf="f.course.errors.required">Curso é obrigatorio</div>
+                  </div>
+                </div>
 
                 <!-- Periodo  -->
-                <select class="browser-default custom-select" formControlName="periodo">
-                  <option selected>Selecione seu semestre</option>
-                  <option value="1">1º</option>
-                  <option value="2">2º</option>
-                  <option value="3">3º</option>
-                  <option value="4">4º</option>
-                  <option value="5">5º</option>
-                  <option value="6">6º</option>
-                  <option value="7">7º</option>
-                  <option value="8">8º</option>
-                  <option value="9">9º</option>                  
-                  <option value="10">10º</option>
-                  <option value="11">11º</option>
-                  <option value="12">12º</option>
-                </select>
+                <div class="md-form mt-0">
+                  <select class="browser-default custom-select" formControlName="periodo">
+                    <option disabled value="null"selected>Selecione seu semestre</option>
+                    <option value="1">1º</option>
+                    <option value="2">2º</option>
+                    <option value="3">3º</option>
+                    <option value="4">4º</option>
+                    <option value="5">5º</option>
+                    <option value="6">6º</option>
+                    <option value="7">7º</option>
+                    <option value="8">8º</option>
+                    <option value="9">9º</option>
+                    <option value="10">10º</option>
+                    <option value="11">11º</option>
+                    <option value="12">12º</option>
+                  </select>
+                  <div *ngIf="submitted && f.periodo.errors" class="invalidFeedback">
+                    <div *ngIf="f.periodo.errors.required">Período é obrigatorio</div>
+                  </div>
+                </div>
 
                 <!-- Sign up button -->
                 <button mdbBtn color="success" outline="true" rounded="true" block="true"
-                  class="my-4 waves-effect z-depth-0" mdbWavesEffect type="submit">Sign in</button>
+                  class="my-4 waves-effect z-depth-0" mdbWavesEffect type="submit">Iniciar Pesquisa</button>
+
+
 
 
               </form>

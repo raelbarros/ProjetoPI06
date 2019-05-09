@@ -89,11 +89,12 @@ export class CollegeComponent implements OnInit {
       const c = new College();
       c.name = this.addForm.value.name;
 
-      // this.collegeService.persist(c).subscribe(() => {
-      //   this.collegeList.push(c);
-      //   this.updateTable();
-      //   this.success = true;
-      // });
+      this.collegeService.persist(c).subscribe(() => {
+        this.collegeList.push(c);
+        this.updateTable();
+        this.success = true;
+        this.addForm.reset();
+      });
       this.submitted = false;
     }
   }
@@ -111,34 +112,37 @@ export class CollegeComponent implements OnInit {
     c.id = this.collegeList[id].id;
     c.name = this.collegeList[id].name
 
-    console.log(c)
-    // this.collegeService.remove(c).subscribe(() => {
-    //   this.collegeList.splice(id, 1);
-    //   this.updateTable();
-    // });
+    this.collegeService.remove(c).subscribe(() => {
+      this.collegeList.splice(id, 1);
+      this.updateTable();
+    });
 
   }
 
   editCollege(id: any) {
-    this.modal.show();
     this.indexEdit = id;
+
+    let aux = new College();
+    aux = this.collegeList[this.indexEdit];
+    this.editForm.setValue({ name: aux.name })
+
+    this.modal.show();
   }
 
   updateCollege() {
     this.submitted = true;
     if (!this.editForm.invalid && this.indexEdit != null) {
-
       let updateCourse = new College();
 
       updateCourse = this.collegeList[this.indexEdit];
       updateCourse.name = this.editForm.value.name;
       this.collegeList[this.indexEdit] = updateCourse;
 
-      // this.collegeService.merge(updateCourse).subscribe(() => {
-      //   this.success = true;
-      //   this.updateTable();
-
-      // });
+      this.collegeService.merge(updateCourse).subscribe(() => {
+        this.success = true;
+        this.updateTable();
+        this.editForm.reset();
+      });
       this.submitted = false;
     }
   }
