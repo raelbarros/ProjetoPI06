@@ -12,7 +12,8 @@ import { College } from 'src/app/models/college';
 export class CollegeComponent implements OnInit {
 
   @ViewChild('row') row: ElementRef;
-  @ViewChild('editModal') modal: ModalDirective;
+  @ViewChild('editModal') editModal: ModalDirective;
+  @ViewChild('deleteModal') deleteModal: ModalDirective;
   @ViewChild('alert') alert: ElementRef;
   @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective;
   @ViewChild(MdbTablePaginationComponent)
@@ -40,11 +41,7 @@ export class CollegeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.collegeService.read().subscribe(list => {
-      this.collegeList = list;
-
-      this.updateTable();
-    });
+    this.updateTable();
 
     //----
     this.addForm = this.formBuild.group({
@@ -56,9 +53,14 @@ export class CollegeComponent implements OnInit {
   }
 
   updateTable() {
-    this.mdbTable.setDataSource(this.collegeList);
-    this.collegeList = this.mdbTable.getDataSource();
-    this.previous = this.mdbTable.getDataSource();
+    this.collegeService.read().subscribe(list => {
+      this.collegeList = list;
+
+      this.mdbTable.setDataSource(this.collegeList);
+      this.collegeList = this.mdbTable.getDataSource();
+      this.previous = this.mdbTable.getDataSource();
+    });
+
   }
 
   searchItems() {
@@ -90,7 +92,6 @@ export class CollegeComponent implements OnInit {
       c.name = this.addForm.value.name;
 
       this.collegeService.persist(c).subscribe(() => {
-        this.collegeList.push(c);
         this.updateTable();
         this.success = true;
         this.addForm.reset();
@@ -106,17 +107,27 @@ export class CollegeComponent implements OnInit {
     this.success = false;
   }
 
+  auxId = null;
   removeCollege(id: any) {
-    let c = new College();
+    this.auxId = id;
+    this.deleteModal.show();
+  }
+  confirmDelete() {
+    if (this.auxId !== null) {
 
-    c.id = this.collegeList[id].id;
-    c.name = this.collegeList[id].name
+      let id = this.auxId
 
-    this.collegeService.remove(c).subscribe(() => {
-      this.collegeList.splice(id, 1);
-      this.updateTable();
-    });
+      let c = new College();
 
+      c.id = this.collegeList[id].id;
+      c.name = this.collegeList[id].name
+
+      this.collegeService.remove(c).subscribe(() => {
+        this.updateTable();
+        console.log(c)
+      })
+      this.deleteModal.hide();
+    }
   }
 
   editCollege(id: any) {
@@ -126,7 +137,7 @@ export class CollegeComponent implements OnInit {
     aux = this.collegeList[this.indexEdit];
     this.editForm.setValue({ name: aux.name })
 
-    this.modal.show();
+    this.editModal.show();
   }
 
   updateCollege() {
@@ -142,8 +153,10 @@ export class CollegeComponent implements OnInit {
         this.success = true;
         this.updateTable();
         this.editForm.reset();
+        this.editModal.hide();
       });
       this.submitted = false;
+    
     }
   }
 
