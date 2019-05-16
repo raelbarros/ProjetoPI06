@@ -12,7 +12,8 @@ import { Course } from 'src/app/models/course';
 export class CourseComponent implements OnInit {
 
   @ViewChild('row') row: ElementRef;
-  @ViewChild('editModal') modal: ModalDirective;
+  @ViewChild('editModal') editmodal: ModalDirective;
+  @ViewChild('deleteModal') deleteModal: ModalDirective;
   @ViewChild('alert') alert: ElementRef;
   @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective;
   @ViewChild(MdbTablePaginationComponent)
@@ -40,11 +41,7 @@ export class CourseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.courseService.read().subscribe(list => {
-      this.courseList = list;
-
-      this.updateTable();
-    });
+    this.updateTable();
 
     //----
     this.addForm = this.formBuild.group({
@@ -56,9 +53,14 @@ export class CourseComponent implements OnInit {
   }
 
   updateTable() {
-    this.mdbTable.setDataSource(this.courseList);
-    this.courseList = this.mdbTable.getDataSource();
-    this.previous = this.mdbTable.getDataSource();
+    this.courseService.read().subscribe(list => {
+      this.courseList = list;
+
+      this.mdbTable.setDataSource(this.courseList);
+      this.courseList = this.mdbTable.getDataSource();
+      this.previous = this.mdbTable.getDataSource();
+    });
+
   }
 
   searchItems() {
@@ -90,7 +92,6 @@ export class CourseComponent implements OnInit {
       c.name = this.addForm.value.name;
 
       this.courseService.persist(c).subscribe(() => {
-        this.courseList.push(c);
         this.updateTable();
         this.success = true;
         this.addForm.reset();
@@ -106,17 +107,28 @@ export class CourseComponent implements OnInit {
     this.success = false;
   }
 
+
+  auxId = null;
   removeCourse(id: any) {
-    let c = new Course();
+    this.auxId = id;
+    this.deleteModal.show();
+  }
+  confirmDelete() {
+    if (this.auxId !== null) {
 
-    c.id = this.courseList[id].id;
-    c.name = this.courseList[id].name
+      let id = this.auxId
 
-    this.courseService.remove(c).subscribe(() => {
-      this.courseList.splice(id, 1);
-      this.updateTable();
-    });
+      let c = new Course();
 
+      c.id = this.courseList[id].id;
+      c.name = this.courseList[id].name
+
+      this.courseService.remove(c).subscribe(() => {
+        this.updateTable();
+        console.log(c)
+      })
+      this.deleteModal.hide();
+    }
   }
 
   editCourse(id: any) {
@@ -124,9 +136,9 @@ export class CourseComponent implements OnInit {
 
     let aux = new Course();
     aux = this.courseList[this.indexEdit];
-    this.editForm.setValue({name: aux.name})
+    this.editForm.setValue({ name: aux.name })
 
-    this.modal.show();
+    this.editmodal.show();
   }
 
   updateCourse() {
