@@ -11,6 +11,7 @@ import { MainPageComponent } from './views/student/main-page/main-page.component
 import { MenuBarAdminComponent } from './views/admin/main-layout/menu-bar-admin/menu-bar-admin.component';
 import { DashboardComponent } from './views/admin/dashboard/dashboard.component';
 import { CollegeComponent } from './views/admin/college/college.component';
+import { FooterAdminComponent } from './views/admin/main-layout/footer-admin/footer-admin.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { CollegeComponent } from './views/admin/college/college.component';
     MenuBarAdminComponent,
     DashboardComponent,
     CollegeComponent,
+    FooterAdminComponent,
   ],
   imports: [
     BrowserModule,
