@@ -1,6 +1,20 @@
 <app-menu-bar-admin></app-menu-bar-admin>
 
-<h3 class="card-header text-center font-weight-bold text-uppercase py-4">Instituições Cadastradas</h3>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Instituições Cadastradas</h3>
+
+    </div>
+  </div>
+</div>
+<div class="col-md-6 mx-auto">
+  <div class="md-form">
+    <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input" mdbInput>
+    <label for="search-input">Search</label>
+  </div>
+</div>
 <div id="table" class="table-editable">
   <span class="table-add float-right mb-3 mr-2">
     <a class="text-success" (click)="addModal.show()" mdbWavesEffect>
@@ -9,17 +23,10 @@
   </span>
 </div>
 
-
 <div class="container">
   <div class="row">
 
-    <div class="col-md-6 mx-auto">
-      <div class="md-form">
-        <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input"
-          mdbInput>
-        <label for="search-input">Search</label>
-      </div>
-    </div>
+
 
     <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" class="z-depth-1">
       <thead class="sticky-top">
@@ -38,6 +45,13 @@
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">
             {{college.name}}</td>
 
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">
+            {{college.tipo}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">
+            {{college.estado}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">
+            {{college.cidade}}</td>
+
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
             <span class="table-remove">
               <button type="button" mdbBtn color="info" size="sm" class="my-0" (click)="editCollege(i)">Editar</button>
@@ -55,7 +69,7 @@
 
       <tfoot class="grey lighten-5 w-100">
         <tr>
-          <td colspan="4">
+          <td colspan="7">
             <mdb-table-pagination [tableEl]="tableEl" paginationAlign="" [searchDataSource]="collegeList">
             </mdb-table-pagination>
           </td>
@@ -84,11 +98,34 @@
         <div class="modal-body">
 
           <div class="md-form">
-            <input mdbInput type="text" id="name" class="form-control" placeholder="Nome do Courso"
+            <input mdbInput type="text" id="name" class="form-control" placeholder="Nome da Instituição"
               formControlName="name">
 
             <div *ngIf="submitted && fadd.name.errors" class="invalidFeedback">
               <div *ngIf="fadd.name.errors.required">Nome é obrigatorio</div>
+            </div>
+          </div>
+
+          <div class="md-form">
+            <input mdbInput type="text" id="tipo" class="form-control" placeholder="Tipo" formControlName="tipo">
+
+            <div *ngIf="submitted && fadd.tipo.errors" class="invalidFeedback">
+              <div *ngIf="fadd.tipo.errors.required">Tipo é obrigatorio</div>
+            </div>
+          </div>
+
+          <div class="md-form">
+            <input mdbInput type="text" id="cidade" class="form-control" placeholder="Cidade" formControlName="cidade">
+            <div *ngIf="submitted && fadd.cidade.errors" class="invalidFeedback">
+              <div *ngIf="fadd.cidade.errors.required">Cidade é obrigatorio</div>
+            </div>
+          </div>
+
+          <div class="md-form">
+            <input mdbInput type="text" id="estado" class="form-control" placeholder="Estado" formControlName="estado">
+
+            <div *ngIf="submitted && fadd.estado.errors" class="invalidFeedback">
+              <div *ngIf="fadd.estado.errors.required">Estado é obrigatorio</div>
             </div>
           </div>
 
@@ -131,13 +168,33 @@
         <div class="modal-body">
 
           <div class="md-form">
-            <input mdbInput type="text" id="name" class="form-control" placeholder="Nome do Courso"
+            <input mdbInput type="text" id="name" class="form-control" placeholder="Nome da Instituição"
               formControlName="name">
-
             <div *ngIf="submitted && fedit.name.errors" class="invalidFeedback">
               <div *ngIf="fedit.name.errors.required">Nome é obrigatorio</div>
             </div>
+
+            <input mdbInput type="text" id="tipo" class="form-control" placeholder="Tipo da Instituição"
+              formControlName="tipo">
+            <div *ngIf="submitted && fedit.tipo.errors" class="invalidFeedback">
+              <div *ngIf="fedit.tipo.errors.required">Tipo é obrigatorio</div>
+            </div>
+
+            <input mdbInput type="text" id="estado" class="form-control" placeholder="Estado da Instituição"
+              formControlName="estado">
+            <div *ngIf="submitted && fedit.estado.errors" class="invalidFeedback">
+              <div *ngIf="fedit.estado.errors.required">Estado é obrigatorio</div>
+            </div>
+
+            <input mdbInput type="text" id="cidade" class="form-control" placeholder="Cidade da Instituição"
+              formControlName="cidade">
+            <div *ngIf="submitted && fedit.cidade.errors" class="invalidFeedback">
+              <div *ngIf="fedit.cidade.errors.required">Cidade é obrigatorio</div>
+            </div>
+
           </div>
+
+
 
         </div>
 
