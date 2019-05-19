@@ -3,30 +3,30 @@
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-12">
-      <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Instituições Cadastradas</h3>
-
+  <div class="col-12">
+    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Instituições Cadastradas</h3>
+    <div id="table" class="table-editable">
+      <span class="table-add float-right mb-3 mr-2">
+        <a class="text-success" (click)="addModal.show()" mdbWavesEffect>
+          <mdb-icon fas icon="plus" size="2x"></mdb-icon>
+        </a>
+      </span>
+    </div>
     </div>
   </div>
 </div>
-<div class="col-md-6 mx-auto">
-  <div class="md-form">
-    <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input" mdbInput>
-    <label for="search-input">Search</label>
-  </div>
-</div>
-<div id="table" class="table-editable">
-  <span class="table-add float-right mb-3 mr-2">
-    <a class="text-success" (click)="addModal.show()" mdbWavesEffect>
-      <mdb-icon fas icon="plus" size="2x"></mdb-icon>
-    </a>
-  </span>
-</div>
+
 
 <div class="container">
   <div class="row">
 
-
+    <div class="col-md-6 mx-auto">
+      <div class="md-form">
+        <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input"
+          mdbInput>
+        <label for="search-input">Search</label>
+      </div>
+    </div>
 
     <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" class="z-depth-1">
       <thead class="sticky-top">
