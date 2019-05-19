@@ -20,7 +20,7 @@ export class CollegeComponent implements OnInit {
   mdbTablePagination: MdbTablePaginationComponent;
 
   collegeList: any = [];
-  columns = ['id', 'name', 'Edit', 'Remove'];
+  columns = ['id', 'name', 'tipo', 'cidade', 'estado', 'Edit', 'Remove'];
 
   searchText: string = '';
   previous: string;
@@ -45,11 +45,19 @@ export class CollegeComponent implements OnInit {
 
     //----
     this.addForm = this.formBuild.group({
-      name: ['', Validators.required]
+      name: ['', Validators.required],
+      tipo: ['', Validators.required],
+      cidade: ['', Validators.required],
+      estado: ['', Validators.required]
     });
+
     this.editForm = this.formBuild.group({
-      name: ['', Validators.required]
+      name: ['', Validators.required],
+      tipo: ['', Validators.required],
+      cidade: ['', Validators.required],
+      estado: ['', Validators.required]
     });
+
   }
 
   updateTable() {
@@ -90,6 +98,9 @@ export class CollegeComponent implements OnInit {
     if (!this.addForm.invalid) {
       const c = new College();
       c.name = this.addForm.value.name;
+      c.tipo = this.addForm.value.tipo;
+      c.cidade = this.addForm.value.cidade;
+      c.estado = this.addForm.value.estado;
 
       this.collegeService.persist(c).subscribe(() => {
         this.updateTable();
@@ -114,7 +125,6 @@ export class CollegeComponent implements OnInit {
   }
   confirmDelete() {
     if (this.auxId !== null) {
-
       let id = this.auxId
 
       let c = new College();
@@ -124,7 +134,6 @@ export class CollegeComponent implements OnInit {
 
       this.collegeService.remove(c).subscribe(() => {
         this.updateTable();
-        console.log(c)
       })
       this.deleteModal.hide();
     }
@@ -135,7 +144,13 @@ export class CollegeComponent implements OnInit {
 
     let aux = new College();
     aux = this.collegeList[this.indexEdit];
-    this.editForm.setValue({ name: aux.name })
+    this.editForm.setValue({
+      name: aux.name,
+      tipo: aux.tipo,
+      cidade: aux.cidade,
+      estado: aux.estado
+
+    })
 
     this.editModal.show();
   }
@@ -147,16 +162,18 @@ export class CollegeComponent implements OnInit {
 
       updateCourse = this.collegeList[this.indexEdit];
       updateCourse.name = this.editForm.value.name;
+      updateCourse.tipo = this.editForm.value.tipo;
+      updateCourse.cidade = this.editForm.value.cidade;
+      updateCourse.estado = this.editForm.value.estado;
+
       this.collegeList[this.indexEdit] = updateCourse;
 
       this.collegeService.merge(updateCourse).subscribe(() => {
-        this.success = true;
         this.updateTable();
         this.editForm.reset();
         this.editModal.hide();
       });
       this.submitted = false;
-    
     }
   }
 

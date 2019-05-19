@@ -13,7 +13,7 @@ import { StudentService } from 'src/app/services/student/student.service';
   styleUrls: ['./main-page.component.scss']
 })
 export class MainPageComponent implements OnInit {
-  listCollege: Array<College>;
+  listCollege: Array<College> = [];
   listCourse: Array<Course>;
 
   studentForm: FormGroup;

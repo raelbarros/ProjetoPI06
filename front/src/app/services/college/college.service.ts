@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Course } from '../../models/course';
 import { HttpClient } from '@angular/common/http';
+import { College } from 'src/app/models/college';
 
 @Injectable({
   providedIn: 'root'
@@ -13,19 +13,19 @@ export class CollegeService {
     this.url = 'http://localhost:8080/pi06/servicos/college';
   }
 
-  persist(c: Course): Observable<any> {
+  persist(c: College): Observable<any> {
     return this.http.post(this.url, c);
   }
 
-  read(): Observable<Course[]> {
-    return this.http.get<Course[]>(this.url);
+  read(): Observable<College[]> {
+    return this.http.get<College[]>(this.url);
   }
 
-  merge(c: Course): Observable<any> {
+  merge(c: College): Observable<any> {
     return this.http.put(this.url, c);
   }
 
-  remove(c: Course): Observable<any> {
+  remove(c: College): Observable<any> {
     return this.http.delete(this.url + '/' + c.id);
   }
 }
