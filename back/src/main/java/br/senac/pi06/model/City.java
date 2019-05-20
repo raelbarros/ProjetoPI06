@@ -5,11 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "city")
-
 public class City {
 	
 	@Id
@@ -24,6 +24,9 @@ public class City {
 	
 	@Column(name = "uf", nullable = false, length = 2)
 	private String uf;
+	
+	@ManyToOne
+	private State state;
 
 	public int getId() {
 		return id;
@@ -56,8 +59,13 @@ public class City {
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
-	
-	
-	
 
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
+	}
+	
 }

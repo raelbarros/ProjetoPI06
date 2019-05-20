@@ -10,7 +10,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "college")
-
 public class College {
 
 	@Id
@@ -79,7 +78,5 @@ public class College {
 	public void setCity(City city) {
 		this.city = city;
 	}
-	
-	
 
 }

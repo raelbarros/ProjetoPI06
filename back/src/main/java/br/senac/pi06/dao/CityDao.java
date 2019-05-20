@@ -1,6 +1,5 @@
 package br.senac.pi06.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -40,7 +39,7 @@ public class CityDao {
 
 	//@SuppressWarnings("unchecked")
 	//public List<City> findAll() {
-	//	return em.createQuery("FROM state WHERE enabled = 1").getResultList();
+	//	return em.createQuery("FROM * state WHERE enabled = 1").getResultList();
 	//}
 
 
