@@ -26,6 +26,7 @@ public class State {
 	@Column(name = "enabled", nullable = false)
 	boolean enabled = true;
 	
+	
 	public boolean isEnabled() {
 		return enabled;
 	}

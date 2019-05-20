@@ -23,34 +23,14 @@ public class College {
 	@Column(name = "tipo", nullable = false, length = 20)
 	private String tipo;
 	
-	@Column(name = "cidade", nullable = false, length = 50)
-	private String cidade;
-	
-	@Column(name = "estado", nullable = false, length = 50)
-	private String estado;
-
 	@Column(name = "enabled", nullable = false)
 	boolean enabled = true;
 	
 	@ManyToOne
 	private State state;
 	
-	
-	public String getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
+	@ManyToOne
+	private City city;
 
 	public int getId() {
 		return id;
@@ -75,7 +55,7 @@ public class College {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	
+
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -83,5 +63,23 @@ public class College {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
+	}
+
+	public City getCity() {
+		return city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
+	}
+	
+	
 
 }

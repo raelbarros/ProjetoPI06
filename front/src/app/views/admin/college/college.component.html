@@ -116,21 +116,24 @@
           <!-- inicio BO -->
 
 
-       <!--    <div class="md-form">
+          <!-- <div class="md-form">
             <input mdbInput type="text" id="estado" class="form-control" placeholder="Estado" formControlName="estado">
             <div *ngIf="submitted && fadd.estado.errors" class="invalidFeedback">
               <div *ngIf="fadd.estado.errors.required">Estado é obrigatorio</div>
             </div>
           </div> -->
 
-          <div class="md-form">
+
+          <div class="md-form ">
+
             <select formControlName="estado" class="browser-default custom-select">
-              <option disabled value="null" selected>Selecione o Estado</option>
-              <option *ngFor="let state of listState; let i=index">{{state.name}}</option>
+              <option disabled value="null" selected>Selecione seu Estado</option>
+              <option *ngFor="let state of listState">{{state}}</option>
             </select>
-            <div *ngIf="submitted && f.estado.errors" class="invalidFeedback">
+
+            <!-- <div *ngIf="submitted && f.estado.errors" class="invalidFeedback">
               <div *ngIf="f.estado.errors.required">Estado é obrigatorio</div>
-            </div>
+            </div> --->
           </div>
 
 

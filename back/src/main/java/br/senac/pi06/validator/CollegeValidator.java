@@ -14,12 +14,12 @@ public class CollegeValidator {
 		if (Util.empty(college.getTipo()))
 			return new CollegeException("O tipo da instuição é obrigatorio.");
 		
-		if (Util.empty(college.getCidade()))
-			return new CollegeException("A cidade é obrigatoria.");
-
-		if (Util.empty(college.getEstado()))
-			return new CollegeException("O estado é obrigatorio.");
-		
+//		if (Util.empty(college.getCidade()))
+//			return new CollegeException("A cidade é obrigatoria.");
+//
+//		if (Util.empty(college.getEstado()))
+//			return new CollegeException("O estado é obrigatorio.");
+//		
 		return null;
 
 	}
