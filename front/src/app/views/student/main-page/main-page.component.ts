@@ -26,6 +26,7 @@ export class MainPageComponent implements OnInit {
     this.couseService.read().subscribe((list) => {
       this.listCourse = list;
     })
+
     this.collegeService.read().subscribe((list) => {
       this.listCollege = list;
     })
@@ -62,6 +63,7 @@ export class MainPageComponent implements OnInit {
     student.periodo = this.studentForm.value.periodo
 
     console.log(student)
+    
 /*     this.studentService.persist(student).subscribe(() => {
       this.studentForm.reset();
     })

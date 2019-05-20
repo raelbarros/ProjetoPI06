@@ -3,6 +3,7 @@ import { MdbTableDirective, MdbTablePaginationComponent, ModalDirective } from "
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CollegeService } from 'src/app/services/college/college.service';
 import { College } from 'src/app/models/college';
+import { State } from "src/app/models/State";
 
 @Component({
   selector: 'app-college',
@@ -20,6 +21,7 @@ export class CollegeComponent implements OnInit {
   mdbTablePagination: MdbTablePaginationComponent;
 
   collegeList: any = [];
+  listState: any = [];
   columns = ['id', 'name', 'tipo', 'cidade', 'estado', 'Edit', 'Remove'];
 
   searchText: string = '';
@@ -42,6 +44,12 @@ export class CollegeComponent implements OnInit {
 
   ngOnInit() {
     this.updateTable();
+  
+    this.collegeService.readState().subscribe((listState) => {
+      this.listState = listState;
+      console.log(this.listState);
+    })
+ 
 
     //----
     this.addForm = this.formBuild.group({
