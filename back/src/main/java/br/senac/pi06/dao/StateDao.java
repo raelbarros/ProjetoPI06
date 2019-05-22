@@ -28,7 +28,7 @@ public class StateDao {
 
 	@SuppressWarnings("unchecked")
 	public List<State> findAll() {
-		return em.createQuery("SELECT * FROM State WHERE enabled = 1").getResultList();
+		return em.createQuery("FROM State WHERE enabled = 1").getResultList();
 	}
 
 	public State getByName(String name) {

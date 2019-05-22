@@ -5,6 +5,7 @@ import { CollegeService } from 'src/app/services/college/college.service';
 import { College } from 'src/app/models/college';
 import { State } from "src/app/models/State";
 import { Observable } from 'rxjs';
+import { City } from 'src/app/models/city';
 
 @Component({
   selector: 'app-college',
@@ -22,8 +23,8 @@ export class CollegeComponent implements OnInit {
   mdbTablePagination: MdbTablePaginationComponent;
 
   collegeList: any = [];
-  listState: any = [];
-  // listState: Observable < State[]>;
+  listState: Observable<State[]>;
+  listCity: any = [];
 
   columns = ['id', 'name', 'tipo', 'cidade', 'estado', 'Edit', 'Remove'];
 
@@ -39,22 +40,25 @@ export class CollegeComponent implements OnInit {
 
   indexEdit = null;
 
-  constructor(private collegeService: CollegeService, private formBuild: FormBuilder) { 
-    this.collegeService.readState().subscribe((listState) => {
-      this.listState = listState;
-    });
-  }
+  uf: string;
+
+  constructor(private collegeService: CollegeService, private formBuild: FormBuilder) { }
 
   @HostListener('input') oninput() {
     this.mdbTablePagination.searchText = this.searchText;
   }
 
+  onChange(uf: string){
+    console.log(uf)
+    this.collegeService.readCity(uf).subscribe((list) => {
+      this.listCity = list;
+    })
+  }
+
   ngOnInit() {
-    this.updateTable(); 
+    this.updateTable();
 
-    // this.listState = this.collegeService.readState();
-
-    
+    this.listState = this.collegeService.readState();
 
     //----
     this.addForm = this.formBuild.group({
@@ -81,7 +85,7 @@ export class CollegeComponent implements OnInit {
       this.previous = this.mdbTable.getDataSource();
     });
 
- 
+
 
   }
 

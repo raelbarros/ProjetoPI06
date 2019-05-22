@@ -126,16 +126,16 @@
 
           <div class="md-form ">
 
-            <select formControlName="estado" class="browser-default custom-select">
+            <select formControlName="estado" class="browser-default custom-select"  (change)="onChange($event.target.value)">
               <option disabled value="null" selected>Selecione seu Estado</option>
-              <option *ngFor="let state of listState">{{state}}</option>
+              <option *ngFor="let state of listState | async" value="{{state.uf}}">{{state.name}}</option>
             </select>
-
-            <!-- <div *ngIf="submitted && f.estado.errors" class="invalidFeedback">
+ 
+            <div *ngIf="submitted && f.estado.errors" class="invalidFeedback">
               <div *ngIf="f.estado.errors.required">Estado é obrigatorio</div>
-            </div> --->
+            </div> 
           </div>
-
+          
 
           <!-- fim BO -->
 

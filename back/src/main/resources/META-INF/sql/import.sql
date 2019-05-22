@@ -1,4 +1,3 @@
-
 Insert into pi06.state ( enabled, name, uf ) values (1,'Acre', 'AC');
 Insert into pi06.state ( enabled, name, uf ) values (1,'Alagoas', 'AL');
 Insert into pi06.state ( enabled, name, uf ) values (1,'Amapá', 'AP');

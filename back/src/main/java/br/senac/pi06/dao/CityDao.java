@@ -24,7 +24,7 @@ public class CityDao {
 
 	@SuppressWarnings("unchecked")
 	public List<City> getCity(String uf) {
-		Query query = em.createQuery("SELECT name FROM City WHERE uf =:uf");
+		Query query = em.createQuery("FROM City WHERE uf =:uf");
 		query.setParameter("uf", uf);
 		try {
 			return (List<City>) query.getResultList();
