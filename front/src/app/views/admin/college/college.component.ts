@@ -23,10 +23,11 @@ export class CollegeComponent implements OnInit {
   mdbTablePagination: MdbTablePaginationComponent;
 
   collegeList: any = [];
-  listState: Observable<State[]>;
+  // listState: Observable<State[]>;
   listCity: any = [];
+  listState: any = [];
 
-  columns = ['id', 'name', 'tipo', 'cidade', 'estado', 'Edit', 'Remove'];
+  columns = ['id', 'name', 'tipo', 'cidadde', 'estado', 'edit', 'remove'];
 
   searchText: string = '';
   previous: string;
@@ -39,8 +40,7 @@ export class CollegeComponent implements OnInit {
   success = false;
 
   indexEdit = null;
-
-  uf: string;
+  auxId = null;
 
   constructor(private collegeService: CollegeService, private formBuild: FormBuilder) { }
 
@@ -48,8 +48,7 @@ export class CollegeComponent implements OnInit {
     this.mdbTablePagination.searchText = this.searchText;
   }
 
-  onChange(uf: string){
-    console.log(uf)
+  onChange(uf: string) {
     this.collegeService.readCity(uf).subscribe((list) => {
       this.listCity = list;
     })
@@ -58,21 +57,25 @@ export class CollegeComponent implements OnInit {
   ngOnInit() {
     this.updateTable();
 
-    this.listState = this.collegeService.readState();
+    // this.listState = this.collegeService.readState();
+
+    this.collegeService.readState().subscribe((list) => {
+      this.listState = list;
+    })
 
     //----
     this.addForm = this.formBuild.group({
       name: ['', Validators.required],
       tipo: ['', Validators.required],
-      cidade: ['', Validators.required],
-      estado: [null, Validators.required]
+      city: ['', Validators.required],
+      state: [null, Validators.required]
     });
 
     this.editForm = this.formBuild.group({
       name: ['', Validators.required],
       tipo: ['', Validators.required],
-      cidade: ['', Validators.required],
-      estado: ['']
+      city: ['', Validators.required],
+      state: [null, Validators.required]
     });
 
   }
@@ -84,9 +87,6 @@ export class CollegeComponent implements OnInit {
       this.collegeList = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
     });
-
-
-
   }
 
   searchItems() {
@@ -112,22 +112,25 @@ export class CollegeComponent implements OnInit {
   }
 
   saveCollege() {
-    console.log(this.addForm.value.estado)
-    /*this.submitted = true;
+    this.submitted = true;
+
+    let auxState = this.findItemState(this.addForm.value.state);
+    let auxCity = this.findItemCity(this.addForm.value.city);
+
     if (!this.addForm.invalid) {
       const c = new College();
       c.name = this.addForm.value.name;
       c.tipo = this.addForm.value.tipo;
-      c.cidade = this.addForm.value.cidade;
-      c.estado = this.addForm.value.estado;
-
-       this.collegeService.persist(c).subscribe(() => {
-        this.updateTable();
-        this.success = true;
-        this.addForm.reset();
-      }); 
+      c.city = auxCity;
+      c.state = auxState;
+      console.log(c)
+      // this.collegeService.persist(c).subscribe(() => {
+      //   this.updateTable();
+      //   this.success = true;
+      //   this.addForm.reset();
+      // });
       this.submitted = false;
-    }*/
+    }
   }
 
   closeAlert() {
@@ -137,23 +140,23 @@ export class CollegeComponent implements OnInit {
     this.success = false;
   }
 
-  auxId = null;
   removeCollege(id: any) {
     this.auxId = id;
     this.deleteModal.show();
   }
+
   confirmDelete() {
     if (this.auxId !== null) {
       let id = this.auxId
 
       let c = new College();
-
       c.id = this.collegeList[id].id;
       c.name = this.collegeList[id].name
 
       this.collegeService.remove(c).subscribe(() => {
         this.updateTable();
       })
+      this.auxId = null;
       this.deleteModal.hide();
     }
   }
@@ -166,24 +169,26 @@ export class CollegeComponent implements OnInit {
     this.editForm.setValue({
       name: aux.name,
       tipo: aux.tipo,
-      cidade: aux.cidade,
-      estado: aux.estado
-
+      city: aux.city,
+      state: aux.state
     })
-
     this.editModal.show();
   }
 
   updateCollege() {
     this.submitted = true;
+
+    let auxState = this.findItemState(this.addForm.value.state);
+    let auxCity = this.findItemCity(this.addForm.value.city);
+
     if (!this.editForm.invalid && this.indexEdit != null) {
       let updateCourse = new College();
 
       updateCourse = this.collegeList[this.indexEdit];
       updateCourse.name = this.editForm.value.name;
       updateCourse.tipo = this.editForm.value.tipo;
-      updateCourse.cidade = this.editForm.value.cidade;
-      updateCourse.estado = this.editForm.value.estado;
+      updateCourse.city = auxCity;
+      updateCourse.state = auxState;
 
       this.collegeList[this.indexEdit] = updateCourse;
 
@@ -196,12 +201,20 @@ export class CollegeComponent implements OnInit {
     }
   }
 
+  findItemState(item: string) {
+    return this.listState.find(x => x.uf == item)
+  }
+
+  findItemCity(item: string) {
+    return this.listCity.find(x => x.name == item)
+  }
+
   get fadd() {
     return this.addForm.controls;
   }
 
   get fedit() {
-    return this.addForm.controls;
+    return this.editForm.controls;
   }
 
 }

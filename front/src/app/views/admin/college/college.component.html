@@ -48,9 +48,9 @@
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">
             {{college.tipo}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">
-            {{college.cidade}}</td>
+            {{college.city.name}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">
-            {{college.estado}}</td>
+            {{college.state.name}}</td>
 
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
             <span class="table-remove">
@@ -105,46 +105,51 @@
               <div *ngIf="fadd.name.errors.required">Nome é obrigatorio</div>
             </div>
           </div>
-
+          <!-- 
           <div class="md-form">
             <input mdbInput type="text" id="tipo" class="form-control" placeholder="Tipo" formControlName="tipo">
             <div *ngIf="submitted && fadd.tipo.errors" class="invalidFeedback">
               <div *ngIf="fadd.tipo.errors.required">Tipo é obrigatorio</div>
             </div>
+          </div> -->
+
+          <!-- Checkbox -->
+          <div class="md-form">
+            <p>Tipo da Instituição</p>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input formControlName="tipo" type="radio" class="custom-control-input" id="publica" name="tipo" value="publica">
+              <label class="custom-control-label" for="publica">Publica</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input formControlName="tipo" type="radio" class="custom-control-input" id="privado" name="tipo" value="privado">
+              <label class="custom-control-label" for="privado">Privado</label>
+            </div>
+          </div>
+          <div *ngIf="submitted && fadd.tipo.errors" class="invalidFeedback">
+            <div *ngIf="fadd.tipo.errors.required">Tipo é obrigatorio</div>
           </div>
 
-          <!-- inicio BO -->
+          <div class="md-form ">
+            <select formControlName="state" class="browser-default custom-select"
+              (change)="onChange($event.target.value)">
+              <option disabled value="null" selected>Selecione seu Estado</option>
+              <option *ngFor="let state of listState" value="{{state.uf}}">{{state.name}}</option>
+            </select>
 
-
-          <!-- <div class="md-form">
-            <input mdbInput type="text" id="estado" class="form-control" placeholder="Estado" formControlName="estado">
-            <div *ngIf="submitted && fadd.estado.errors" class="invalidFeedback">
-              <div *ngIf="fadd.estado.errors.required">Estado é obrigatorio</div>
+            <div *ngIf="submitted && fadd.state.errors" class="invalidFeedback">
+              <div *ngIf="fadd.state.errors.required">Estado é obrigatorio</div>
             </div>
-          </div> -->
+          </div>
 
 
           <div class="md-form ">
-
-            <select formControlName="estado" class="browser-default custom-select"  (change)="onChange($event.target.value)">
-              <option disabled value="null" selected>Selecione seu Estado</option>
-              <option *ngFor="let state of listState | async" value="{{state.uf}}">{{state.name}}</option>
+            <select formControlName="city" class="browser-default custom-select">
+              <option disabled value="null" selected>Selecione sua Cidade</option>
+              <option *ngFor="let city of listCity" value="{{city.name}}">{{city.name}}</option>
             </select>
- 
-            <div *ngIf="submitted && f.estado.errors" class="invalidFeedback">
-              <div *ngIf="f.estado.errors.required">Estado é obrigatorio</div>
-            </div> 
-          </div>
-          
 
-          <!-- fim BO -->
-
-
-
-          <div class="md-form">
-            <input mdbInput type="text" id="cidade" class="form-control" placeholder="Cidade" formControlName="cidade">
-            <div *ngIf="submitted && fadd.cidade.errors" class="invalidFeedback">
-              <div *ngIf="fadd.cidade.errors.required">Cidade é obrigatorio</div>
+            <div *ngIf="submitted && fadd.city.errors" class="invalidFeedback">
+              <div *ngIf="fadd.city.errors.required">Cidade é obrigatorio</div>
             </div>
           </div>
 
@@ -199,16 +204,16 @@
               <div *ngIf="fedit.tipo.errors.required">Tipo é obrigatorio</div>
             </div>
 
-            <input mdbInput type="text" id="estado" class="form-control" placeholder="Estado da Instituição"
-              formControlName="estado">
-            <div *ngIf="submitted && fedit.estado.errors" class="invalidFeedback">
-              <div *ngIf="fedit.estado.errors.required">Estado é obrigatorio</div>
+            <input mdbInput type="text" id="state" class="form-control" placeholder="Estado da Instituição"
+              formControlName="state">
+            <div *ngIf="submitted && fedit.state.errors" class="invalidFeedback">
+              <div *ngIf="fedit.state.errors.required">Estado é obrigatorio</div>
             </div>
 
-            <input mdbInput type="text" id="cidade" class="form-control" placeholder="Cidade da Instituição"
-              formControlName="cidade">
-            <div *ngIf="submitted && fedit.cidade.errors" class="invalidFeedback">
-              <div *ngIf="fedit.cidade.errors.required">Cidade é obrigatorio</div>
+            <input mdbInput type="text" id="city" class="form-control" placeholder="Cidade da Instituição"
+              formControlName="city">
+            <div *ngIf="submitted && fedit.city.errors" class="invalidFeedback">
+              <div *ngIf="fedit.city.errors.required">Cidade é obrigatorio</div>
             </div>
 
           </div>

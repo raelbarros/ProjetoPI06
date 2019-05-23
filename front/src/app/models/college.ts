@@ -3,7 +3,7 @@ export class College {
     name: string;
     tipo: string;
     enabled: boolean;
-    cidade: string;
-    estado: string;
+    city: string;
+    state: string;
 
 }
