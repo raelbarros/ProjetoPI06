@@ -12,6 +12,7 @@ import { MenuBarAdminComponent } from './views/admin/main-layout/menu-bar-admin/
 import { DashboardComponent } from './views/admin/dashboard/dashboard.component';
 import { CollegeComponent } from './views/admin/college/college.component';
 import { FooterAdminComponent } from './views/admin/main-layout/footer-admin/footer-admin.component';
+import { StudentSurveyComponent } from './views/student/student-survey/student-survey.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { FooterAdminComponent } from './views/admin/main-layout/footer-admin/foo
     DashboardComponent,
     CollegeComponent,
     FooterAdminComponent,
+    StudentSurveyComponent,
   ],
   imports: [
     BrowserModule,

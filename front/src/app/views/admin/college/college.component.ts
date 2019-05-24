@@ -27,7 +27,7 @@ export class CollegeComponent implements OnInit {
   listCity: any = [];
   listState: any = [];
 
-  columns = ['id', 'name', 'tipo', 'cidadde', 'estado', 'edit', 'remove'];
+  columns = ['id', 'name', 'tipo', 'cidade', 'estado', 'edit', 'remove'];
 
   searchText: string = '';
   previous: string;
@@ -67,14 +67,14 @@ export class CollegeComponent implements OnInit {
     this.addForm = this.formBuild.group({
       name: ['', Validators.required],
       tipo: ['', Validators.required],
-      city: ['', Validators.required],
+      city: [null, Validators.required],
       state: [null, Validators.required]
     });
 
     this.editForm = this.formBuild.group({
       name: ['', Validators.required],
       tipo: ['', Validators.required],
-      city: ['', Validators.required],
+      city: [null, Validators.required],
       state: [null, Validators.required]
     });
 
@@ -123,12 +123,12 @@ export class CollegeComponent implements OnInit {
       c.tipo = this.addForm.value.tipo;
       c.city = auxCity;
       c.state = auxState;
-      console.log(c)
-      // this.collegeService.persist(c).subscribe(() => {
-      //   this.updateTable();
-      //   this.success = true;
-      //   this.addForm.reset();
-      // });
+      
+      this.collegeService.persist(c).subscribe(() => {
+        this.updateTable();
+        this.success = true;
+        this.addForm.reset();
+      });
       this.submitted = false;
     }
   }
@@ -166,11 +166,12 @@ export class CollegeComponent implements OnInit {
 
     let aux = new College();
     aux = this.collegeList[this.indexEdit];
+
     this.editForm.setValue({
       name: aux.name,
       tipo: aux.tipo,
-      city: aux.city,
-      state: aux.state
+      city: aux.city.name,
+      state: aux.state.name
     })
     this.editModal.show();
   }
