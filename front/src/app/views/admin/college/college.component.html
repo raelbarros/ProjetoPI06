@@ -1,6 +1,5 @@
 <app-menu-bar-admin></app-menu-bar-admin>
 
-
 <div class="container-fluid">
   <div class="row">
     <div class="col-12">
@@ -22,9 +21,8 @@
 
     <div class="col-md-6 mx-auto">
       <div class="md-form">
-        <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input"
-          mdbInput>
-        <label for="search-input">Search</label>
+        <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input" mdbInput>
+        <label for="search-input">Pesquisar</label>
       </div>
     </div>
 
@@ -43,13 +41,13 @@
           <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
             {{college.id}}</th>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">
-            {{college.name}}</td>
+            {{college.name | slice:0:20}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">
             {{college.tipo}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">
-            {{college.city.name}}</td>
+            {{college.city.name | slice:0:20}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">
-            {{college.state.name}}</td>
+            {{college.state.uf}}</td>
 
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
             <span class="table-remove">
@@ -88,7 +86,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close pull-right" aria-label="Close" (click)="addModal.hide()"><span
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideAddModal()"><span
             aria-hidden="true">×</span></button>
         <h4 class="modal-title w-100" id="myModalLabel">Adicionar Instituição</h4>
       </div>
@@ -97,8 +95,8 @@
         <div class="modal-body">
 
           <div class="md-form">
-            <input mdbInput type="text" id="name" class="form-control" placeholder="Nome da Instituição"
-              formControlName="name">
+            <input mdbInput type="text" id="name" class="form-control" formControlName="name">
+              <label for="name">Nome da Instituição</label>
 
             <div *ngIf="submitted && fadd.name.errors" class="invalidFeedback">
               <div *ngIf="fadd.name.errors.required">Nome é obrigatorio</div>
@@ -160,7 +158,7 @@
 
         <div class="modal-footer">
           <button type="button" mdbBtn color="danger" class="waves-light" outline="true" aria-label="Close"
-            (click)="addModal.hide()" mdbWavesEffect>Cancelar</button>
+            (click)="hideAddModal()" mdbWavesEffect>Cancelar</button>
           <button type="button" mdbBtn color="success" class="relative waves-light" mdbWavesEffect
             type="submit">Salvar</button>
         </div>
@@ -185,7 +183,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close pull-right" aria-label="Close" (click)="editModal.hide()">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideEditModal()">
           <span aria-hidden="true">×</span>
         </button>
         <h4 class="modal-title w-100" id="myModalLabel">Editar Instituição</h4>
@@ -195,15 +193,11 @@
         <div class="modal-body">
 
           <div class="md-form">
-            <input mdbInput type="text" id="name" class="form-control" placeholder="Nome da Instituição"
-              formControlName="name">
+            <input mdbInput type="text" id="name" class="form-control" formControlName="name">
+              <label for="name">Nome da Instituição</label>
             <div *ngIf="submitted && fedit.name.errors" class="invalidFeedback">
               <div *ngIf="fedit.name.errors.required">Nome é obrigatorio</div>
             </div>
-
-
-
-
 
 
             <!-- <input mdbInput type="text" id="tipo" class="form-control" placeholder="Tipo da Instituição"
@@ -241,7 +235,6 @@
 
             <div class="md-form ">
               <select formControlName="state" class="browser-default custom-select"(change)="onChange($event.target.value)">
-
                 <option *ngFor="let state of listState" value="{{state.uf}}">{{state.name}}</option>
               </select>
 
@@ -252,8 +245,6 @@
 
 
             
-
-
             <input mdbInput type="text" id="city" class="form-control" placeholder="Cidade da Instituição"
               formControlName="city">
             <div *ngIf="submitted && fedit.city.errors" class="invalidFeedback">
@@ -269,7 +260,7 @@
 
         <div class="modal-footer">
           <button type="button" mdbBtn color="danger" class="waves-light" outline="true" aria-label="Close"
-            (click)="editModal.hide()" mdbWavesEffect>Cancelar</button>
+            (click)="hideEditModal()" mdbWavesEffect>Cancelar</button>
           <button type="button" mdbBtn color="success" class="relative waves-light" mdbWavesEffect
             type="submit">Salvar</button>
         </div>
@@ -293,7 +284,7 @@
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close pull-right" aria-label="Close" (click)="deleteModal.hide()">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideDeleteModal()">
           <span aria-hidden="true">×</span>
         </button>
         <h4 class="modal-title w-100" id="myModalLabel">Excluir Instituição</h4>
@@ -303,7 +294,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" mdbBtn color="info" outline="true" class="waves-light" aria-label="Close"
-          (click)="deleteModal.hide()" mdbWavesEffect>Cancelar</button>
+          (click)="hideDeleteModal()" mdbWavesEffect>Cancelar</button>
         <button type="button" mdbBtn color="warning" class="relative waves-light"
           (click)="confirmDelete()">Excluir</button>
       </div>

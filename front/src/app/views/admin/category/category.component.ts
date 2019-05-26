@@ -1,25 +1,27 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, HostListener, ElementRef } from '@angular/core';
 import { MdbTableDirective, MdbTablePaginationComponent, ModalDirective } from "angular-bootstrap-md";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CourseService } from 'src/app/services/course/course.service';
-import { Course } from 'src/app/models/course';
+import { CategoryService } from 'src/app/services/category/category.service';
+import { Category } from 'src/app/models/category';
 
 @Component({
-  selector: 'app-course',
-  templateUrl: './course.component.html',
-  styleUrls: ['./course.component.scss']
+  selector: 'app-category',
+  templateUrl: './category.component.html',
+  styleUrls: ['./category.component.scss']
 })
-export class CourseComponent implements OnInit {
 
+export class CategoryComponent implements OnInit {
+  
   @ViewChild('row') row: ElementRef;
   @ViewChild('addModal') addModal: ModalDirective;
   @ViewChild('editModal') editModal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
   @ViewChild('alert') alert: ElementRef;
   @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective;
-  @ViewChild(MdbTablePaginationComponent) mdbTablePagination: MdbTablePaginationComponent;
+  @ViewChild(MdbTablePaginationComponent)
+  mdbTablePagination: MdbTablePaginationComponent;
 
-  courseList: any = [];
+  categoryList: any = [];
   columns = ['id', 'name', 'edit', 'remove'];
 
   searchText: string = '';
@@ -35,7 +37,7 @@ export class CourseComponent implements OnInit {
   indexEdit = null;
   idRemove = null;
 
-  constructor(private courseService: CourseService, private formBuild: FormBuilder) { }
+  constructor(private categoryService: CategoryService, private formBuild: FormBuilder) { }
 
   @HostListener('input') oninput() {
     this.mdbTablePagination.searchText = this.searchText;
@@ -54,11 +56,11 @@ export class CourseComponent implements OnInit {
   }
 
   updateTable() {
-    this.courseService.read().subscribe(list => {
-      this.courseList = list;
+    this.categoryService.read().subscribe(list => {
+      this.categoryList = list;
 
-      this.mdbTable.setDataSource(this.courseList);
-      this.courseList = this.mdbTable.getDataSource();
+      this.mdbTable.setDataSource(this.categoryList);
+      this.categoryList = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
     });
 
@@ -69,11 +71,11 @@ export class CourseComponent implements OnInit {
 
     if (!this.searchText) {
       this.mdbTable.setDataSource(this.previous);
-      this.courseList = this.mdbTable.getDataSource();
+      this.categoryList = this.mdbTable.getDataSource();
     }
 
     if (this.searchText) {
-      this.courseList = this.mdbTable.searchLocalDataBy(this.searchText);
+      this.categoryList = this.mdbTable.searchLocalDataBy(this.searchText);
       this.mdbTable.setDataSource(prev);
     }
 
@@ -86,13 +88,13 @@ export class CourseComponent implements OnInit {
     });
   }
 
-  saveCourse() {
+  saveCategory() {
     this.submitted = true;
     if (!this.addForm.invalid) {
-      const c = new Course();
+      const c = new Category();
       c.name = this.addForm.value.name;
 
-      this.courseService.persist(c).subscribe(() => {
+      this.categoryService.persist(c).subscribe(() => {
         this.updateTable();
         this.success = true;
         this.addForm.reset();
@@ -108,7 +110,7 @@ export class CourseComponent implements OnInit {
     this.success = false;
   }
 
-  removeCourse(id: any) {
+  removeCategory(id: any) {
     this.idRemove = id;
     this.deleteModal.show();
   }
@@ -117,40 +119,39 @@ export class CourseComponent implements OnInit {
     if (this.idRemove !== null) {
       let id = this.idRemove;
 
-      let c = new Course();
+      let c = new Category();
 
-      c.id = this.courseList[id].id;
-      c.name = this.courseList[id].name
+      c.id = this.categoryList[id].id;
+      c.name = this.categoryList[id].name
 
-      this.courseService.remove(c).subscribe(() => {
+      this.categoryService.remove(c).subscribe(() => {
         this.updateTable();
-        console.log(c)
       })
-      this.deleteModal.hide();
+      this.hideDeleteModal();
     }
   }
 
-  editCourse(id: any) {
+  editCategory(id: any) {
     this.indexEdit = id;
 
-    let aux = new Course();
-    aux = this.courseList[this.indexEdit];
+    let aux = new Category();
+    aux = this.categoryList[this.indexEdit];
     this.editForm.setValue({ name: aux.name })
 
     this.editModal.show();
   }
 
-  updateCourse() {
+  updateCategory() {
     this.submitted = true;
     if (!this.editForm.invalid && this.indexEdit != null) {
 
-      let updtCourse = new Course();
+      let updtCategory = new Category();
 
-      updtCourse = this.courseList[this.indexEdit];
-      updtCourse.name = this.editForm.value.name;
-      this.courseList[this.indexEdit] = updtCourse;
+      updtCategory = this.categoryList[this.indexEdit];
+      updtCategory.name = this.editForm.value.name;
+      this.categoryList[this.indexEdit] = updtCategory;
 
-      this.courseService.merge(updtCourse).subscribe(() => {
+      this.categoryService.merge(updtCategory).subscribe(() => {
         this.success = true;
         this.updateTable();
         this.editForm.reset();
@@ -186,5 +187,4 @@ export class CourseComponent implements OnInit {
   get fedit() {
     return this.addForm.controls;
   }
-
 }

@@ -1,26 +1,30 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, HostListener, ElementRef } from '@angular/core';
 import { MdbTableDirective, MdbTablePaginationComponent, ModalDirective } from "angular-bootstrap-md";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CourseService } from 'src/app/services/course/course.service';
-import { Course } from 'src/app/models/course';
+import { Category } from 'src/app/models/category';
+import { QuestionService } from 'src/app/services/question/question.service';
+import { CategoryService } from 'src/app/services/category/category.service';
+import { Question } from 'src/app/models/question';
 
 @Component({
-  selector: 'app-course',
-  templateUrl: './course.component.html',
-  styleUrls: ['./course.component.scss']
+  selector: 'app-question',
+  templateUrl: './question.component.html',
+  styleUrls: ['./question.component.scss']
 })
-export class CourseComponent implements OnInit {
-
+export class QuestionComponent implements OnInit {
+ 
   @ViewChild('row') row: ElementRef;
   @ViewChild('addModal') addModal: ModalDirective;
   @ViewChild('editModal') editModal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
   @ViewChild('alert') alert: ElementRef;
   @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective;
-  @ViewChild(MdbTablePaginationComponent) mdbTablePagination: MdbTablePaginationComponent;
+  @ViewChild(MdbTablePaginationComponent)
+  mdbTablePagination: MdbTablePaginationComponent;
 
-  courseList: any = [];
-  columns = ['id', 'name', 'edit', 'remove'];
+  questionList: any = [];
+  categoryList: any = [];
+  columns = ['id', 'name', 'category', 'edit', 'remove'];
 
   searchText: string = '';
   previous: string;
@@ -35,7 +39,7 @@ export class CourseComponent implements OnInit {
   indexEdit = null;
   idRemove = null;
 
-  constructor(private courseService: CourseService, private formBuild: FormBuilder) { }
+  constructor(private questionService: QuestionService, private categoryService: CategoryService, private formBuild: FormBuilder) { }
 
   @HostListener('input') oninput() {
     this.mdbTablePagination.searchText = this.searchText;
@@ -44,21 +48,29 @@ export class CourseComponent implements OnInit {
   ngOnInit() {
     this.updateTable();
 
-    //----
+    /* formulary add question */
     this.addForm = this.formBuild.group({
-      name: ['', Validators.required]
+      question: ['', Validators.required],
+      category: [null, Validators.required]
     });
+    
+    /* formulary edit question */
     this.editForm = this.formBuild.group({
-      name: ['', Validators.required]
+      question: ['', Validators.required],
+      category: [null, Validators.required]
     });
+
+    this.categoryService.read().subscribe((list) => {
+      this.categoryList = list;
+    })
   }
 
   updateTable() {
-    this.courseService.read().subscribe(list => {
-      this.courseList = list;
+    this.questionService.read().subscribe(list => {
+      this.questionList = list;
 
-      this.mdbTable.setDataSource(this.courseList);
-      this.courseList = this.mdbTable.getDataSource();
+      this.mdbTable.setDataSource(this.questionList);
+      this.questionList = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
     });
 
@@ -69,11 +81,11 @@ export class CourseComponent implements OnInit {
 
     if (!this.searchText) {
       this.mdbTable.setDataSource(this.previous);
-      this.courseList = this.mdbTable.getDataSource();
+      this.questionList = this.mdbTable.getDataSource();
     }
 
     if (this.searchText) {
-      this.courseList = this.mdbTable.searchLocalDataBy(this.searchText);
+      this.questionList = this.mdbTable.searchLocalDataBy(this.searchText);
       this.mdbTable.setDataSource(prev);
     }
 
@@ -86,13 +98,18 @@ export class CourseComponent implements OnInit {
     });
   }
 
-  saveCourse() {
+  saveQuestion() {
     this.submitted = true;
-    if (!this.addForm.invalid) {
-      const c = new Course();
-      c.name = this.addForm.value.name;
 
-      this.courseService.persist(c).subscribe(() => {
+    if (!this.addForm.invalid) {
+      let category = new Category();
+      category = this.findItemCategory(this.addForm.value.category)
+  
+      let q = new Question();
+      q.question = this.addForm.value.question;
+      q.category = category
+
+      this.questionService.persist(q).subscribe(() => {
         this.updateTable();
         this.success = true;
         this.addForm.reset();
@@ -108,7 +125,7 @@ export class CourseComponent implements OnInit {
     this.success = false;
   }
 
-  removeCourse(id: any) {
+  removeQuestion(id: any) {
     this.idRemove = id;
     this.deleteModal.show();
   }
@@ -117,46 +134,58 @@ export class CourseComponent implements OnInit {
     if (this.idRemove !== null) {
       let id = this.idRemove;
 
-      let c = new Course();
+      let q = new Question();
 
-      c.id = this.courseList[id].id;
-      c.name = this.courseList[id].name
+      q.id = this.questionList[id].id;
+      q.question = this.questionList[id].question
+      q.category = this.questionList[id].category
 
-      this.courseService.remove(c).subscribe(() => {
+      this.questionService.remove(q).subscribe(() => {
         this.updateTable();
-        console.log(c)
-      })
-      this.deleteModal.hide();
+      }) 
+      this.hideDeleteModal();
+      
     }
   }
 
-  editCourse(id: any) {
+  editCategory(id: any) {
     this.indexEdit = id;
 
-    let aux = new Course();
-    aux = this.courseList[this.indexEdit];
-    this.editForm.setValue({ name: aux.name })
+    let aux = new Question();
+    aux = this.questionList[this.indexEdit];
+    this.editForm.setValue({ 
+      question: aux.question, 
+      category: aux.category.name 
+    })
 
     this.editModal.show();
   }
 
-  updateCourse() {
+  updateQuestion() {
     this.submitted = true;
     if (!this.editForm.invalid && this.indexEdit != null) {
+      let category = new Category();
+      category = this.findItemCategory(this.editForm.value.category)
 
-      let updtCourse = new Course();
+      let updtQuestion = new Question();
 
-      updtCourse = this.courseList[this.indexEdit];
-      updtCourse.name = this.editForm.value.name;
-      this.courseList[this.indexEdit] = updtCourse;
+      updtQuestion = this.questionList[this.indexEdit];
+      updtQuestion.question = this.editForm.value.question;
+      updtQuestion.category = category;
 
-      this.courseService.merge(updtCourse).subscribe(() => {
+      this.questionList[this.indexEdit] = updtQuestion;
+
+      this.questionService.merge(updtQuestion).subscribe(() => {
         this.success = true;
         this.updateTable();
         this.editForm.reset();
       });
       this.submitted = false;
-    }
+    } 
+  } 
+
+  findItemCategory(item: string) {
+    return this.categoryList.find(x => x.name == item)
   }
 
   hideAddModal(){
@@ -186,5 +215,4 @@ export class CourseComponent implements OnInit {
   get fedit() {
     return this.addForm.controls;
   }
-
 }

@@ -1,6 +1,6 @@
 <app-menu-bar-admin></app-menu-bar-admin>
 
-<h3 class="card-header text-center font-weight-bold text-uppercase py-4">Cursos Cadastrados</h3>
+<h3 class="card-header text-center font-weight-bold text-uppercase py-4">Perguntas Cadastrados</h3>
 <div id="table" class="table-editable">
   <span class="table-add float-right mb-3 mr-2">
     <a class="text-success" (click)="addModal.show()" mdbWavesEffect>
@@ -15,7 +15,8 @@
 
     <div class="col-md-6 mx-auto">
       <div class="md-form">
-        <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input" mdbInput>
+        <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input"
+          mdbInput>
         <label for="search-input">Pesquisar</label>
       </div>
     </div>
@@ -23,7 +24,7 @@
     <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" class="z-depth-1">
       <thead class="sticky-top">
         <tr>
-          <th *ngFor="let item of columns; let i = index" [mdbTableSort]="courseList" [sortBy]="columns[i]" scope="col">
+          <th *ngFor="let item of columns; let i = index" [mdbTableSort]="questionList" [sortBy]="columns[i]" scope="col">
             {{item | titlecase}} <mdb-icon fas icon="sort"></mdb-icon>
           </th>
         </tr>
@@ -31,22 +32,24 @@
 
       <tbody #row>
         <tr mdbTableCol (rowCreated)="onRowCreate($event)" (rowRemoved)="onRowRemove($event)"
-          *ngFor="let course of courseList; let i = index">
+          *ngFor="let question of questionList; let i = index">
           <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
-            {{course.id}}</th>
+            {{question.id}}</th>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">
-            {{course.name | slice:0:20}}</td>
+            {{question.question | slice:0:20}}...</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">
+            {{question.category.name | slice:0:20}}</td>
 
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
             <span class="table-remove">
-              <button type="button" mdbBtn color="info" size="sm" class="my-0" (click)="editCourse(i)">Editar</button>
+              <button type="button" mdbBtn color="info" size="sm" class="my-0" (click)="editCategory(i)">Editar</button>
             </span>
           </td>
 
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
             <span class="table-remove">
               <button type="button" mdbBtn color="danger" size="sm" class="my-0"
-                (click)="removeCourse(i)">Remove</button>
+                (click)="removeQuestion(i)">Remove</button>
             </span>
           </td>
         </tr>
@@ -54,8 +57,8 @@
 
       <tfoot class="grey lighten-5 w-100">
         <tr>
-          <td colspan="4">
-            <mdb-table-pagination [tableEl]="tableEl" paginationAlign="" [searchDataSource]="courseList">
+          <td colspan="5">
+            <mdb-table-pagination [tableEl]="tableEl" paginationAlign="" [searchDataSource]="questionList">
             </mdb-table-pagination>
           </td>
         </tr>
@@ -76,19 +79,30 @@
       <div class="modal-header">
         <button type="button" class="close pull-right" aria-label="Close" (click)="hideAddModal()"><span
             aria-hidden="true">×</span></button>
-        <h4 class="modal-title w-100" id="myModalLabel">Adicionar Curso</h4>
+        <h4 class="modal-title w-100" id="myModalLabel">Adicionar Pergunta</h4>
       </div>
 
-      <form [formGroup]="addForm" (ngSubmit)="saveCourse()">
+      <form [formGroup]="addForm" (ngSubmit)="saveQuestion()">
         <div class="modal-body">
 
           <div class="md-form">
-            <input mdbInput type="text" id="name" class="form-control" formControlName="name">
-              <label for="name">Nome do Curso</label>
+            <textarea id="question" class="md-textarea form-control" formControlName="question" mdbInput></textarea>
+              <label for="question">Pergunta</label>
 
-            <div *ngIf="submitted && fadd.name.errors" class="invalidFeedback">
-              <div *ngIf="fadd.name.errors.required">Nome é obrigatorio</div>
+            <div *ngIf="submitted && fadd.question.errors" class="invalidFeedback">
+              <div *ngIf="fadd.question.errors.required">Pergunta é obrigatorio</div>
             </div>
+          </div>
+
+          <div class="md-form ">
+              <select formControlName="category" class="browser-default custom-select">
+                <option disabled value="null" selected>Selecione a Categoria</option>
+                <option *ngFor="let category of categoryList" value="{{category.name}}">{{category.name}}</option>
+              </select>
+
+              <div *ngIf="submitted && fadd.category.errors" class="invalidFeedback">
+                <div *ngIf="fadd.category.errors.required">Categoria é obrigatorio</div>
+              </div>
           </div>
 
         </div>
@@ -103,7 +117,7 @@
         <div #alert class="alert alert-success fade show" role="alert" *ngIf="success">
           <button type="button" class="close" aria-label="Close" (click)="closeAlert()"><span
               aria-hidden="true">&times;</span></button>
-          <strong>Sucesso!</strong> Curso inserido.
+          <strong>Sucesso!</strong> Categoria inserida.
         </div>
 
       </form>
@@ -126,16 +140,27 @@
         <h4 class="modal-title w-100" id="myModalLabel">Editar Curso</h4>
       </div>
 
-      <form [formGroup]="editForm" (ngSubmit)="updateCourse()">
+      <form [formGroup]="editForm" (ngSubmit)="updateQuestion()">
         <div class="modal-body">
 
           <div class="md-form">
-            <input mdbInput type="text" id="name" class="form-control" formControlName="name">
-              <label for="name">Nome do Curso</label>
-
-            <div *ngIf="submitted && fedit.name.errors" class="invalidFeedback">
-              <div *ngIf="fedit.name.errors.required">Nome é obrigatorio</div>
+            <textarea id="question" class="md-textarea form-control" formControlName="question" mdbInput></textarea>
+              <label for="question">Pergunta</label>
+            
+              <div *ngIf="submitted && fedit.question.errors" class="invalidFeedback">
+              <div *ngIf="fedit.question.errors.required">Pergunta é obrigatorio</div>
             </div>
+          </div>
+
+          <div class="md-form ">
+              <select formControlName="category" class="browser-default custom-select">
+                <option disabled value="null" selected>Selecione a Categoria</option>
+                <option *ngFor="let category of categoryList" value="{{category.name}}">{{category.name}}</option>
+              </select>
+
+              <div *ngIf="submitted && fedit.category.errors" class="invalidFeedback">
+                <div *ngIf="fedit.category.errors.required">Categoria é obrigatorio</div>
+              </div>
           </div>
 
         </div>
@@ -150,7 +175,7 @@
         <div #alert class="alert alert-success fade show" role="alert" *ngIf="success">
           <button type="button" class="close" aria-label="Close" (click)="closeAlert()"><span
               aria-hidden="true">&times;</span></button>
-          <strong>Sucesso!</strong> Curso editado.
+          <strong>Sucesso!</strong> Categoria editada.
         </div>
 
       </form>
@@ -159,6 +184,8 @@
   </div>
 </div>
 
+
+<!-- Delete Modal -->
 <div mdbModal #deleteModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-sm" role="document">
@@ -167,7 +194,7 @@
         <button type="button" class="close pull-right" aria-label="Close" (click)="hideDeleteModal()">
           <span aria-hidden="true">×</span>
         </button>
-        <h4 class="modal-title w-100" id="myModalLabel">Excluir Curso</h4>
+        <h4 class="modal-title w-100" id="myModalLabel">Excluir Pergunta</h4>
       </div>
       <div class="modal-body">
         Confirmar Exclusão?

@@ -25,7 +25,7 @@
 			<property name="javax.persistence.jdbc.url"
 				value="jdbc:mysql://localhost/pi06?useTimezone=true&amp;serverTimezone=America/Sao_Paulo" />
 			<property name="javax.persistence.jdbc.user" value="root" />
-			<property name="javax.persistence.jdbc.password" value="" />
+			<property name="javax.persistence.jdbc.password" value="Senode90eh1!" />
 
 			<!-- propriedades do hibernate -->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
@@ -33,7 +33,7 @@
 			<property name="hibernate.format_sql" value="true" />
 
 			<!-- atualiza o banco, gera as tabelas se for preciso -->
-			<property name="hibernate.hbm2ddl.auto" value="create-only" />
+			<property name="hibernate.hbm2ddl.auto" value="create" />
 			
 			<!-- insere arq sql no banco  -->			
 			<property name="hibernate.hbm2ddl.import_files" value="/META-INF/sql/import.sql"/>		

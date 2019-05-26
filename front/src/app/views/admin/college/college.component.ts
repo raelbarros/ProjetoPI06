@@ -3,7 +3,7 @@ import { MdbTableDirective, MdbTablePaginationComponent, ModalDirective } from "
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CollegeService } from 'src/app/services/college/college.service';
 import { College } from 'src/app/models/college';
-import { State } from "src/app/models/State";
+import { State } from "src/app/models/state";
 import { Observable } from 'rxjs';
 import { City } from 'src/app/models/city';
 
@@ -15,6 +15,7 @@ import { City } from 'src/app/models/city';
 export class CollegeComponent implements OnInit {
 
   @ViewChild('row') row: ElementRef;
+  @ViewChild('addModal') addModal: ModalDirective;
   @ViewChild('editModal') editModal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
   @ViewChild('alert') alert: ElementRef;
@@ -27,7 +28,7 @@ export class CollegeComponent implements OnInit {
   listCity: any = [];
   listState: any = [];
 
-  columns = ['id', 'name', 'tipo', 'cidade', 'estado', 'edit', 'remove'];
+  columns = ['id', 'name', 'tipo', 'city', 'state', 'edit', 'remove'];
 
   searchText: string = '';
   previous: string;
@@ -40,7 +41,7 @@ export class CollegeComponent implements OnInit {
   success = false;
 
   indexEdit = null;
-  auxId = null;
+  idRemove = null;
 
   constructor(private collegeService: CollegeService, private formBuild: FormBuilder) { }
 
@@ -141,13 +142,13 @@ export class CollegeComponent implements OnInit {
   }
 
   removeCollege(id: any) {
-    this.auxId = id;
+    this.idRemove = id;
     this.deleteModal.show();
   }
 
   confirmDelete() {
-    if (this.auxId !== null) {
-      let id = this.auxId
+    if (this.idRemove !== null) {
+      let id = this.idRemove;
 
       let c = new College();
       c.id = this.collegeList[id].id;
@@ -156,7 +157,7 @@ export class CollegeComponent implements OnInit {
       this.collegeService.remove(c).subscribe(() => {
         this.updateTable();
       })
-      this.auxId = null;
+      this.idRemove = null;
       this.deleteModal.hide();
     }
   }
@@ -183,17 +184,17 @@ export class CollegeComponent implements OnInit {
     let auxCity = this.findItemCity(this.addForm.value.city);
 
     if (!this.editForm.invalid && this.indexEdit != null) {
-      let updateCourse = new College();
+      let updtCourse = new College();
 
-      updateCourse = this.collegeList[this.indexEdit];
-      updateCourse.name = this.editForm.value.name;
-      updateCourse.tipo = this.editForm.value.tipo;
-      updateCourse.city = auxCity;
-      updateCourse.state = auxState;
+      updtCourse = this.collegeList[this.indexEdit];
+      updtCourse.name = this.editForm.value.name;
+      updtCourse.tipo = this.editForm.value.tipo;
+      updtCourse.city = auxCity;
+      updtCourse.state = auxState;
 
-      this.collegeList[this.indexEdit] = updateCourse;
+      this.collegeList[this.indexEdit] = updtCourse;
 
-      this.collegeService.merge(updateCourse).subscribe(() => {
+      this.collegeService.merge(updtCourse).subscribe(() => {
         this.updateTable();
         this.editForm.reset();
         this.editModal.hide();
@@ -208,6 +209,26 @@ export class CollegeComponent implements OnInit {
 
   findItemCity(item: string) {
     return this.listCity.find(x => x.name == item)
+  }
+
+  hideAddModal(){
+    this.submitted = false;
+    this.success = false;
+    this.addForm.reset();
+    this.addModal.hide();
+  }
+
+  hideEditModal(){
+    this.submitted = false;
+    this.success = false;
+    this.editForm.reset();
+    this.editModal.hide();
+  }
+
+  hideDeleteModal(){
+    this.submitted = false;
+    this.success = false;
+    this.deleteModal.hide();
   }
 
   get fadd() {

@@ -1,5 +1,5 @@
 import { City } from './city';
-import { State } from './State';
+import { State } from './state';
 
 export class College {
     id: number;

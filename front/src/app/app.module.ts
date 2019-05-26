@@ -13,6 +13,9 @@ import { DashboardComponent } from './views/admin/dashboard/dashboard.component'
 import { CollegeComponent } from './views/admin/college/college.component';
 import { FooterAdminComponent } from './views/admin/main-layout/footer-admin/footer-admin.component';
 import { StudentSurveyComponent } from './views/student/student-survey/student-survey.component';
+import { CategoryComponent } from './views/admin/category/category.component';
+import { QuestionComponent } from './views/admin/question/question.component';
+
 
 @NgModule({
   declarations: [
@@ -24,6 +27,8 @@ import { StudentSurveyComponent } from './views/student/student-survey/student-s
     CollegeComponent,
     FooterAdminComponent,
     StudentSurveyComponent,
+    CategoryComponent,
+    QuestionComponent,
   ],
   imports: [
     BrowserModule,

@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { College } from 'src/app/models/college';
-import { State } from "src/app/models/State";
+import { State } from "src/app/models/state";
 import { City } from 'src/app/models/city';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class CollegeService {
   url: string;
   urlState: string;
