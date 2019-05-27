@@ -21,7 +21,8 @@
 
     <div class="col-md-6 mx-auto">
       <div class="md-form">
-        <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input" mdbInput>
+        <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input"
+          mdbInput>
         <label for="search-input">Pesquisar</label>
       </div>
     </div>
@@ -86,91 +87,73 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close pull-right" aria-label="Close" (click)="hideAddModal()"><span
-            aria-hidden="true">×</span></button>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideAddModal()">
+          <span aria-hidden="true">×</span>
+        </button>
         <h4 class="modal-title w-100" id="myModalLabel">Adicionar Instituição</h4>
       </div>
-
       <form [formGroup]="addForm" (ngSubmit)="saveCollege()">
         <div class="modal-body">
-
           <div class="md-form">
             <input mdbInput type="text" id="name" class="form-control" formControlName="name">
-              <label for="name">Nome da Instituição</label>
-
+            <label for="name">Nome da Instituição</label>
             <div *ngIf="submitted && fadd.name.errors" class="invalidFeedback">
               <div *ngIf="fadd.name.errors.required">Nome é obrigatorio</div>
             </div>
           </div>
-          <!-- 
+          <!-- RadioButton Tipo -->
           <div class="md-form">
-            <input mdbInput type="text" id="tipo" class="form-control" placeholder="Tipo" formControlName="tipo">
+            <div class="d-flex justify-content-around">
+              <p>Tipo da Instituição: </p>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input formControlName="tipo" type="radio" class="custom-control-input" id="publicaAdd" name="tipo"
+                  value="Publica">
+                <label class="custom-control-label" for="publicaAdd">Publica</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input formControlName="tipo" type="radio" class="custom-control-input" id="privadoAdd" name="tipo"
+                  value="Privado">
+                <label class="custom-control-label" for="privadoAdd">Privado</label>
+              </div>
+            </div>
             <div *ngIf="submitted && fadd.tipo.errors" class="invalidFeedback">
               <div *ngIf="fadd.tipo.errors.required">Tipo é obrigatorio</div>
             </div>
-          </div> -->
-
-          <!-- RadioButton -->
-
-          <div class="d-flex justify-content-around">
-            <p>Tipo da Instituição: </p>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input formControlName="tipo" type="radio" class="custom-control-input" id="publica" name="tipo"
-                value="Publica">
-              <label class="custom-control-label" for="publica">Publica</label>
-            </div>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input formControlName="tipo" type="radio" class="custom-control-input" id="privado" name="tipo"
-                value="Privado">
-              <label class="custom-control-label" for="privado">Privado</label>
-            </div>
           </div>
-
-          <div *ngIf="submitted && fadd.tipo.errors" class="invalidFeedback">
-            <div *ngIf="fadd.tipo.errors.required">Tipo é obrigatorio</div>
-          </div>
-
+          <!-- Select Estado -->
           <div class="md-form ">
             <select formControlName="state" class="browser-default custom-select"
               (change)="onChange($event.target.value)">
               <option disabled value="null" selected>Selecione seu Estado</option>
               <option *ngFor="let state of listState" value="{{state.uf}}">{{state.name}}</option>
             </select>
-
             <div *ngIf="submitted && fadd.state.errors" class="invalidFeedback">
               <div *ngIf="fadd.state.errors.required">Estado é obrigatorio</div>
             </div>
           </div>
-
-
+          <!-- Select Cidade -->
           <div class="md-form ">
             <select formControlName="city" class="browser-default custom-select">
               <option disabled value="null" selected>Selecione sua Cidade</option>
               <option *ngFor="let city of listCity" value="{{city.name}}">{{city.name}}</option>
             </select>
-
             <div *ngIf="submitted && fadd.city.errors" class="invalidFeedback">
               <div *ngIf="fadd.city.errors.required">Cidade é obrigatorio</div>
             </div>
           </div>
-
         </div>
-
         <div class="modal-footer">
           <button type="button" mdbBtn color="danger" class="waves-light" outline="true" aria-label="Close"
             (click)="hideAddModal()" mdbWavesEffect>Cancelar</button>
           <button type="button" mdbBtn color="success" class="relative waves-light" mdbWavesEffect
             type="submit">Salvar</button>
         </div>
-
         <div #alert class="alert alert-success fade show" role="alert" *ngIf="success">
           <button type="button" class="close" aria-label="Close" (click)="closeAlert()"><span
               aria-hidden="true">&times;</span></button>
           <strong>Sucesso!</strong> Instituição inserida.
         </div>
-
       </form>
-
     </div>
   </div>
 </div>
@@ -188,91 +171,68 @@
         </button>
         <h4 class="modal-title w-100" id="myModalLabel">Editar Instituição</h4>
       </div>
-
       <form [formGroup]="editForm" (ngSubmit)="updateCollege()">
         <div class="modal-body">
-
           <div class="md-form">
             <input mdbInput type="text" id="name" class="form-control" formControlName="name">
-              <label for="name">Nome da Instituição</label>
+            <label for="name">Nome da Instituição</label>
             <div *ngIf="submitted && fedit.name.errors" class="invalidFeedback">
               <div *ngIf="fedit.name.errors.required">Nome é obrigatorio</div>
             </div>
-
-
-            <!-- <input mdbInput type="text" id="tipo" class="form-control" placeholder="Tipo da Instituição"
-              formControlName="tipo">
-            <div *ngIf="submitted && fedit.tipo.errors" class="invalidFeedback">
-              <div *ngIf="fedit.tipo.errors.required">Tipo é obrigatorio</div>
-            </div> -->
-
-
+          </div>
+          <!-- RadioButton -->
+          <div class="md-form">
             <div class="d-flex justify-content-around">
               <p>Tipo da Instituição: </p>
               <div class="custom-control custom-radio custom-control-inline">
-                <input formControlName="tipo" type="radio" class="custom-control-input" id="publica" name="tipo"
+                <input formControlName="tipoedit" type="radio" class="custom-control-input" id="publicaEdit" name="tipoedit"
                   value="Publica">
-                <label class="custom-control-label" for="publica">Publica</label>
+                <label class="custom-control-label" for="publicaEdit">Publica</label>
               </div>
               <div class="custom-control custom-radio custom-control-inline">
-                <input formControlName="tipo" type="radio" class="custom-control-input" id="privado" name="tipo"
+                <input formControlName="tipoedit" type="radio" class="custom-control-input" id="privadoEdit" name="tipoedit"
                   value="Privado">
-                <label class="custom-control-label" for="privado">Privado</label>
+                <label class="custom-control-label" for="privadoEdit">Privado</label>
               </div>
             </div>
-
-            <div *ngIf="submitted && fedit.tipo.errors" class="invalidFeedback">
-              <div *ngIf="fedit.tipo.errors.required">Tipo é obrigatorio</div>
+            <div *ngIf="submitted && fedit.type.errors" class="invalidFeedback">
+              <div *ngIf="fedit.type.errors.required">Tipo é obrigatorio</div>
             </div>
-
-
-
-            <!-- <input mdbInput type="text" id="state" class="form-control" placeholder="Estado da Instituição"
-              formControlName="state">
+          </div>
+          <!-- Select Estado -->
+          <div class="md-form ">
+            <select formControlName="state" class="browser-default custom-select"
+              (change)="onChange($event.target.value)">
+              <option disabled value="null" selected>Selecione seu Estado</option>
+              <option *ngFor="let state of listState" value="{{state.uf}}">{{state.name}}</option>
+            </select>
             <div *ngIf="submitted && fedit.state.errors" class="invalidFeedback">
               <div *ngIf="fedit.state.errors.required">Estado é obrigatorio</div>
-            </div> -->
-
-            <div class="md-form ">
-              <select formControlName="state" class="browser-default custom-select"(change)="onChange($event.target.value)">
-                <option *ngFor="let state of listState" value="{{state.uf}}">{{state.name}}</option>
-              </select>
-
-              <div *ngIf="submitted && fedit.state.errors" class="invalidFeedback">
-                <div *ngIf="fedit.state.errors.required">Estado é obrigatorio</div>
-              </div>
             </div>
-
-
-            
-            <input mdbInput type="text" id="city" class="form-control" placeholder="Cidade da Instituição"
-              formControlName="city">
+          </div>
+          <!-- Select Cidade -->
+          <div class="md-form ">
+            <select formControlName="city" class="browser-default custom-select">
+              <option disabled value="null" selected>Selecione sua Cidade</option>
+              <option *ngFor="let city of listCity" value="{{city.name}}">{{city.name}}</option>
+            </select>
             <div *ngIf="submitted && fedit.city.errors" class="invalidFeedback">
               <div *ngIf="fedit.city.errors.required">Cidade é obrigatorio</div>
             </div>
-
-
           </div>
-
-
-
         </div>
-
         <div class="modal-footer">
           <button type="button" mdbBtn color="danger" class="waves-light" outline="true" aria-label="Close"
             (click)="hideEditModal()" mdbWavesEffect>Cancelar</button>
           <button type="button" mdbBtn color="success" class="relative waves-light" mdbWavesEffect
             type="submit">Salvar</button>
         </div>
-
         <div #alert class="alert alert-success fade show" role="alert" *ngIf="success">
           <button type="button" class="close" aria-label="Close" (click)="closeAlert()"><span
               aria-hidden="true">&times;</span></button>
           <strong>Sucesso!</strong> Instituição editada.
         </div>
-
       </form>
-
     </div>
   </div>
 </div>

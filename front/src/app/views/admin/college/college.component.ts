@@ -74,7 +74,7 @@ export class CollegeComponent implements OnInit {
 
     this.editForm = this.formBuild.group({
       name: ['', Validators.required],
-      tipo: ['', Validators.required],
+      tipoedit: [null, Validators.required],
       city: [null, Validators.required],
       state: [null, Validators.required]
     });
@@ -124,13 +124,14 @@ export class CollegeComponent implements OnInit {
       c.tipo = this.addForm.value.tipo;
       c.city = auxCity;
       c.state = auxState;
-      
+
       this.collegeService.persist(c).subscribe(() => {
         this.updateTable();
         this.success = true;
         this.addForm.reset();
       });
       this.submitted = false;
+
     }
   }
 
@@ -163,32 +164,47 @@ export class CollegeComponent implements OnInit {
   }
 
   editCollege(id: any) {
+
     this.indexEdit = id;
 
     let aux = new College();
     aux = this.collegeList[this.indexEdit];
+    console.log(aux.state.uf)
 
     this.editForm.setValue({
+
       name: aux.name,
-      tipo: aux.tipo,
-      city: aux.city.name,
-      state: aux.state.name
+      tipoedit: aux.tipo,
+      state: [aux.state.uf],
+      city: null
     })
+
+    this.collegeService.readCity(aux.state.uf).subscribe((list) => {
+      this.listCity = list;
+    })
+    this.editForm.setValue({
+      name: aux.name,
+      tipoedit: aux.tipo,
+      state: [aux.state.uf],
+      city: [aux.city.name]
+    })
+
+
     this.editModal.show();
   }
 
   updateCollege() {
     this.submitted = true;
 
-    let auxState = this.findItemState(this.addForm.value.state);
-    let auxCity = this.findItemCity(this.addForm.value.city);
+    let auxState = this.findItemState(this.editForm.value.state);
+    let auxCity = this.findItemCity(this.editForm.value.city);
 
     if (!this.editForm.invalid && this.indexEdit != null) {
       let updtCourse = new College();
 
       updtCourse = this.collegeList[this.indexEdit];
       updtCourse.name = this.editForm.value.name;
-      updtCourse.tipo = this.editForm.value.tipo;
+      updtCourse.tipo = this.editForm.value.tipoedit;
       updtCourse.city = auxCity;
       updtCourse.state = auxState;
 
@@ -211,21 +227,21 @@ export class CollegeComponent implements OnInit {
     return this.listCity.find(x => x.name == item)
   }
 
-  hideAddModal(){
+  hideAddModal() {
     this.submitted = false;
     this.success = false;
     this.addForm.reset();
     this.addModal.hide();
   }
 
-  hideEditModal(){
+  hideEditModal() {
     this.submitted = false;
     this.success = false;
     this.editForm.reset();
     this.editModal.hide();
   }
 
-  hideDeleteModal(){
+  hideDeleteModal() {
     this.submitted = false;
     this.success = false;
     this.deleteModal.hide();
