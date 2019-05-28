@@ -12,4 +12,127 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
   }
 
+
+  // Grafico 01
+  public chartType01: string = 'line';
+
+  public chartDatasets01: Array<any> = [
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'My First dataset' },
+    { data: [28, 48, 40, 19, 86, 27, 90], label: 'My Second dataset' }
+  ];
+
+  public chartLabels01: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+  public chartColors01: Array<any> = [
+    {
+      backgroundColor: 'rgba(105, 0, 132, .2)',
+      borderColor: 'rgba(200, 99, 132, .7)',
+      borderWidth: 2,
+    },
+    {
+      backgroundColor: 'rgba(0, 137, 132, .2)',
+      borderColor: 'rgba(0, 10, 130, .7)',
+      borderWidth: 2,
+    }
+  ];
+
+  public chartOptions01: any = {
+    responsive: true
+  };
+  public chartClicked01(e: any): void { }
+  public chartHovered01(e: any): void { }
+
+
+  // Grafico 02
+  public chartType02: string = 'horizontalBar';
+
+  public chartDatasets02: Array<any> = [
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'My First dataset' }
+  ];
+
+  public chartLabels02: Array<any> = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
+
+  public chartColors02: Array<any> = [
+    {
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)'
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ],
+      borderWidth: 2,
+    }
+  ];
+
+  public chartOptions02: any = {
+    responsive: true
+  };
+  public chartClicked02(e: any): void { }
+  public chartHovered02(e: any): void { }
+
+  // Grafico 03
+  public chartType03: string = 'pie';
+
+  public chartDatasets03: Array<any> = [
+    { data: [300, 50, 100, 40, 120], label: 'My First dataset' }
+  ];
+
+  public chartLabels03: Array<any> = ['Red', 'Green', 'Yellow', 'Grey', 'Dark Grey'];
+
+  public chartColors03: Array<any> = [
+    {
+      backgroundColor: ['#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'],
+      hoverBackgroundColor: ['#FF5A5E', '#5AD3D1', '#FFC870', '#A8B3C5', '#616774'],
+      borderWidth: 2,
+    }
+  ];
+
+  public chartOptions03: any = {
+    responsive: true
+  };
+  public chartClicked03(e: any): void { }
+  public chartHovered03(e: any): void { }
+
+  // Grafico 04
+  public chartType04: string = 'radar';
+
+  public chartDatasets04: Array<any> = [
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'My First dataset' },
+    { data: [28, 48, 40, 19, 86, 27, 90], label: 'My Second dataset' }
+  ];
+
+  public chartLabels04: Array<any> = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
+
+  public chartColors04: Array<any> = [
+    {
+      backgroundColor: 'rgba(105, 0, 132, .2)',
+      borderColor: 'rgba(200, 99, 132, .7)',
+      borderWidth: 2,
+    },
+    {
+      backgroundColor: 'rgba(0, 250, 220, .2)',
+      borderColor: 'rgba(0, 213, 132, .7)',
+      borderWidth: 2,
+    }
+  ];
+
+  public chartOptions04: any = {
+    responsive: true
+  };
+  public chartClicked04(e: any): void { }
+  public chartHovered04(e: any): void { }
+
+  downloadExcel() {
+    alert("Leandro Mari viado");
+  }
 }
