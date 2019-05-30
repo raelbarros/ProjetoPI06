@@ -41,14 +41,16 @@ public class StudentDao {
 		return em.createQuery("FROM Student WHERE enabled = 1").getResultList();
 	}
 
-	public void persist(Student s) {
+	public Student persist(Student s) {
 		try {
 			em.getTransaction().begin();
 			em.persist(s);
 			em.getTransaction().commit();
+			return s;
 		} catch (Exception e) {
 			e.printStackTrace();
 			em.getTransaction().rollback();
+			return null;
 		}
 	}
 
