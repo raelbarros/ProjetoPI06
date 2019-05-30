@@ -6,6 +6,7 @@ import { CollegeService } from 'src/app/services/college/college.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Student } from 'src/app/models/sudent';
 import { StudentService } from 'src/app/services/student/student.service';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-main-page',
@@ -21,7 +22,7 @@ export class MainPageComponent implements OnInit {
   success = false;
 
   teste = null;
-  constructor(private studentService: StudentService, private couseService: CourseService, private collegeService: CollegeService, private fb: FormBuilder) {
+  constructor(private studentService: StudentService, private router: Router, private couseService: CourseService, private collegeService: CollegeService, private fb: FormBuilder) {
     this.teste = new Student();
     this.teste.email = '1234';
   }
@@ -67,10 +68,14 @@ export class MainPageComponent implements OnInit {
 
     console.log(student)
 
-    // this.studentService.persist(student).subscribe(() => {
-    //   this.studentForm.reset();
-    // })
+    this.studentService.persist(student).subscribe((studentid) => {
+      console.log(studentid)
+      this.studentForm.reset();
+    })
 
+
+    //this.router.navigate(['/survey', 5]);
+    
   }
 
 

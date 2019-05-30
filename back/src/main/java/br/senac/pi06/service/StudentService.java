@@ -30,8 +30,8 @@ public class StudentService {
 			if (ex != null)
 				throw ex;
 
-			StudentDao.getInstance().persist(s);
-			return Util.printOk();
+			Student student = StudentDao.getInstance().persist(s);
+			return Response.status(Response.Status.OK).entity(student).build();
 		} catch (StudentException e) {
 			e.printStackTrace();
 			return Util.printNotAccept(e.getMessage());
