@@ -3,6 +3,7 @@ import { MdbTableDirective, MdbTablePaginationComponent, ModalDirective } from "
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CourseService } from 'src/app/services/course/course.service';
 import { Course } from 'src/app/models/course';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-course',
@@ -35,7 +36,10 @@ export class CourseComponent implements OnInit {
   indexEdit = null;
   idRemove = null;
 
-  constructor(private courseService: CourseService, private formBuild: FormBuilder) { }
+  
+
+  constructor(private courseService: CourseService, private formBuild: FormBuilder, private route: ActivatedRoute) { 
+  }
 
   @HostListener('input') oninput() {
     this.mdbTablePagination.searchText = this.searchText;
@@ -43,6 +47,9 @@ export class CourseComponent implements OnInit {
 
   ngOnInit() {
     this.updateTable();
+
+    // this.teste = this.route.snapshot.paramMap.get('id');
+    // console.log(this.teste);
 
     //----
     this.addForm = this.formBuild.group({

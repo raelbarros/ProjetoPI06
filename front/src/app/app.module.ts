@@ -12,9 +12,9 @@ import { MenuBarAdminComponent } from './views/admin/main-layout/menu-bar-admin/
 import { DashboardComponent } from './views/admin/dashboard/dashboard.component';
 import { CollegeComponent } from './views/admin/college/college.component';
 import { FooterAdminComponent } from './views/admin/main-layout/footer-admin/footer-admin.component';
-import { StudentSurveyComponent } from './views/student/student-survey/student-survey.component';
 import { CategoryComponent } from './views/admin/category/category.component';
 import { QuestionComponent } from './views/admin/question/question.component';
+import { SurveyComponent } from './views/student/survey/survey.component';
 
 
 @NgModule({
@@ -26,9 +26,9 @@ import { QuestionComponent } from './views/admin/question/question.component';
     DashboardComponent,
     CollegeComponent,
     FooterAdminComponent,
-    StudentSurveyComponent,
     CategoryComponent,
     QuestionComponent,
+    SurveyComponent,
   ],
   imports: [
     BrowserModule,

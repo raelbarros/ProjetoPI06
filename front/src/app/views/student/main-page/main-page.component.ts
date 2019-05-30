@@ -20,7 +20,11 @@ export class MainPageComponent implements OnInit {
   submitted = false;
   success = false;
 
-  constructor(private studentService: StudentService, private couseService: CourseService, private collegeService: CollegeService, private fb: FormBuilder) { }
+  teste = null;
+  constructor(private studentService: StudentService, private couseService: CourseService, private collegeService: CollegeService, private fb: FormBuilder) {
+    this.teste = new Student();
+    this.teste.email = '1234';
+  }
 
   ngOnInit() {
     this.couseService.read().subscribe((list) => {
@@ -41,7 +45,6 @@ export class MainPageComponent implements OnInit {
     });
   }
 
-
   saveStudent() {
     this.submitted = true;
     let auxCourse = new Course();
@@ -54,7 +57,7 @@ export class MainPageComponent implements OnInit {
       return item.name == this.studentForm.value.college;
     })
 
-    let student = new Student
+    let student = new Student();
     student.firstName = this.studentForm.value.firstName;
     student.lastName = this.studentForm.value.lastName;
     student.email = this.studentForm.value.email;
@@ -63,11 +66,11 @@ export class MainPageComponent implements OnInit {
     student.periodo = this.studentForm.value.periodo
 
     console.log(student)
-    
-/*     this.studentService.persist(student).subscribe(() => {
-      this.studentForm.reset();
-    })
- */
+
+    // this.studentService.persist(student).subscribe(() => {
+    //   this.studentForm.reset();
+    // })
+
   }
 
 
