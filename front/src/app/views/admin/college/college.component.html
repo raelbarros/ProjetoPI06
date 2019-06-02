@@ -179,13 +179,11 @@
             <div class="d-flex justify-content-around">
               <p>Tipo da Instituição: </p>
               <div class="custom-control custom-radio custom-control-inline">
-                <input formControlName="tipoedit" type="radio" class="custom-control-input" id="publicaEdit" name="tipoedit"
-                  value="Publica">
+                <input formControlName="tipoedit" type="radio" class="custom-control-input" id="publicaEdit" name="tipoedit" value="Publica">
                 <label class="custom-control-label" for="publicaEdit">Publica</label>
               </div>
               <div class="custom-control custom-radio custom-control-inline">
-                <input formControlName="tipoedit" type="radio" class="custom-control-input" id="privadoEdit" name="tipoedit"
-                  value="Privado">
+                <input formControlName="tipoedit" type="radio" class="custom-control-input" id="privadoEdit" name="tipoedit" value="Privado">
                 <label class="custom-control-label" for="privadoEdit">Privado</label>
               </div>
             </div>
@@ -193,6 +191,7 @@
               <div *ngIf="fedit.type.errors.required">Tipo é obrigatorio</div>
             </div>
           </div>
+          
           <!-- Select Estado -->
           <div class="md-form ">
             <select formControlName="state" class="browser-default custom-select"

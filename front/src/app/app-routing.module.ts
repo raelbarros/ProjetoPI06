@@ -6,6 +6,7 @@ import { CourseComponent } from './views/admin/course/course.component';
 import { CollegeComponent } from './views/admin/college/college.component';
 import { CategoryComponent } from './views/admin/category/category.component';
 import { QuestionComponent } from './views/admin/question/question.component';
+import { SurveyComponent } from './views/student/survey/survey.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'college', component: CollegeComponent},
   {path: 'category', component: CategoryComponent},
   {path: 'question', component: QuestionComponent},
+  {path: 'survey/:student', component: SurveyComponent} 
 
 ];
 

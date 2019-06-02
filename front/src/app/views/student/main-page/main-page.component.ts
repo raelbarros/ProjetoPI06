@@ -69,15 +69,10 @@ export class MainPageComponent implements OnInit {
     console.log(student)
 
     this.studentService.persist(student).subscribe((studentid) => {
-      console.log(studentid)
+      this.router.navigate(['/survey', studentid.id]);
       this.studentForm.reset();
     })
-
-
-    //this.router.navigate(['/survey', 5]);
-    
   }
-
 
   get f() {
     return this.studentForm.controls;

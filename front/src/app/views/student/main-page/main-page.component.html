@@ -1,130 +1,171 @@
-<!-- Default form register -->
-<main>
+<div class="container">
+  <div class="d-flex p-2 col-example">
+    <section class="my-5">
+      <!--Grid row-->
+      <div class="row">
+        <div class="col-md-12">
+          <!--Featured image-->
+          <mdb-card wider="true" reverse="true">
+            <div class="rounded mx-auto d-block" mdbWavesEffect>
+              <mdb-card-img src="../../../../assets/images/study.jpg" alt="Responsive image">
+              </mdb-card-img>
+            </div>
 
-  INSTRUÇÕES PARA RESPONDER AO QUESTIONÁRIO
+            <!--Post data-->
+            <mdb-card-body class="text-center">
+              <h2 class="font-weight-bold text-primary">Identifique seu estilo preferido de aprendizagem!</h2><br>
+              <div class="card">
+                <div class="card-body">
+                  <h3 class="font-weight-bold">Instruções para responder ao questionário:</h3>
+                  <br>
+                  <p>
+                    Não existem respostas corretas nem erradas. Será útil na medida que seja sincero(a) em suas
+                    respostas,
+                    sendo:
+                  </p>
+                  <p>
+                    Se está mais em acordo com a frase do que em desacordo selecione <strong>"CONCORDO".</strong>
+                  </p>
+                  <p>
+                    Se está mais em desacordo com a frase do que em acordo selecione <strong>"DESCORDO".</strong>
+                  </p>
+                  <p class="text-black-50">O questionário será anônimo, não será divulgado o nome do aluno que colaborou
+                    com esta pesquisa.</p>
+                </div>
+              </div><br>
 
-  Este questionário está sendo aplicado para identificar seu estilo preferido de aprendizagem.
-  Não existem respostas corretas nem erradas. Será útil na medida que seja sincero(a) em suas respostas, sendo:
-  Se está mais em acordo com a frase que em desacordo coloque um x na coluna "CONCORDO".
-  Se está mais em desacordo com a frase que em acordo coloque um x na coluna "DESCORDO".
-  O questionário será anônimo, isto é, não será divulgado o nome do aluno que colaborou com esta pesquisa.
+              <div>
 
-  <a class="text-success" (click)="signup.show()" mdbWavesEffect>teste</a>
 
-  <!-- modal student -->
-  <div mdbModal #signup="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mybasicModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header info-color white-text text-center py-4">
-          <button type="button" class="close pull-right" aria-label="Close" (click)="hideAddModal()"><span
-              aria-hidden="true">×</span></button>
-          <h4 class="modal-title w-100" id="myModalLabel"><strong>Preencha para iniciar</strong></h4>
+                <!--Comments-->
+                <a mdbBtn color="success" class="waves-light" mdbWavesEffect>
+                  <span class="clearfix d-none d-md-inline-block " (click)="signup.show()">Iniciar pesquisa
+                    <i class="fas fa-chevron-right pl-2 waves-light" mdbWavesEffect></i></span>
+                </a>
+
+              </div>
+              <!--Social shares-->
+            </mdb-card-body>
+            <!--Post data-->
+          </mdb-card>
+
         </div>
-
-        <mdb-card-body class="px-lg-5 pt-0">
-
-          <!-- Form -->
-          <form [formGroup]="studentForm" (ngSubmit)="saveStudent()" class="text-center" style="color: #757575;">
-
-            <div class="form-row">
-              <div class="col">
-                <!-- First name -->
-                <div class="md-form">
-                  <input type="text" id="materialRegisterFormFirstName" class="form-control" mdbInput
-                    formControlName="firstName">
-                  <label for="materialRegisterFormFirstName">Nome</label>
-
-                  <div *ngIf="submitted && f.firstName.errors" class="invalidFeedback">
-                    <div *ngIf="f.firstName.errors.required">Nome é obrigatorio</div>
-                  </div>
-
-                </div>
-              </div>
-              <div class="col">
-                <!-- Last name -->
-                <div class="md-form">
-                  <input type="email" id="materialRegisterFormLastName" class="form-control" mdbInput
-                    formControlName="lastName">
-                  <label for="materialRegisterFormLastName">Sobre Nome</label>
-
-                  <div *ngIf="submitted && f.lastName.errors" class="invalidFeedback">
-                    <div *ngIf="f.lastName.errors.required">Sobrenome é obrigatorio</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- E-mail -->
-            <div class="md-form mt-0">
-              <input type="email" id="materialRegisterFormEmail" class="form-control" mdbInput formControlName="email">
-              <label for="materialRegisterFormEmail">E-mail</label>
-
-              <div *ngIf="submitted && f.email.errors" class="invalidFeedback">
-                <div *ngIf="f.email.errors.required">E-mail é obrigatorio</div>
-              </div>
-
-            </div>
-
-            <!-- Faculdade -->
-            <div class="md-form mt-0">
-              <select class="browser-default custom-select" formControlName="college">
-                <option disabled value="null" selected>Selecione sua Faculdade</option>
-                <option *ngFor="let college of listCollege; let i=index">{{college.name}}</option>
-              </select>
-              <div *ngIf="submitted && f.college.errors" class="invalidFeedback">
-                <div *ngIf="f.college.errors.required">Faculdade é obrigatorio</div>
-              </div>
-            </div>
-
-            <!-- Curso -->
-            <div class="md-form mt-0">
-              <select formControlName="course" class="browser-default custom-select">
-                <option disabled value="null" selected>Selecione seu Curso</option>
-                <option *ngFor="let course of listCourse; let i=index">{{course.name}}</option>
-              </select>
-              <div *ngIf="submitted && f.course.errors" class="invalidFeedback">
-                <div *ngIf="f.course.errors.required">Curso é obrigatorio</div>
-              </div>
-            </div>
-
-            <!-- Periodo  -->
-            <div class="md-form mt-0">
-              <select class="browser-default custom-select" formControlName="periodo">
-                <option disabled value="null" selected>Selecione seu semestre</option>
-                <option value="1">1º</option>
-                <option value="2">2º</option>
-                <option value="3">3º</option>
-                <option value="4">4º</option>
-                <option value="5">5º</option>
-                <option value="6">6º</option>
-                <option value="7">7º</option>
-                <option value="8">8º</option>
-                <option value="9">9º</option>
-                <option value="10">10º</option>
-                <option value="11">11º</option>
-                <option value="12">12º</option>
-              </select>
-              <div *ngIf="submitted && f.periodo.errors" class="invalidFeedback">
-                <div *ngIf="f.periodo.errors.required">Período é obrigatorio</div>
-              </div>
-            </div>
-
-            <!-- Sign up button -->
-            <button mdbBtn color="success" outline="true" rounded="true" block="true"
-              class="my-4 waves-effect z-depth-0" mdbWavesEffect type="submit">Iniciar Pesquisa</button>
-
-
-          </form>
-          <!-- Form -->
-        </mdb-card-body>
       </div>
+      <!--Grid row-->
+
+    </section>
+  </div>
+</div>
+
+
+<!-- modal student -->
+
+<div mdbModal #signup="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mybasicModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header info-color white-text text-center py-4">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideAddModal()"><span
+            aria-hidden="true">×</span></button>
+        <h4 class="modal-title w-100" id="myModalLabel"><strong>Preencha para iniciar</strong></h4>
+      </div>
+
+      <mdb-card-body class="px-lg-5 pt-0">
+
+        <!-- Form -->
+        <form [formGroup]="studentForm" (ngSubmit)="saveStudent()" class="text-center" style="color: #757575;">
+
+          <div class="form-row">
+            <div class="col">
+              <!-- First name -->
+              <div class="md-form">
+                <input type="text" id="materialRegisterFormFirstName" class="form-control" mdbInput
+                  formControlName="firstName">
+                <label for="materialRegisterFormFirstName">Nome</label>
+
+                <div *ngIf="submitted && f.firstName.errors" class="invalidFeedback">
+                  <div *ngIf="f.firstName.errors.required">Nome é obrigatorio</div>
+                </div>
+
+              </div>
+            </div>
+            <div class="col">
+              <!-- Last name -->
+              <div class="md-form">
+                <input type="email" id="materialRegisterFormLastName" class="form-control" mdbInput
+                  formControlName="lastName">
+                <label for="materialRegisterFormLastName">Sobrenome</label>
+
+                <div *ngIf="submitted && f.lastName.errors" class="invalidFeedback">
+                  <div *ngIf="f.lastName.errors.required">Sobrenome é obrigatorio</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- E-mail -->
+          <div class="md-form mt-0">
+            <input type="email" id="materialRegisterFormEmail" class="form-control" mdbInput formControlName="email">
+            <label for="materialRegisterFormEmail">E-mail</label>
+
+            <div *ngIf="submitted && f.email.errors" class="invalidFeedback">
+              <div *ngIf="f.email.errors.required">E-mail é obrigatorio</div>
+            </div>
+
+          </div>
+
+          <!-- Faculdade -->
+          <div class="md-form mt-0">
+            <select class="browser-default custom-select" formControlName="college">
+              <option disabled value="null" selected>Selecione sua Faculdade</option>
+              <option *ngFor="let college of listCollege; let i=index">{{college.name}}</option>
+            </select>
+            <div *ngIf="submitted && f.college.errors" class="invalidFeedback">
+              <div *ngIf="f.college.errors.required">Faculdade é obrigatorio</div>
+            </div>
+          </div>
+
+          <!-- Curso -->
+          <div class="md-form mt-0">
+            <select formControlName="course" class="browser-default custom-select">
+              <option disabled value="null" selected>Selecione seu Curso</option>
+              <option *ngFor="let course of listCourse; let i=index">{{course.name}}</option>
+            </select>
+            <div *ngIf="submitted && f.course.errors" class="invalidFeedback">
+              <div *ngIf="f.course.errors.required">Curso é obrigatorio</div>
+            </div>
+          </div>
+
+          <!-- Periodo  -->
+          <div class="md-form mt-0">
+            <select class="browser-default custom-select" formControlName="periodo">
+              <option disabled value="null" selected>Selecione seu semestre</option>
+              <option value="1">1º</option>
+              <option value="2">2º</option>
+              <option value="3">3º</option>
+              <option value="4">4º</option>
+              <option value="5">5º</option>
+              <option value="6">6º</option>
+              <option value="7">7º</option>
+              <option value="8">8º</option>
+              <option value="9">9º</option>
+              <option value="10">10º</option>
+              <option value="11">11º</option>
+              <option value="12">12º</option>
+            </select>
+            <div *ngIf="submitted && f.periodo.errors" class="invalidFeedback">
+              <div *ngIf="f.periodo.errors.required">Período é obrigatorio</div>
+            </div>
+          </div>
+
+          <!-- Sign up button -->
+          <button mdbBtn color="success" outline="true" rounded="true" block="true" class="my-4 waves-effect z-depth-0"
+            mdbWavesEffect type="submit">Iniciar Pesquisa</button>
+
+
+        </form>
+        <!-- Form -->
+      </mdb-card-body>
     </div>
   </div>
-
-
-
-
-
-
-</main>
+</div>

@@ -1,8 +1,42 @@
-INSTRUÇÕES PARA RESPONDER AO QUESTIONÁRIO
-
-Este questionário está sendo aplicado para identificar seu estilo preferido de aprendizagem.
-Não existem respostas corretas nem erradas. Será útil na medida que seja sincero(a) em suas respostas, sendo:
-Se está mais em acordo com a frase que em desacordo coloque um x na coluna "CONCORDO".
-Se está mais em desacordo com a frase que em acordo coloque um x na coluna "DESCORDO".
-O questionário será anônimo, isto é, não será divulgado o nome do aluno que colaborou com esta pesquisa.
-
+<div class="container">
+    <div class="row">
+        <table mdbTable #tableEl="mdbTable" class="z-depth-1">
+            <thead>
+                <tr>
+                    <th *ngFor="let item of columns; let i = index" [mdbTableSort]="questionList" [sortBy]="columns[i]"
+                        scope="col">
+                        {{item | titlecase}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let question of questionList; let i = index">
+                    <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
+                        scope="row">{{i+1}}</th>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        {{question.question}}</td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" id="{{question.id}}" name="{{question.id}}" value="{{question.id}}" mdbInput>
+                            <label class="custom-control-label" for="{{question.id}}">Concordo</label>
+                        </div>
+                    </td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" id="disagree" name="{{question.id}}" value="disagree" mdbInput>
+                            <label class="custom-control-label" for="{{question.id}}">Descordo</label>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot class="grey lighten-5 w-100">
+                <tr>
+                    <td colspan="4">
+                        <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements">
+                        </mdb-table-pagination>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
