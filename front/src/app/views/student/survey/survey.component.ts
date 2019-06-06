@@ -2,6 +2,8 @@ import { MdbTableDirective, MdbTablePaginationComponent, ModalDirective } from "
 import { Component, OnInit, ViewChild, ChangeDetectorRef, HostListener, ElementRef } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { QuestionService } from 'src/app/services/question/question.service';
+import { Question } from 'src/app/models/question';
+
 
 @Component({
   selector: 'app-survey',
@@ -10,28 +12,22 @@ import { QuestionService } from 'src/app/services/question/question.service';
 })
 export class SurveyComponent implements OnInit {
 
+  @ViewChild(MdbTablePaginationComponent) mdbTablePagination: MdbTablePaginationComponent;
+  @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective
 
-
-  constructor(private questionService: QuestionService, private route: ActivatedRoute) { }
-
-  student = null;
-  @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective;
-  @ViewChild(MdbTablePaginationComponent)
-  mdbTablePagination: MdbTablePaginationComponent;
-
-  questionList: any = [];
-  categoryList: any = [];
-  columns = ['Numero', 'Pergunta', 'Concordo', 'Descordo'];
-  searchText: string = '';
+  questionList: Array<Question> = new Array<Question>();
+  columns = ['numero', 'pergunta', 'concordo', 'descordo'];
   previous: string;
 
   maxVisibleItems: number = 10;
 
+  lastPage = false;
 
+  constructor(private questionService: QuestionService, private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.updateTable();
-    
   }
 
   updateTable() {
@@ -42,7 +38,14 @@ export class SurveyComponent implements OnInit {
       this.questionList = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
     });
+  }
 
+  checkPagination() {
+    
+    if (this.mdbTablePagination.checkIfNextShouldBeDisabled()) {
+      this.lastPage = true;
+    }
+    console.log(this.questionList) 
   }
 
 }

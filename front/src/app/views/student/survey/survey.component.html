@@ -3,8 +3,7 @@
         <table mdbTable #tableEl="mdbTable" class="z-depth-1">
             <thead>
                 <tr>
-                    <th *ngFor="let item of columns; let i = index" [mdbTableSort]="questionList" [sortBy]="columns[i]"
-                        scope="col">
+                    <th *ngFor="let item of columns; let i = index" scope="col">
                         {{item | titlecase}}
                     </th>
                 </tr>
@@ -18,7 +17,7 @@
                     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" class="custom-control-input" id="idagree_{{question.id}}"
-                                name="name_{{question.id}}" value="agree_{{question.id}}" mdbInput>
+                                name="name_{{question.id}}" [(ngModel)]="question.answer" value="{{true}}" mdbInput>
                             <label class="custom-control-label" for="idagree_{{question.id}}">Concordo</label>
                         </div>
 
@@ -26,7 +25,7 @@
                     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" class="custom-control-input" id="iddisagree_{{question.id}}"
-                                name="name_{{question.id}}" value="disagree_{{question.id}}" mdbInput>
+                                name="name_{{question.id}}" [(ngModel)]="question.answer" value="{{false}}" mdbInput>
                             <label class="custom-control-label" for="iddisagree_{{question.id}}">Descordo</label>
                         </div>
                     </td>
@@ -35,8 +34,11 @@
             <tfoot class="grey lighten-5 w-100">
                 <tr>
                     <td colspan="4">
-                        <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements">
+                        <mdb-table-pagination (click)="checkPagination()" [tableEl]="tableEl" [searchDataSource]="questionList">
                         </mdb-table-pagination>
+                    </td>
+                    <td colspan="4" *ngIf="lastPage">
+                        <button type="button" mdbBtn color="success" mdbWavesEffect>Submeter</button>
                     </td>
                 </tr>
             </tfoot>
