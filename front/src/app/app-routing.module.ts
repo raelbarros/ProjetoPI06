@@ -19,6 +19,8 @@ const routes: Routes = [
   {path: 'question', component: QuestionComponent},
   {path: 'survey/:student', component: SurveyComponent} 
 
+
+  
 ];
 
 @NgModule({
