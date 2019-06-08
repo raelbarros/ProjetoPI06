@@ -1,3 +1,25 @@
+<!--Navbar-->
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark blue" [containerInside]="false">
+
+    <!-- Navbar brand -->
+    <mdb-navbar-brand><a class="navbar-brand" href="">Início</a></mdb-navbar-brand>
+
+
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+            <a class="nav-link waves-light" mdbWavesEffect *ngIf="student">
+                <mdb-icon fas icon="user"></mdb-icon>Bem vindo, {{student.firstName| titlecase}}
+                {{student.lastName| titlecase}}!<span class="caret"></span>
+            </a>
+        </li>
+
+    </ul>
+
+
+</mdb-navbar>
+<!--/.Navbar--><br>
+
+
 <div class="container">
     <div class="row">
         <table mdbTable #tableEl="mdbTable" class="z-depth-1">
@@ -17,7 +39,8 @@
                     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" class="custom-control-input" id="idagree_{{question.id}}"
-                                name="name_{{question.id}}" [(ngModel)]="question.answer" value="{{true}}" mdbInput>
+                                name="name_{{question.id}}" [(ngModel)]="question.answer" value="{{true}}"
+                                (click)="checkQuestionsMissing()" mdbInput>
                             <label class="custom-control-label" for="idagree_{{question.id}}">Concordo</label>
                         </div>
 
@@ -25,7 +48,8 @@
                     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" class="custom-control-input" id="iddisagree_{{question.id}}"
-                                name="name_{{question.id}}" [(ngModel)]="question.answer" value="{{false}}" mdbInput>
+                                name="name_{{question.id}}" [(ngModel)]="question.answer" value="{{false}}"
+                                (click)="checkQuestionsMissing()" mdbInput>
                             <label class="custom-control-label" for="iddisagree_{{question.id}}">Descordo</label>
                         </div>
                     </td>
@@ -34,14 +58,44 @@
             <tfoot class="grey lighten-5 w-100">
                 <tr>
                     <td colspan="4">
-                        <mdb-table-pagination (click)="checkPagination()" [tableEl]="tableEl" [searchDataSource]="questionList">
+                        <mdb-table-pagination (click)="checkPagination()" [tableEl]="tableEl"
+                            [searchDataSource]="questionList">
                         </mdb-table-pagination>
                     </td>
-                    <td colspan="4" *ngIf="lastPage">
-                        <button type="button" mdbBtn color="success" mdbWavesEffect>Submeter</button>
-                    </td>
+
                 </tr>
             </tfoot>
         </table>
+
     </div>
 </div>
+
+<!-- Footer -->
+<footer class="page-footer font-small blue pt-4">
+
+    <!-- Footer Elements -->
+    <div class="container">
+
+        <!-- Call to action -->
+        <ul class="list-unstyled list-inline text-center py-2">
+            <li class="list-inline-item" *ngIf="!checkQuestionsMissing()">
+                <h5 class="mb-1">Faltam {{questionsMissing.length}} perguntas. </h5>
+            </li>
+            <li class="list-inline-item" *ngIf="lastPage">
+                <button type="button" (click)="checkStyle()" mdbBtn color="success" mdbWavesEffect>
+                    Finalizar</button>
+            </li>
+        </ul>
+        <!-- Call to action -->
+
+    </div>
+    <!-- Footer Elements -->
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2018 Copyright:
+        <a href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
+    </div>
+    <!-- Copyright -->
+
+</footer>
+<!-- Footer -->

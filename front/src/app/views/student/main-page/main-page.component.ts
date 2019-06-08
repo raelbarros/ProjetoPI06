@@ -23,8 +23,7 @@ export class MainPageComponent implements OnInit {
 
   teste = null;
   constructor(private studentService: StudentService, private router: Router, private couseService: CourseService, private collegeService: CollegeService, private fb: FormBuilder) {
-    this.teste = new Student();
-    this.teste.email = '1234';
+ 
   }
 
   ngOnInit() {
@@ -65,8 +64,6 @@ export class MainPageComponent implements OnInit {
     student.college = auxCollege;
     student.course = auxCourse;
     student.periodo = this.studentForm.value.periodo
-
-    console.log(student)
 
     this.studentService.persist(student).subscribe((studentid) => {
       this.router.navigate(['/survey', studentid.id]);

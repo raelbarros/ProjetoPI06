@@ -4,6 +4,6 @@ export class Question {
     id: number;
     question: string;
     category: Category;
-    answer: boolean;
+    answer: string;
     enabled: boolean;
 }

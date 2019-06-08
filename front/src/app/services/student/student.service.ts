@@ -9,7 +9,7 @@ import { Student } from 'src/app/models/sudent';
 export class StudentService {
   url: string
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.url = 'http://localhost:8080/pi06/servicos/student';
   }
 
@@ -17,9 +17,11 @@ export class StudentService {
     return this.http.post(this.url, c);
   }
 
+  readById(id): Observable<any> {
+    return this.http.get(this.url+"/"+ id);
+  }
+
   read(): Observable<Student[]> {
     return this.http.get<Student[]>(this.url);
   }
-
-  
 }

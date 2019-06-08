@@ -59,7 +59,9 @@ public class StudentService {
 	public Response readById(@PathParam("id") int id) {
 		try {
 			Student s = StudentDao.getInstance().getById(id);
+//			return Response.status(Response.Status.OK).entity(s).build();
 			return Response.status(Response.Status.OK).entity(s).type(MediaType.APPLICATION_JSON).build();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Util.printBadRequest();
