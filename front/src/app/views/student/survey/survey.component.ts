@@ -127,8 +127,6 @@ export class SurveyComponent implements OnInit {
     survey.category = max;
     survey.student = this.student
 
-    console.log(survey);
-
     this.surveyService.persist(survey).subscribe();
   }
 
