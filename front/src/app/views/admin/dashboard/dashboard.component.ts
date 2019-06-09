@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { SurveyService } from 'src/app/services/survey/survey.service';
+import { Survey } from 'src/app/models/survet';
+import { CategoryService } from 'src/app/services/category/category.service';
+import { Category } from 'src/app/models/category';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,11 +11,48 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  surveyList: Array<Survey> = [];
+  categoryList: Array<Category> = [];
+
+  constructor(private surveyService: SurveyService, private categoryService: CategoryService) { }
 
   ngOnInit() {
+    this.surveyService.read().subscribe((list) => {
+      this.surveyList = list;
+      console.log(this.surveyList)
+    })
+
+    this.categoryService.read().subscribe((list) => {
+      this.categoryList = list;
+
+ 
+      this.namesCategory();
+      this.countAnswers();
+
+    })
+
   }
 
+  namesCategory(){
+    for (const item of this.categoryList) {
+      this.chartLabels02.push(item.name)
+    }
+  }
+
+  countAnswers(){
+    for (const item of this.surveyList) {
+      for (const c of this.categoryList){
+        if (item.category.id == c.id){
+          c.answer += 1;
+        }
+      }
+
+      for (const item of this.categoryList){
+        this.chartDatasets02.data.push(item.answer)
+      }
+      console.log(this.categoryList)
+    }
+  }
 
   // Grafico 01
   public chartType01: string = 'line';
@@ -47,10 +88,15 @@ export class DashboardComponent implements OnInit {
   public chartType02: string = 'horizontalBar';
 
   public chartDatasets02: Array<any> = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'My First dataset' }
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Respostas' }
   ];
 
-  public chartLabels02: Array<any> = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
+
+  public chartLabels02: Array<any>  = [];
+
+  teste(){
+    
+  }
 
   public chartColors02: Array<any> = [
     {
@@ -129,10 +175,9 @@ export class DashboardComponent implements OnInit {
   public chartOptions04: any = {
     responsive: true
   };
+
   public chartClicked04(e: any): void { }
   public chartHovered04(e: any): void { }
 
-  downloadExcel() {
-    alert("Leandro Mari viado");
-  }
+
 }
