@@ -7,7 +7,7 @@ import { Student } from 'src/app/models/sudent';
   providedIn: 'root'
 })
 export class StudentService {
-  url: string
+  url: string;
 
   constructor(private http: HttpClient) {
     this.url = 'http://localhost:8080/pi06/servicos/student';
@@ -18,7 +18,7 @@ export class StudentService {
   }
 
   readById(id): Observable<any> {
-    return this.http.get(this.url+"/"+ id);
+    return this.http.get(this.url + "/" + id);
   }
 
   read(): Observable<Student[]> {

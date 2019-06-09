@@ -7,6 +7,8 @@ import { Student } from 'src/app/models/sudent';
 import { StudentService } from 'src/app/services/student/student.service';
 import { Category } from 'src/app/models/category';
 import { CategoryService } from 'src/app/services/category/category.service';
+import { Survey } from 'src/app/models/survet';
+import { SurveyService } from 'src/app/services/survey/survey.service';
 
 @Component({
   selector: 'app-survey',
@@ -30,7 +32,7 @@ export class SurveyComponent implements OnInit {
 
   lastPage = false;
 
-  constructor(private questionService: QuestionService, private categoryService: CategoryService, private route: ActivatedRoute, private studentService: StudentService) {
+  constructor(private questionService: QuestionService, private categoryService: CategoryService, private surveyService: SurveyService, private route: ActivatedRoute, private studentService: StudentService) {
   }
 
   getIdUrl: string;
@@ -39,10 +41,9 @@ export class SurveyComponent implements OnInit {
   ngOnInit() {
     this.updateTable();
     this.getIdUrl = this.route.snapshot.paramMap.get('student');
-
+    
     this.studentService.readById(this.getIdUrl).subscribe((studentid) => {
       this.student = studentid;
-      console.log(this.student);
     });
 
 
@@ -122,6 +123,13 @@ export class SurveyComponent implements OnInit {
     // Categoria do aluno
     console.log(max)
 
+    let survey = new Survey();
+    survey.category = max;
+    survey.student = this.student
+
+    console.log(survey);
+
+    this.surveyService.persist(survey).subscribe();
   }
 
 }

@@ -21,7 +21,7 @@ public class StudentDao {
 		em = Manager.getInstance().entityManager;
 	}
 
-	public Student getById(int id) {
+	public Student getById(String id) {
 		return em.find(Student.class, id);
 	}
 
@@ -76,7 +76,7 @@ public class StudentDao {
 		}
 	}
 
-	public void removeById(int id) {
+	public void removeById(String id) {
 		try {
 			Student s = getById(id);
 			s.setEnabled(false);

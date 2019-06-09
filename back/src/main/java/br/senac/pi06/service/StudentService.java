@@ -56,7 +56,7 @@ public class StudentService {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response readById(@PathParam("id") int id) {
+	public Response readById(@PathParam("id") String id) {
 		try {
 			Student s = StudentDao.getInstance().getById(id);
 			return Response.status(Response.Status.OK).entity(s).type(MediaType.APPLICATION_JSON).build();
@@ -100,7 +100,7 @@ public class StudentService {
 
 	@DELETE
 	@Path("/{id}")
-	public Response deleteById(@PathParam("id") int id) {
+	public Response deleteById(@PathParam("id") String id) {
 		try {
 			StudentDao.getInstance().removeById(id);
 			return Util.printOk();

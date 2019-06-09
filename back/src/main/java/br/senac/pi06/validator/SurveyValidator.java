@@ -10,7 +10,7 @@ public class SurveyValidator {
 	public static SurveyException validate(Survey s) {
 
 		// NOT NULL
-		if (Util.isDate(s.getDate()))
+		if (!Util.isDate(s.getDate()))
 			return new SurveyException("Data eh obrigatorio.");
 
 		return null;

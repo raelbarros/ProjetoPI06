@@ -1,5 +1,7 @@
 package br.senac.pi06.service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -25,11 +27,13 @@ public class SurveyService {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response create(Survey survey) {
+		Calendar c = Calendar.getInstance();
+		survey.setDate(c);
 		try {
 			SurveyException ex = SurveyValidator.validate(survey);
 			if (ex != null)
 				throw ex;
-
+			
 			SurveyDao.getInstance().persist(survey);
 			return Util.printOk();
 		} catch (SurveyException e) {

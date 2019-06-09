@@ -23,8 +23,8 @@ export class QuestionComponent implements OnInit {
   @ViewChild(MdbTablePaginationComponent)
   mdbTablePagination: MdbTablePaginationComponent;
 
-  questionList: any = [];
-  categoryList: any = [];
+  questionList: Array<Question> = [];
+  categoryList: Array<Category> = [];
   columns = ['id', 'name', 'category', 'edit', 'remove'];
 
   searchText: string = '';
@@ -47,7 +47,9 @@ export class QuestionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.updateTable();
+    this.categoryService.read().subscribe((list) => {
+      this.categoryList = list;
+    })
 
     /* formulary add question */
     this.addForm = this.formBuild.group({
@@ -60,17 +62,15 @@ export class QuestionComponent implements OnInit {
       question: ['', Validators.required],
       category: [null, Validators.required]
     });
-
-    this.categoryService.read().subscribe((list) => {
-      this.categoryList = list;
-    })
+  
+    this.updateTable();
   }
 
   updateTable() {
     this.questionService.read().subscribe(list => {
       this.questionList = list;
 
-      this.mdbTable.setDataSource(this.questionList);
+      this.mdbTable.setDataSource(list);
       this.questionList = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
     });

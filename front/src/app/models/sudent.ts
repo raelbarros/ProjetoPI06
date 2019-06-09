@@ -2,7 +2,7 @@ import { College } from './college';
 import { Course } from './course';
 
 export class Student {
-    id: number;
+    id: string;
     firstName: string;
     lastName: string;
     email: string;
