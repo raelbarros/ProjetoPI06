@@ -1,10 +1,12 @@
 import { MdbTableDirective, MdbTablePaginationComponent, ModalDirective } from "angular-bootstrap-md";
-import { Component, OnInit, ViewChild, ChangeDetectorRef, HostListener, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { QuestionService } from 'src/app/services/question/question.service';
 import { Question } from 'src/app/models/question';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Student } from 'src/app/models/sudent';
 import { StudentService } from 'src/app/services/student/student.service';
+import { Category } from 'src/app/models/category';
+import { CategoryService } from 'src/app/services/category/category.service';
 
 @Component({
   selector: 'app-survey',
@@ -16,15 +18,19 @@ export class SurveyComponent implements OnInit {
   @ViewChild(MdbTablePaginationComponent) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective
 
-  questionList: Array<Question> = new Array<Question>();
+  questionList: Array<Question> = [];
+  categoryList: Array<Category> = [];
+
   columns = ['numero', 'pergunta', 'concordo', 'descordo'];
   previous: string;
 
   maxVisibleItems: number = 10;
 
+  questionsMissing: Array<any> = new Array<any>();
+
   lastPage = false;
 
-  constructor(private questionService: QuestionService, private route: ActivatedRoute, private studentService: StudentService) {
+  constructor(private questionService: QuestionService, private categoryService: CategoryService, private route: ActivatedRoute, private studentService: StudentService) {
   }
 
   getIdUrl: string;
@@ -39,10 +45,14 @@ export class SurveyComponent implements OnInit {
       console.log(this.student);
     });
 
+
+    this.categoryService.read().subscribe((list) => {
+      this.categoryList = list;
+    });
   }
 
   updateTable() {
-    this.questionService.read().subscribe(list => {
+    this.questionService.read().subscribe((list) => {
       this.questionList = list;
 
       this.mdbTable.setDataSource(this.questionList);
@@ -58,10 +68,6 @@ export class SurveyComponent implements OnInit {
     }
 
   }
-
-
-
-  questionsMissing: Array<any> = new Array<any>();
 
   checkQuestionsMissing() {
     this.questionsMissing = [];
@@ -79,40 +85,42 @@ export class SurveyComponent implements OnInit {
     }
   }
 
-  estilo1: number = 0;
-  estilo2: number = 0;
-  estilo3: number = 0;
-  estilo4: number = 0;
-
   checkStyle() {
+    //if (this.checkQuestionsMissing() == true) {/* Mover essa chaves para o final do for */}
 
-    if (this.checkQuestionsMissing() == true) {/* Mover essa chaves para o final do for */ }
-
-
-    console.log("começou a checar o estilo")
-    for (let index = 0; index < this.questionList.length; index++) {
-
-      // console.log(this.questionList[index].category.id)
-      // console.log(this.questionList[index].answer)
-
-      if ((this.questionList[index].category.id == 1) && (this.questionList[index].answer == "true")) {
-        this.estilo1++;
-      } else if ((this.questionList[index].category.id == 2) && (this.questionList[index].answer == "true")) {
-        this.estilo2++;
-      } else if ((this.questionList[index].category.id == 3) && (this.questionList[index].answer == "true")) {
-        this.estilo3++;
-      } else if ((this.questionList[index].category.id == 4) && (this.questionList[index].answer == "true")) {
-        this.estilo4++;
+    // verifica se o usuario respondeu 'Concordo'
+    for (const item of this.questionList) {
+      if (item.answer == "true"){
+        if (item.category.answer == NaN || item.category.answer == undefined){
+          item.category.answer = 0;
+        }
+        item.category.answer += 1;
       }
-
-
     }
 
-    console.log("estilo1: " + this.estilo1)
-    console.log("estilo2: " + this.estilo2)
-    console.log("estilo3: " + this.estilo3)
-    console.log("estilo4: " + this.estilo4)
+    // Contabiliza os total de respostas por categoria
+    for (const item of this.questionList) {
+      for (const ca of this.categoryList) {
+        if(ca.name == item.category.name) {
+          if (ca.answer == NaN || ca.answer == undefined){
+            ca.answer = 0;
+          }
+          ca.answer += item.category.answer;
+        }
+      }
+    }
+    
+    // Pega a categoria com maior resposta
+    let max = new Category();
+    max.answer = 0;
+    for (const item of this.categoryList) {
+      if(item.answer > max.answer) {
+        max = item;
+      }
+    }
 
+    // Categoria do aluno
+    console.log(max)
 
   }
 

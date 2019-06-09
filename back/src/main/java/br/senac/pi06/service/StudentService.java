@@ -31,7 +31,7 @@ public class StudentService {
 				throw ex;
 
 			Student student = StudentDao.getInstance().persist(s);
-			return Response.status(Response.Status.OK).entity(student).build();
+			return Response.status(Response.Status.OK).entity(student).type(MediaType.APPLICATION_JSON).build();
 		} catch (StudentException e) {
 			e.printStackTrace();
 			return Util.printNotAccept(e.getMessage());
@@ -59,7 +59,6 @@ public class StudentService {
 	public Response readById(@PathParam("id") int id) {
 		try {
 			Student s = StudentDao.getInstance().getById(id);
-//			return Response.status(Response.Status.OK).entity(s).build();
 			return Response.status(Response.Status.OK).entity(s).type(MediaType.APPLICATION_JSON).build();
 			
 		} catch (Exception e) {
@@ -67,22 +66,6 @@ public class StudentService {
 			return Util.printBadRequest();
 		}
 	}
-
-	// ***** ARRUMAR *****
-//	@GET
-//	@Path("/email")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	@Consumes(MediaType.TEXT_PLAIN)
-//	public Response readByEmail(@QueryParam("email") String email) {
-//		System.out.println("email: " + email);
-//		try {
-//			Student s = StudentDao.getInstance().getByEmail(email);
-//			return Response.status(Response.Status.OK).entity(s).type(MediaType.APPLICATION_JSON).build();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return Util.printBadRequest();
-//		}
-//	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)

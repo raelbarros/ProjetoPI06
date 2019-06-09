@@ -12,11 +12,11 @@ import { SurveyComponent } from './views/student/survey/survey.component';
 const routes: Routes = [
   {path: '', component: MainPageComponent},
   {path: 'admin', component: DashboardComponent},
-  {path: 'student', component: MainPageComponent},
-  {path: 'course', component: CourseComponent},
-  {path: 'college', component: CollegeComponent},
-  {path: 'category', component: CategoryComponent},
-  {path: 'question', component: QuestionComponent},
+  {path: 'admin/student', component: MainPageComponent},
+  {path: 'admin/course', component: CourseComponent},
+  {path: 'admin/college', component: CollegeComponent},
+  {path: 'admin/category', component: CategoryComponent},
+  {path: 'admin/question', component: QuestionComponent},
   {path: 'survey/:student', component: SurveyComponent} 
   
 ];

@@ -20,6 +20,12 @@ public class Category {
 	@Column(name = "name", nullable = false, length = 50)
 	private String name;
 	
+	@Column(name = "description", columnDefinition = "text" , nullable = false)
+	private String description;
+	
+	@Column(name = "answer", nullable = false)
+	private Integer answer = 0;
+	
 	@Column(name = "enabled", nullable = false)
 	boolean enabled = true;
 
@@ -45,6 +51,22 @@ public class Category {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Integer getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(Integer answer) {
+		this.answer = answer;
 	}
 	
 

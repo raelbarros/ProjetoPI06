@@ -48,10 +48,12 @@ export class CategoryComponent implements OnInit {
 
     //----
     this.addForm = this.formBuild.group({
-      name: ['', Validators.required]
+      name: ['', Validators.required],
+      description: ['', Validators.required]
     });
     this.editForm = this.formBuild.group({
-      name: ['', Validators.required]
+      name: ['', Validators.required],
+      description: ['', Validators.required]
     });
   }
 
@@ -90,9 +92,12 @@ export class CategoryComponent implements OnInit {
 
   saveCategory() {
     this.submitted = true;
+    console.log(this.addForm.value)
     if (!this.addForm.invalid) {
       const c = new Category();
+      
       c.name = this.addForm.value.name;
+      c.description = this.addForm.value.description;
 
       this.categoryService.persist(c).subscribe(() => {
         this.updateTable();
@@ -122,7 +127,8 @@ export class CategoryComponent implements OnInit {
       let c = new Category();
 
       c.id = this.categoryList[id].id;
-      c.name = this.categoryList[id].name
+      c.name = this.categoryList[id].name;
+      c.description = this.categoryList[id].description;
 
       this.categoryService.remove(c).subscribe(() => {
         this.updateTable();
@@ -136,7 +142,11 @@ export class CategoryComponent implements OnInit {
 
     let aux = new Category();
     aux = this.categoryList[this.indexEdit];
-    this.editForm.setValue({ name: aux.name })
+
+    this.editForm.setValue({ 
+      name: aux.name, 
+      description: aux.description 
+    }),
 
     this.editModal.show();
   }
@@ -149,6 +159,7 @@ export class CategoryComponent implements OnInit {
 
       updtCategory = this.categoryList[this.indexEdit];
       updtCategory.name = this.editForm.value.name;
+      updtCategory.description = this.editForm.value.description;
       this.categoryList[this.indexEdit] = updtCategory;
 
       this.categoryService.merge(updtCategory).subscribe(() => {

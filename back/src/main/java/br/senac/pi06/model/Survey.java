@@ -24,10 +24,7 @@ public class Survey {
 	@Column(name = "date_survey")
 	@Temporal(TemporalType.DATE)
 	private Calendar date;
-	
-	@Column(name = "result")
-	private int result;
-	
+		
 	@Column(name = "enabled", nullable = false)
 	boolean enabled = true;
 	
@@ -53,14 +50,6 @@ public class Survey {
 		this.date = date;
 	}
 
-	public int getResult() {
-		return result;
-	}
-
-	public void setResult(int result) {
-		this.result = result;
-	}
-
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -84,6 +73,5 @@ public class Survey {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	
 
 }

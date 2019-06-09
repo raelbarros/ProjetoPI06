@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { ModalDirective } from "angular-bootstrap-md";
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Course } from 'src/app/models/course';
 import { College } from 'src/app/models/college';
 import { CourseService } from 'src/app/services/course/course.service';
@@ -14,12 +15,14 @@ import { Router } from "@angular/router";
   styleUrls: ['./main-page.component.scss']
 })
 export class MainPageComponent implements OnInit {
+
+  @ViewChild('signup') signupModal: ModalDirective;
+  
   listCollege: Array<College> = [];
-  listCourse: Array<Course>;
+  listCourse: Array<Course> = [];
 
   studentForm: FormGroup;
   submitted = false;
-  success = false;
 
   teste = null;
   constructor(private studentService: StudentService, private router: Router, private couseService: CourseService, private collegeService: CollegeService, private fb: FormBuilder) {
@@ -47,6 +50,7 @@ export class MainPageComponent implements OnInit {
 
   saveStudent() {
     this.submitted = true;
+    
     let auxCourse = new Course();
     auxCourse = this.listCourse.find((item) => {
       return item.name == this.studentForm.value.course;
@@ -69,6 +73,12 @@ export class MainPageComponent implements OnInit {
       this.router.navigate(['/survey', studentid.id]);
       this.studentForm.reset();
     })
+  }
+
+  hideSingUpModal(){
+    this.submitted = false;
+    this.studentForm.reset();
+    this.signupModal.hide();
   }
 
   get f() {
