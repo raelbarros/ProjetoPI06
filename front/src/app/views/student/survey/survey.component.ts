@@ -98,7 +98,7 @@ export class SurveyComponent implements OnInit {
       }
     }
 
-    // Contabiliza os total de respostas por categoria
+    // Contabiliza o total de respostas por categoria
     for (const item of this.questionList) {
       for (const ca of this.categoryList) {
         if(ca.name == item.category.name) {
