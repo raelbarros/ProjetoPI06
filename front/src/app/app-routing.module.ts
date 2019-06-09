@@ -18,8 +18,6 @@ const routes: Routes = [
   {path: 'category', component: CategoryComponent},
   {path: 'question', component: QuestionComponent},
   {path: 'survey/:student', component: SurveyComponent} 
-
-
   
 ];
 
