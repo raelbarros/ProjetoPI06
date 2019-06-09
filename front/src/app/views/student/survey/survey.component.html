@@ -79,9 +79,9 @@
         <!-- Call to action -->
         <ul class="list-unstyled list-inline text-center py-2">
             <li class="list-inline-item" *ngIf="!checkQuestionsMissing()">
-                <h5 class="mb-1">Faltam {{questionsMissing.length}} perguntas. </h5>
+                <h5 class="mb-1">Falta(m) {{questionsMissing.length}} pergunta(s). </h5>
             </li>
-            <li class="list-inline-item" *ngIf="lastPage">
+            <li class="list-inline-item" *ngIf="checkQuestionsMissing()">
                 <button type="button" (click)="checkStyle()" mdbBtn color="success" mdbWavesEffect>
                     Finalizar</button>
             </li>
