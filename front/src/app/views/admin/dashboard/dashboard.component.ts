@@ -33,6 +33,8 @@ export class DashboardComponent implements OnInit {
 
   }
 
+
+  //Config Grafico 02
   namesCategory(){
     for (const item of this.categoryList) {
       this.chartLabels02.push(item.name)
@@ -47,10 +49,11 @@ export class DashboardComponent implements OnInit {
         }
       }
 
+      let data = [];
       for (const item of this.categoryList){
-        this.chartDatasets02.data.push(item.answer)
+        data.push(item.answer);
       }
-      console.log(this.categoryList)
+      this.chartDatasets02 = [{data: data, label: 'Resposta'}]
     }
   }
 
@@ -87,16 +90,11 @@ export class DashboardComponent implements OnInit {
   // Grafico 02
   public chartType02: string = 'horizontalBar';
 
-  public chartDatasets02: Array<any> = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Respostas' }
-  ];
-
+  public chartDatasets02: Array<any> = [{
+    data: [65, 59, 80, 81, 56, 55, 40], label: 'My First dataset'
+  }];
 
   public chartLabels02: Array<any>  = [];
-
-  teste(){
-    
-  }
 
   public chartColors02: Array<any> = [
     {

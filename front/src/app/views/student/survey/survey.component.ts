@@ -41,7 +41,7 @@ export class SurveyComponent implements OnInit {
   ngOnInit() {
     this.updateTable();
     this.getIdUrl = this.route.snapshot.paramMap.get('student');
-    
+
     this.studentService.readById(this.getIdUrl).subscribe((studentid) => {
       this.student = studentid;
     });
@@ -78,56 +78,59 @@ export class SurveyComponent implements OnInit {
       if (this.questionList[index].answer == null) {
         this.questionsMissing[this.questionsMissing.length] = index + 1;
       }
-    }
 
+    }
     if (this.questionsMissing.length == 0) {
-      console.log("questionario está completo!");
+
       return true;
     }
   }
 
   checkStyle() {
-    //if (this.checkQuestionsMissing() == true) {/* Mover essa chaves para o final do for */}
+    if (this.checkQuestionsMissing() == true) {
 
-    // verifica se o usuario respondeu 'Concordo'
-    for (const item of this.questionList) {
-      if (item.answer == "true"){
-        if (item.category.answer == NaN || item.category.answer == undefined){
-          item.category.answer = 0;
-        }
-        item.category.answer += 1;
-      }
-    }
-
-    // Contabiliza o total de respostas por categoria
-    for (const item of this.questionList) {
-      for (const ca of this.categoryList) {
-        if(ca.name == item.category.name) {
-          if (ca.answer == NaN || ca.answer == undefined){
-            ca.answer = 0;
+      // verifica se o usuario respondeu 'Concordo'
+      for (const item of this.questionList) {
+        if (item.answer == "true") {
+          if (item.category.answer == NaN || item.category.answer == undefined) {
+            item.category.answer = 0;
           }
-          ca.answer += item.category.answer;
+          item.category.answer += 1;
         }
       }
-    }
-    
-    // Pega a categoria com maior resposta
-    let max = new Category();
-    max.answer = 0;
-    for (const item of this.categoryList) {
-      if(item.answer > max.answer) {
-        max = item;
+
+      // Contabiliza o total de respostas por categoria
+      for (const item of this.questionList) {
+        for (const ca of this.categoryList) {
+          if (ca.name == item.category.name) {
+            if (ca.answer == NaN || ca.answer == undefined) {
+              ca.answer = 0;
+            }
+            ca.answer += item.category.answer;
+          }
+        }
       }
+
+      // Pega a categoria com maior resposta
+      let max = new Category();
+      max.answer = 0;
+      for (const item of this.categoryList) {
+        if (item.answer > max.answer) {
+          max = item;
+        }
+      }
+
+      // Categoria do aluno
+      console.log(max)
+
+      let survey = new Survey();
+      survey.category = max;
+      survey.student = this.student
+
+      this.surveyService.persist(survey).subscribe();
+
+    } else {
+      // mostrar modal com perguntas que faltam
     }
-
-    // Categoria do aluno
-    console.log(max)
-
-    let survey = new Survey();
-    survey.category = max;
-    survey.student = this.student
-
-    this.surveyService.persist(survey).subscribe();
   }
-
 }
