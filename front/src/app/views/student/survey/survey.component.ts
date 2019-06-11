@@ -10,6 +10,7 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { Survey } from 'src/app/models/survet';
 import { SurveyService } from 'src/app/services/survey/survey.service';
 
+
 @Component({
   selector: 'app-survey',
   templateUrl: './survey.component.html',
@@ -18,7 +19,8 @@ import { SurveyService } from 'src/app/services/survey/survey.service';
 export class SurveyComponent implements OnInit {
 
   @ViewChild(MdbTablePaginationComponent) mdbTablePagination: MdbTablePaginationComponent;
-  @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective
+  @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective;
+  @ViewChild('styleModal') styleModal: ModalDirective;
 
   questionList: Array<Question> = [];
   categoryList: Array<Category> = [];
@@ -32,11 +34,13 @@ export class SurveyComponent implements OnInit {
 
   lastPage = false;
 
+
   constructor(private questionService: QuestionService, private categoryService: CategoryService, private surveyService: SurveyService, private route: ActivatedRoute, private studentService: StudentService) {
   }
 
   getIdUrl: string;
   student: Student;
+  styleFinal: Survey;
 
   ngOnInit() {
     this.updateTable();
@@ -87,50 +91,52 @@ export class SurveyComponent implements OnInit {
   }
 
   checkStyle() {
-    if (this.checkQuestionsMissing() == true) {
 
-      // verifica se o usuario respondeu 'Concordo'
-      for (const item of this.questionList) {
-        if (item.answer == "true") {
-          if (item.category.answer == NaN || item.category.answer == undefined) {
-            item.category.answer = 0;
-          }
-          item.category.answer += 1;
+    // verifica se o usuario respondeu 'Concordo'
+    for (const item of this.questionList) {
+      if (item.answer == "true") {
+        if (item.category.answer == NaN || item.category.answer == undefined) {
+          item.category.answer = 0;
         }
+        item.category.answer += 1;
       }
-
-      // Contabiliza o total de respostas por categoria
-      for (const item of this.questionList) {
-        for (const ca of this.categoryList) {
-          if (ca.name == item.category.name) {
-            if (ca.answer == NaN || ca.answer == undefined) {
-              ca.answer = 0;
-            }
-            ca.answer += item.category.answer;
-          }
-        }
-      }
-
-      // Pega a categoria com maior resposta
-      let max = new Category();
-      max.answer = 0;
-      for (const item of this.categoryList) {
-        if (item.answer > max.answer) {
-          max = item;
-        }
-      }
-
-      // Categoria do aluno
-      console.log(max)
-
-      let survey = new Survey();
-      survey.category = max;
-      survey.student = this.student
-
-      this.surveyService.persist(survey).subscribe();
-
-    } else {
-      // mostrar modal com perguntas que faltam
     }
+
+    // Contabiliza o total de respostas por categoria
+    for (const item of this.questionList) {
+      for (const ca of this.categoryList) {
+        if (ca.name == item.category.name) {
+          if (ca.answer == NaN || ca.answer == undefined) {
+            ca.answer = 0;
+          }
+          ca.answer += item.category.answer;
+        }
+      }
+    }
+
+    // Pega a categoria com maior resposta
+    let max = new Category();
+    max.answer = 0;
+    for (const item of this.categoryList) {
+      if (item.answer > max.answer) {
+        max = item;
+      }
+    }
+
+    // Categoria do aluno
+    console.log(max)
+
+    let survey = new Survey();
+    survey.category = max;
+    survey.student = this.student
+
+    this.surveyService.persist(survey).subscribe();
+    this.styleFinal = survey;
+    console.log(this.styleFinal);
+    this.styleModal.show();
   }
+
+
+
+
 }

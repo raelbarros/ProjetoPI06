@@ -12,7 +12,6 @@
                 {{student.lastName| titlecase}}!<span class="caret"></span>
             </a>
         </li>
-
     </ul>
 
 
@@ -21,7 +20,7 @@
 
 
 <div class="container">
-    <div class="row">
+    <div class="row" *ngIf="!styleFinal">
         <table mdbTable #tableEl="mdbTable" class="z-depth-1">
             <thead>
                 <tr>
@@ -71,15 +70,15 @@
 </div>
 
 <!-- Footer -->
-<footer class="page-footer font-small blue pt-4">
+<footer class="page-footer font-small blue pt-4 bottom">
 
     <!-- Footer Elements -->
-    <div class="container">
+    <div class="container" *ngIf="!styleFinal">
 
         <!-- Call to action -->
         <ul class="list-unstyled list-inline text-center py-2">
             <li class="list-inline-item" *ngIf="!checkQuestionsMissing()">
-                <h5 class="mb-1">Falta(m) {{questionsMissing.length}} pergunta(s). </h5>
+                <h5 class="mb-1">Faltam {{questionsMissing.length}} perguntas. </h5>
             </li>
             <li class="list-inline-item" *ngIf="checkQuestionsMissing()">
                 <button type="button" (click)="checkStyle()" mdbBtn color="success" mdbWavesEffect>
@@ -92,10 +91,42 @@
     <!-- Footer Elements -->
 
     <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">© 2018 Copyright:
-        <a href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
+    <div class="footer-copyright text-center py-3">© 2019 Copyright:
+        <a href="https://www.sp.senac.br/"> Israel, Leandro, Mauro e Paulo</a>
     </div>
     <!-- Copyright -->
 
 </footer>
 <!-- Footer -->
+
+
+
+<div mdbModal #styleModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="styleModal.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+
+                <p *ngIf="styleFinal">
+                    Seu estilo de aprendizado é: {{styleFinal.category.name| titlecase}}
+                    {{styleFinal.category.description| titlecase}}!
+                </p>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                    (click)="styleModal.hide()" mdbWavesEffect>Close</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Save
+                    changes</button>
+            </div>
+        </div>
+    </div>
+</div>
