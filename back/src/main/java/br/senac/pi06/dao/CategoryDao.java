@@ -8,7 +8,7 @@ import javax.persistence.Query;
 import br.senac.pi06.model.Category;
 
 public class CategoryDao {
-	
+	// Variaveis
 	private static CategoryDao instance;
 	protected EntityManager em;
 
