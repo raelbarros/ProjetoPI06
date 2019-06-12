@@ -55,7 +55,7 @@ export class DashboardComponent implements OnInit {
         Tipo: item.student.college.tipo,
         Cidade: item.student.college.city.name,
         Estado: item.student.college.state.name,
-        'Data(yyyy-MM-dd)': finalData,
+        'Data(yyyy-mm-dd)': finalData,
         Resultado: item.category.name
       });
     }
