@@ -31,7 +31,7 @@ public class TeacherDao {
 
 	public Teacher getByEmail(final String email) {
 		em.clear();
-		Query query = em.createQuery("FROM Teacher where enabled = 1 AND email=:email");
+		Query query = em.createQuery("FROM Teacher where email=:email");
 		query.setParameter("email", email);
 	
 		try {
@@ -40,12 +40,23 @@ public class TeacherDao {
 			return null;
 		}
 	}
-
-	public Teacher getByUserName(final String teacher) {
-		if(Util.isValidEmailAddress(teacher))
-			return getByEmail(teacher);
-		else 
+	public Teacher getByNickname(final String nick) {
+		em.clear();
+		Query query = em.createQuery("FROM Teacher where nickname=:nickname");
+		query.setParameter("nickname", nick);
+	
+		try {
+			return (Teacher) query.getSingleResult();
+		} catch (Exception e) {
 			return null;
+		}
+	}
+
+	public Teacher getByUserName(final String username) {
+		if(Util.isValidEmailAddress(username))
+			return getByEmail(username);
+		else 
+			return getByNickname(username);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -83,7 +94,6 @@ public class TeacherDao {
 		try {
 			em.getTransaction().begin();
 			Teacher user = getById(id);
-			user.setEnabled(false); 
 			em.merge(user);
 			em.getTransaction().commit();
 		} catch (Exception ex) {

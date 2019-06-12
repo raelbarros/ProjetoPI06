@@ -12,25 +12,13 @@ import br.senac.pi06.model.Authorization;
 import br.senac.pi06.model.Teacher;
 import br.senac.pi06.model.AuthAuthenticatePojo;
 import br.senac.pi06.util.JWTUtil;
-import br.senac.pi06.util.Util;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import io.swagger.annotations.SwaggerDefinition;
-import io.swagger.annotations.Tag;
 
 @Path("auth")
-@Api("/Auth Service")
-@SwaggerDefinition(tags= {@Tag (name="Auth Service", description="REST Endpoint for Auth Service")})
 public class AuthorizationService {
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	@ApiResponses(value = { 
-			@ApiResponse(code = 200, message = "Sucesso! Retornará o JWT Token"),
-			@ApiResponse(code = 403, message = "Usuário ou senha inválida")
-	})
 	public Response authenticateUser(Authorization auth) {
 
 		try {
@@ -66,7 +54,7 @@ public class AuthorizationService {
 	private Teacher authenticate(String username, String password) throws Exception {
 		Teacher user = null;
 		user = TeacherDao.getInstance().getByUserName(username);
-		if(user != null && user.getPassword().equals(Util.sha1(password)))
+		if(user != null && user.getPassword().equals((password)))
 			return user;
 		else
 			throw new Exception();

@@ -10,9 +10,12 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
+import br.senac.pi06.annotation.Secured;
 import br.senac.pi06.dao.CollegeDao;
 import br.senac.pi06.exception.CollegeException;
 import br.senac.pi06.model.College;
@@ -21,10 +24,12 @@ import br.senac.pi06.validator.CollegeValidator;
 
 @Path("/college")
 public class CollegeService {
+	@Context SecurityContext securityContext;
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response create(College college) {
+	@Secured
+	public Response create(College college, @Context SecurityContext securityContext) {
 		try {
 			CollegeException ex = CollegeValidator.validate(college);
 			if (ex != null)
