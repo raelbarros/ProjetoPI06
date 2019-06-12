@@ -1,4 +1,4 @@
-import { MdbTableDirective, MdbTablePaginationComponent, ModalDirective } from "angular-bootstrap-md";
+import { MdbTableDirective, MdbTablePaginationComponent } from "angular-bootstrap-md";
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { QuestionService } from 'src/app/services/question/question.service';
 import { Question } from 'src/app/models/question';
@@ -20,7 +20,6 @@ export class SurveyComponent implements OnInit {
 
   @ViewChild(MdbTablePaginationComponent) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective;
-  @ViewChild('styleModal') styleModal: ModalDirective;
 
   questionList: Array<Question> = [];
   categoryList: Array<Category> = [];
@@ -132,8 +131,6 @@ export class SurveyComponent implements OnInit {
 
     this.surveyService.persist(survey).subscribe();
     this.styleFinal = survey;
-    console.log(this.styleFinal);
-    this.styleModal.show();
   }
 
 
