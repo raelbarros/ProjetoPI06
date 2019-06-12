@@ -7,7 +7,7 @@
           <!--Featured image-->
           <mdb-card wider="true" reverse="true">
             <div class="rounded mx-auto d-block" mdbWavesEffect>
-              <mdb-card-img src="../../../../assets/images/study.jpg" alt="Responsive image">
+              <mdb-card-img src="../../../../assets/images/study.jpg" alt="study">
               </mdb-card-img>
             </div>
 
@@ -32,27 +32,16 @@
                   <p class="text-black-50">O questionário será anônimo, não será divulgado o nome do aluno que colaborou
                     com esta pesquisa.</p>
                 </div>
-              </div><br>
-
-              <div>
-
-
-                <!--Comments-->
-                <a mdbBtn color="success" class="waves-light" (click)="signup.show()" mdbWavesEffect>
-                  <span class="clearfix d-none d-md-inline-block " >Iniciar pesquisa
-                    <i class="fas fa-chevron-right pl-2 waves-light" mdbWavesEffect></i></span>
-                </a>
-
               </div>
-              <!--Social shares-->
+              <br>
+              <div>
+                <button mdbBtn color="success" rounded="true" class="my-4 waves-effect z-depth-0" mdbWavesEffect
+                  (click)="signup.show()">Iniciar Pesquisa</button>
+              </div>
             </mdb-card-body>
-            <!--Post data-->
           </mdb-card>
-
         </div>
       </div>
-      <!--Grid row-->
-
     </section>
   </div>
 </div>
