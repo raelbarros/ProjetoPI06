@@ -1,7 +1,6 @@
 package br.senac.pi06.service;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;

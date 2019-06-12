@@ -3,6 +3,7 @@ import { SurveyService } from 'src/app/services/survey/survey.service';
 import { Survey } from 'src/app/models/survet';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { Category } from 'src/app/models/category';
+import { ExcelService } from 'src/app/services/excel/excel.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,26 +14,56 @@ export class DashboardComponent implements OnInit {
 
   surveyList: Array<Survey> = [];
   categoryList: Array<Category> = [];
+  dataExcel: any = [];
 
-  constructor(private surveyService: SurveyService, private categoryService: CategoryService) { }
+
+  constructor(private excelService: ExcelService, private surveyService: SurveyService, private categoryService: CategoryService) { }
 
   ngOnInit() {
     this.surveyService.read().subscribe((list) => {
       this.surveyList = list;
-      console.log(this.surveyList)
-    })
+
+      this.createDataExcel()
+    });
 
     this.categoryService.read().subscribe((list) => {
       this.categoryList = list;
 
- 
       this.namesCategory();
       this.countAnswers();
-
-    })
+    });
 
   }
 
+  // Data Excel
+  createDataExcel(){
+    for (const item of this.surveyList){
+
+      let auxData = new Date(item.date);
+      let years = auxData.getFullYear();
+      let month = auxData.getMonth() + 1;
+      let day = auxData.getDate();
+      let finalData = years + '-' + month + '-' + day;
+
+      this.dataExcel.push({
+        Aluno:item.student.firstName,
+        Sobrenome: item.student.lastName,
+        Email: item.student.email,
+        Curso:item.student.course.name,
+        Periodo: item.student.periodo,
+        Faculdade: item.student.college.name,
+        Tipo: item.student.college.tipo,
+        Cidade: item.student.college.city.name,
+        Estado: item.student.college.state.name,
+        'Data(yyyy-MM-dd)': finalData,
+        Resultado: item.category.name
+      });
+    }
+  }
+
+  downloadExcel(){
+    this.excelService.exportAsExcelFile(this.dataExcel, new Date().toLocaleDateString())
+  }
 
   //Config Grafico 02
   namesCategory(){
