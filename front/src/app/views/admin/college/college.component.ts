@@ -179,7 +179,6 @@ export class CollegeComponent implements OnInit {
 
     let aux = new College();
     aux = this.collegeList[this.indexEdit];
-    console.log(aux.state.uf)
 
     this.editForm.setValue({
 
@@ -223,7 +222,7 @@ export class CollegeComponent implements OnInit {
       this.collegeService.merge(updtCourse).subscribe(() => {
         this.updateTable();
         this.editForm.reset();
-        this.editModal.hide();
+        this.hideEditModal();
       });
       this.submitted = false;
     }

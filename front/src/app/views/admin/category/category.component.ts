@@ -172,9 +172,9 @@ export class CategoryComponent implements OnInit {
       this.categoryList[this.indexEdit] = updtCategory;
 
       this.categoryService.merge(updtCategory).subscribe(() => {
-        this.success = true;
         this.updateTable();
         this.editForm.reset();
+        this.hideEditModal();
       });
       this.submitted = false;
     }

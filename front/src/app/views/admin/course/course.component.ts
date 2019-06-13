@@ -162,9 +162,9 @@ export class CourseComponent implements OnInit {
       this.courseList[this.indexEdit] = updtCourse;
 
       this.courseService.merge(updtCourse).subscribe(() => {
-        this.success = true;
         this.updateTable();
         this.editForm.reset();
+        this.hideEditModal();
       });
       this.submitted = false;
     }

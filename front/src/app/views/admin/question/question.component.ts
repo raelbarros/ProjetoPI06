@@ -186,9 +186,9 @@ export class QuestionComponent implements OnInit {
       this.questionList[this.indexEdit] = updtQuestion;
 
       this.questionService.merge(updtQuestion).subscribe(() => {
-        this.success = true;
         this.updateTable();
         this.editForm.reset();
+        this.hideEditModal();
       });
       this.submitted = false;
     } 
