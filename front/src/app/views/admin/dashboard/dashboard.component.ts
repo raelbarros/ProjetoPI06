@@ -3,6 +3,9 @@ import { SurveyService } from 'src/app/services/survey/survey.service';
 import { Survey } from 'src/app/models/survet';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { Category } from 'src/app/models/category';
+import { ExcelService } from 'src/app/services/excel/excel.service';
+
+import { NgxUiLoaderService } from 'ngx-ui-loader'; 
 
 @Component({
   selector: 'app-dashboard',
@@ -13,26 +16,61 @@ export class DashboardComponent implements OnInit {
 
   surveyList: Array<Survey> = [];
   categoryList: Array<Category> = [];
+  dataExcel: any = [];
 
-  constructor(private surveyService: SurveyService, private categoryService: CategoryService) { }
+
+  constructor(private loadService: NgxUiLoaderService, private excelService: ExcelService, private surveyService: SurveyService, private categoryService: CategoryService) { }
 
   ngOnInit() {
+    this.loadService.start();
+
     this.surveyService.read().subscribe((list) => {
       this.surveyList = list;
-      console.log(this.surveyList)
-    })
+      
+      this.categoryService.read().subscribe((list) => {
+        this.categoryList = list;
+  
 
-    this.categoryService.read().subscribe((list) => {
-      this.categoryList = list;
-
- 
+      this.createDataExcel();
+  
       this.namesCategory();
       this.countAnswers();
 
-    })
+      this.loadService.stop();
+    });
+  });
 
   }
 
+  // Data Excel
+  createDataExcel(){
+    for (const item of this.surveyList){
+
+      let auxData = new Date(item.date);
+      let years = auxData.getFullYear();
+      let month = auxData.getMonth() + 1;
+      let day = auxData.getDate();
+      let finalData = years + '-' + month + '-' + day;
+
+      this.dataExcel.push({
+        Aluno:item.student.firstName,
+        Sobrenome: item.student.lastName,
+        Email: item.student.email,
+        Curso:item.student.course.name,
+        Periodo: item.student.periodo,
+        Faculdade: item.student.college.name,
+        Tipo: item.student.college.tipo,
+        Cidade: item.student.college.city.name,
+        Estado: item.student.college.state.name,
+        'Data(yyyy-mm-dd)': finalData,
+        Resultado: item.category.name
+      });
+    }
+  }
+
+  downloadExcel(){
+    this.excelService.exportAsExcelFile(this.dataExcel, new Date().toLocaleDateString());
+  }
 
   //Config Grafico 02
   namesCategory(){

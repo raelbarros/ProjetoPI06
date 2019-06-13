@@ -3,9 +3,10 @@ import { MdbTableDirective, MdbTablePaginationComponent, ModalDirective } from "
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CollegeService } from 'src/app/services/college/college.service';
 import { College } from 'src/app/models/college';
-import { State } from "src/app/models/state";
+import { NgxUiLoaderService } from 'ngx-ui-loader'; 
+
 import { Observable } from 'rxjs';
-import { City } from 'src/app/models/city';
+
 
 @Component({
   selector: 'app-college',
@@ -43,7 +44,7 @@ export class CollegeComponent implements OnInit {
   indexEdit = null;
   idRemove = null;
 
-  constructor(private collegeService: CollegeService, private formBuild: FormBuilder) { }
+  constructor(private loadService: NgxUiLoaderService, private collegeService: CollegeService, private formBuild: FormBuilder) { }
 
   @HostListener('input') oninput() {
     this.mdbTablePagination.searchText = this.searchText;
@@ -82,11 +83,16 @@ export class CollegeComponent implements OnInit {
   }
 
   updateTable() {
+    this.loadService.start();
+
     this.collegeService.read().subscribe(list => {
       this.collegeList = list;
+
       this.mdbTable.setDataSource(this.collegeList);
       this.collegeList = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
+
+      this.loadService.stop();
     });
   }
 

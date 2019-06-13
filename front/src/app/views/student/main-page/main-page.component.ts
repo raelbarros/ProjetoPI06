@@ -8,6 +8,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Student } from 'src/app/models/sudent';
 import { StudentService } from 'src/app/services/student/student.service';
 import { Router } from "@angular/router";
+import { NgxUiLoaderService } from 'ngx-ui-loader'; 
+
 
 @Component({
   selector: 'app-main-page',
@@ -25,18 +27,23 @@ export class MainPageComponent implements OnInit {
   submitted = false;
 
   teste = null;
-  constructor(private studentService: StudentService, private router: Router, private couseService: CourseService, private collegeService: CollegeService, private fb: FormBuilder) {
+  constructor(private loadService: NgxUiLoaderService, private studentService: StudentService, private router: Router, private couseService: CourseService, private collegeService: CollegeService, private fb: FormBuilder) {
  
   }
 
   ngOnInit() {
+    this.loadService.start();
+
     this.couseService.read().subscribe((list) => {
       this.listCourse = list;
-    })
 
-    this.collegeService.read().subscribe((list) => {
-      this.listCollege = list;
-    })
+      this.collegeService.read().subscribe((list) => {
+        this.listCollege = list;
+      });
+
+      this.loadService.stop();
+    });
+
 
     this.studentForm = this.fb.group({
       firstName: [null, Validators.required],

@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CourseService } from 'src/app/services/course/course.service';
 import { Course } from 'src/app/models/course';
 import { ActivatedRoute } from '@angular/router';
+import { NgxUiLoaderService } from 'ngx-ui-loader'; 
+
 
 @Component({
   selector: 'app-course',
@@ -38,14 +40,12 @@ export class CourseComponent implements OnInit {
 
 
 
-  constructor(private courseService: CourseService, private formBuild: FormBuilder, private route: ActivatedRoute) {
+  constructor(private loadService: NgxUiLoaderService, private courseService: CourseService, private formBuild: FormBuilder, private route: ActivatedRoute) {
   }
 
   @HostListener('input') oninput() {
     this.mdbTablePagination.searchText = this.searchText;
   }
-
- 
 
   ngOnInit() {
     this.updateTable();
@@ -59,12 +59,16 @@ export class CourseComponent implements OnInit {
   }
 
   updateTable() {
+    this.loadService.start();
+
     this.courseService.read().subscribe(list => {
       this.courseList = list;
 
       this.mdbTable.setDataSource(this.courseList);
       this.courseList = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
+      
+      this.loadService.stop();
     });
 
   }
