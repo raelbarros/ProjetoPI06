@@ -1,26 +1,21 @@
 
+import { HttpInterceptor, HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { HttpInterceptor, HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpErrorResponse} from "@angular/common/http";
-
 import { Observable, throwError } from "rxjs";
 import { map, catchError } from "rxjs/operators";
-//import { Globals } from "../services/globals";
 import { Router } from "@angular/router";
-//import { AuthService } from "../services/auth/auth.service";
+import { AuthService } from '../services/auth/auth.service';
 
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
-    constructor(private router: Router) { }
+    constructor(private router: Router, private auth: AuthService) { }
     intercept(
         request: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
-        //this.globals.loading = true;
         const token: string = localStorage.getItem("token");
 
         if (token) {
-            console.log(token);
-
             request = request.clone({
                 headers: request.headers.set("Authorization", "Bearer " + token)
             });
@@ -47,10 +42,9 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             catchError((error: HttpErrorResponse) => {
                 console.log("error interceptor--->>>", error, request.body);
 
-                //this.globals.loading = false;
                 if (error.status == 401) {
-                    // this.authSvc.logout();
-                    this.router.navigate(["/login"]);
+                    this.auth.logout()
+                    this.router.navigate([""]);
                 }
 
                 let data = {};

@@ -6,6 +6,8 @@ import { Category } from 'src/app/models/category';
 import { ExcelService } from 'src/app/services/excel/excel.service';
 
 import { NgxUiLoaderService } from 'ngx-ui-loader'; 
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +21,12 @@ export class DashboardComponent implements OnInit {
   dataExcel: any = [];
 
 
-  constructor(private loadService: NgxUiLoaderService, private excelService: ExcelService, private surveyService: SurveyService, private categoryService: CategoryService) { }
+  constructor(private router: Router, private auth: AuthService, private loadService: NgxUiLoaderService, private excelService: ExcelService, private surveyService: SurveyService, private categoryService: CategoryService) { 
+    if(!this.auth.isAuthenticated()){
+      console.log('oi')
+      this.router.navigate(['']);
+    }
+  }
 
   ngOnInit() {
     this.loadService.start();

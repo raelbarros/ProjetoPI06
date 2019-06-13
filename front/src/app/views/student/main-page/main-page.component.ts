@@ -9,6 +9,8 @@ import { Student } from 'src/app/models/sudent';
 import { StudentService } from 'src/app/services/student/student.service';
 import { Router } from "@angular/router";
 import { NgxUiLoaderService } from 'ngx-ui-loader'; 
+import { User } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 
 @Component({
@@ -24,10 +26,11 @@ export class MainPageComponent implements OnInit {
   listCourse: Array<Course> = [];
 
   studentForm: FormGroup;
+  loginForm: FormGroup;
   submitted = false;
 
   teste = null;
-  constructor(private loadService: NgxUiLoaderService, private studentService: StudentService, private router: Router, private couseService: CourseService, private collegeService: CollegeService, private fb: FormBuilder) {
+  constructor(private auth: AuthService, private loadService: NgxUiLoaderService, private studentService: StudentService, private router: Router, private couseService: CourseService, private collegeService: CollegeService, private fb: FormBuilder) {
  
   }
 
@@ -52,6 +55,11 @@ export class MainPageComponent implements OnInit {
       college: [null, Validators.required],
       course: [null, Validators.required],
       periodo: [null, Validators.required]
+    });
+
+    this.loginForm = this.fb.group({
+      username: [null, Validators.required],
+      password: [null, Validators.required],
     });
   }
 
@@ -86,6 +94,23 @@ export class MainPageComponent implements OnInit {
     this.submitted = false;
     this.studentForm.reset();
     this.signupModal.hide();
+  }
+
+  login(){
+    let user:any = {
+      username: null,
+      password: null,
+    };
+
+    console.log(this.loginForm.value)
+
+    user.username = this.loginForm.value.username
+    user.password = this.loginForm.value.password
+    console.log(user)
+    this.auth.login(user).subscribe((user) => {
+      localStorage.setItem('token', user.token);
+      this.router.navigate(['/admin']);
+    })
   }
 
   get f() {

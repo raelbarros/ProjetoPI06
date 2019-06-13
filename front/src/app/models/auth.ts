@@ -1,6 +1,6 @@
-import { UserModel } from './user';
+import { User } from './user';
 
 export class AuthModel {
     public token: string;
-    public user: UserModel;
+    public user: User;
 }

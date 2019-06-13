@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { CourseComponent } from './views/admin/course/course.component';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { MainPageComponent } from './views/student/main-page/main-page.component';
 import { MenuBarAdminComponent } from './views/admin/main-layout/menu-bar-admin/menu-bar-admin.component';
@@ -17,6 +17,7 @@ import { QuestionComponent } from './views/admin/question/question.component';
 import { SurveyComponent } from './views/student/survey/survey.component';
 
 import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from  'ngx-ui-loader';
+import { HttpConfigInterceptor } from './interceptor/http.interceptor';
 
 
 @NgModule({
@@ -42,7 +43,9 @@ import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from  'ngx-ui-loader';
     NgxUiLoaderModule,
     NgxUiLoaderHttpModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
