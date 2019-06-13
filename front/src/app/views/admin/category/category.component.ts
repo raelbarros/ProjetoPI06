@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { Category } from 'src/app/models/category';
 import { NgxUiLoaderService } from 'ngx-ui-loader'; 
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-category',
@@ -38,7 +39,7 @@ export class CategoryComponent implements OnInit {
   indexEdit = null;
   idRemove = null;
 
-  constructor(private loadService: NgxUiLoaderService, private categoryService: CategoryService, private formBuild: FormBuilder) { }
+  constructor(private auth: AuthService, private loadService: NgxUiLoaderService, private categoryService: CategoryService, private formBuild: FormBuilder) { }
 
   @HostListener('input') oninput() {
     this.mdbTablePagination.searchText = this.searchText;
@@ -46,6 +47,9 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit() {
     this.updateTable();
+
+    // Verifica se eh um adm
+      this.auth.isAdmin();
 
     //----
     this.addForm = this.formBuild.group({

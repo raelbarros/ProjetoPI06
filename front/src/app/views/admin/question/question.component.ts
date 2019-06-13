@@ -6,6 +6,7 @@ import { QuestionService } from 'src/app/services/question/question.service';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { Question } from 'src/app/models/question';
 import { NgxUiLoaderService } from 'ngx-ui-loader'; 
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-question',
@@ -41,7 +42,7 @@ export class QuestionComponent implements OnInit {
   indexEdit = null;
   idRemove = null;
 
-  constructor(private loadService: NgxUiLoaderService, private questionService: QuestionService, private categoryService: CategoryService, private formBuild: FormBuilder) { }
+  constructor(private auth: AuthService, private loadService: NgxUiLoaderService, private questionService: QuestionService, private categoryService: CategoryService, private formBuild: FormBuilder) { }
 
   @HostListener('input') oninput() {
     this.mdbTablePagination.searchText = this.searchText;
@@ -51,6 +52,9 @@ export class QuestionComponent implements OnInit {
     this.categoryService.read().subscribe((list) => {
       this.categoryList = list;
     })
+
+    // Verifica se eh um adm
+    this.auth.isAdmin();
 
     /* formulary add question */
     this.addForm = this.formBuild.group({

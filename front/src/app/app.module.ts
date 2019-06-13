@@ -18,6 +18,8 @@ import { SurveyComponent } from './views/student/survey/survey.component';
 
 import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from  'ngx-ui-loader';
 import { HttpConfigInterceptor } from './interceptor/http.interceptor';
+import { LoginComponent } from './views/admin/login/login.component';
+import { PageNotFoundComponent } from './views/student/page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -32,6 +34,8 @@ import { HttpConfigInterceptor } from './interceptor/http.interceptor';
     CategoryComponent,
     QuestionComponent,
     SurveyComponent,
+    LoginComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,

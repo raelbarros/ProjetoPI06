@@ -21,15 +21,14 @@ export class DashboardComponent implements OnInit {
   dataExcel: any = [];
 
 
-  constructor(private router: Router, private auth: AuthService, private loadService: NgxUiLoaderService, private excelService: ExcelService, private surveyService: SurveyService, private categoryService: CategoryService) { 
-    if(!this.auth.isAuthenticated()){
-      console.log('oi')
-      this.router.navigate(['']);
-    }
+  constructor(private auth: AuthService, private loadService: NgxUiLoaderService, private excelService: ExcelService, private surveyService: SurveyService, private categoryService: CategoryService) { 
   }
 
   ngOnInit() {
     this.loadService.start();
+
+    // Verifica se eh um adm
+    this.auth.isAdmin();
 
     this.surveyService.read().subscribe((list) => {
       this.surveyList = list;
@@ -44,9 +43,8 @@ export class DashboardComponent implements OnInit {
       this.countAnswers();
 
       this.loadService.stop();
+      });
     });
-  });
-
   }
 
   // Data Excel

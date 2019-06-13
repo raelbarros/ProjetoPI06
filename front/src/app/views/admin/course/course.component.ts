@@ -5,6 +5,7 @@ import { CourseService } from 'src/app/services/course/course.service';
 import { Course } from 'src/app/models/course';
 import { ActivatedRoute } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader'; 
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 
 @Component({
@@ -38,9 +39,7 @@ export class CourseComponent implements OnInit {
   indexEdit = null;
   idRemove = null;
 
-
-
-  constructor(private loadService: NgxUiLoaderService, private courseService: CourseService, private formBuild: FormBuilder, private route: ActivatedRoute) {
+  constructor(private auth: AuthService, private loadService: NgxUiLoaderService, private courseService: CourseService, private formBuild: FormBuilder, private route: ActivatedRoute) {
   }
 
   @HostListener('input') oninput() {
@@ -49,6 +48,9 @@ export class CourseComponent implements OnInit {
 
   ngOnInit() {
     this.updateTable();
+
+    // Verifica se eh um adm
+    this.auth.isAdmin();
 
     this.addForm = this.formBuild.group({
       name: ['', Validators.required]

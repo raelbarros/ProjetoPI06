@@ -10,7 +10,7 @@ export class AuthService {
   url: string;
 
   constructor(private http: HttpClient, private router: Router) {
-    this.url =  "http://localhost:8085/pi06/servicos/auth";
+    this.url =  "http://localhost:8080/pi06/servicos/auth";
   }
 
   public login(user): Observable<any>{
@@ -28,5 +28,11 @@ export class AuthService {
   public logout() {
     localStorage.clear();
     this.router.navigate(['']);
+  }
+
+  isAdmin(){
+    if(!this.isAuthenticated()){
+      this.router.navigate(['']);
+    }
   }
 }

@@ -6,6 +6,7 @@ import { College } from 'src/app/models/college';
 import { NgxUiLoaderService } from 'ngx-ui-loader'; 
 
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 
 @Component({
@@ -44,7 +45,7 @@ export class CollegeComponent implements OnInit {
   indexEdit = null;
   idRemove = null;
 
-  constructor(private loadService: NgxUiLoaderService, private collegeService: CollegeService, private formBuild: FormBuilder) { }
+  constructor(private auth: AuthService, private loadService: NgxUiLoaderService, private collegeService: CollegeService, private formBuild: FormBuilder) { }
 
   @HostListener('input') oninput() {
     this.mdbTablePagination.searchText = this.searchText;
@@ -58,6 +59,9 @@ export class CollegeComponent implements OnInit {
 
   ngOnInit() {
     this.updateTable();
+
+    // Verifica se eh um adm
+    this.auth.isAdmin();
 
     // this.listState = this.collegeService.readState();
 
