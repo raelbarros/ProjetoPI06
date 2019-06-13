@@ -16,6 +16,8 @@ import { CategoryComponent } from './views/admin/category/category.component';
 import { QuestionComponent } from './views/admin/question/question.component';
 import { SurveyComponent } from './views/student/survey/survey.component';
 
+import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from  'ngx-ui-loader';
+
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { SurveyComponent } from './views/student/survey/survey.component';
     MDBBootstrapModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxUiLoaderModule,
+    NgxUiLoaderHttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]

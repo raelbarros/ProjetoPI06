@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef, HostListener, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener, ElementRef } from '@angular/core';
 import { MdbTableDirective, MdbTablePaginationComponent, ModalDirective } from "angular-bootstrap-md";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Category } from 'src/app/models/category';
 import { QuestionService } from 'src/app/services/question/question.service';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { Question } from 'src/app/models/question';
+import { NgxUiLoaderService } from 'ngx-ui-loader'; 
 
 @Component({
   selector: 'app-question',
@@ -40,7 +41,7 @@ export class QuestionComponent implements OnInit {
   indexEdit = null;
   idRemove = null;
 
-  constructor(private questionService: QuestionService, private categoryService: CategoryService, private formBuild: FormBuilder) { }
+  constructor(private loadService: NgxUiLoaderService, private questionService: QuestionService, private categoryService: CategoryService, private formBuild: FormBuilder) { }
 
   @HostListener('input') oninput() {
     this.mdbTablePagination.searchText = this.searchText;
@@ -67,12 +68,16 @@ export class QuestionComponent implements OnInit {
   }
 
   updateTable() {
+    this.loadService.start();
+
     this.questionService.read().subscribe(list => {
       this.questionList = list;
 
       this.mdbTable.setDataSource(list);
       this.questionList = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
+
+      this.loadService.stop();
     });
 
   }

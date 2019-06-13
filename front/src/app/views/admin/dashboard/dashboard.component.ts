@@ -5,6 +5,8 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { Category } from 'src/app/models/category';
 import { ExcelService } from 'src/app/services/excel/excel.service';
 
+import { NgxUiLoaderService } from 'ngx-ui-loader'; 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -17,21 +19,26 @@ export class DashboardComponent implements OnInit {
   dataExcel: any = [];
 
 
-  constructor(private excelService: ExcelService, private surveyService: SurveyService, private categoryService: CategoryService) { }
+  constructor(private loadService: NgxUiLoaderService, private excelService: ExcelService, private surveyService: SurveyService, private categoryService: CategoryService) { }
 
   ngOnInit() {
+    this.loadService.start();
+
     this.surveyService.read().subscribe((list) => {
       this.surveyList = list;
+      
+      this.categoryService.read().subscribe((list) => {
+        this.categoryList = list;
+  
 
-      this.createDataExcel()
-    });
-
-    this.categoryService.read().subscribe((list) => {
-      this.categoryList = list;
-
+      this.createDataExcel();
+  
       this.namesCategory();
       this.countAnswers();
+
+      this.loadService.stop();
     });
+  });
 
   }
 
@@ -62,7 +69,7 @@ export class DashboardComponent implements OnInit {
   }
 
   downloadExcel(){
-    this.excelService.exportAsExcelFile(this.dataExcel, new Date().toLocaleDateString())
+    this.excelService.exportAsExcelFile(this.dataExcel, new Date().toLocaleDateString());
   }
 
   //Config Grafico 02

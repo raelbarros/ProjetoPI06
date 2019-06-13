@@ -3,6 +3,7 @@ import { MdbTableDirective, MdbTablePaginationComponent, ModalDirective } from "
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { Category } from 'src/app/models/category';
+import { NgxUiLoaderService } from 'ngx-ui-loader'; 
 
 @Component({
   selector: 'app-category',
@@ -37,7 +38,7 @@ export class CategoryComponent implements OnInit {
   indexEdit = null;
   idRemove = null;
 
-  constructor(private categoryService: CategoryService, private formBuild: FormBuilder) { }
+  constructor(private loadService: NgxUiLoaderService, private categoryService: CategoryService, private formBuild: FormBuilder) { }
 
   @HostListener('input') oninput() {
     this.mdbTablePagination.searchText = this.searchText;
@@ -58,12 +59,16 @@ export class CategoryComponent implements OnInit {
   }
 
   updateTable() {
+    this.loadService.start();
+
     this.categoryService.read().subscribe(list => {
       this.categoryList = list;
 
       this.mdbTable.setDataSource(this.categoryList);
       this.categoryList = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
+
+      this.loadService.stop();
     });
 
   }

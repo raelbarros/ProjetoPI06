@@ -9,6 +9,7 @@ import { Category } from 'src/app/models/category';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { Survey } from 'src/app/models/survet';
 import { SurveyService } from 'src/app/services/survey/survey.service';
+import { NgxUiLoaderService } from 'ngx-ui-loader'; 
 
 
 @Component({
@@ -34,7 +35,7 @@ export class SurveyComponent implements OnInit {
   lastPage = false;
 
 
-  constructor(private questionService: QuestionService, private categoryService: CategoryService, private surveyService: SurveyService, private route: ActivatedRoute, private studentService: StudentService) {
+  constructor(private loadService: NgxUiLoaderService, private questionService: QuestionService, private categoryService: CategoryService, private surveyService: SurveyService, private route: ActivatedRoute, private studentService: StudentService) {
   }
 
   getIdUrl: string;
@@ -56,12 +57,16 @@ export class SurveyComponent implements OnInit {
   }
 
   updateTable() {
+    this.loadService.start();
+
     this.questionService.read().subscribe((list) => {
       this.questionList = list;
 
       this.mdbTable.setDataSource(this.questionList);
       this.questionList = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
+
+      this.loadService.stop();
     });
   }
 
