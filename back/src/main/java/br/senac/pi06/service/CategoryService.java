@@ -10,9 +10,12 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
+import br.senac.pi06.annotation.Secured;
 import br.senac.pi06.dao.CategoryDao;
 import br.senac.pi06.exception.CategoryException;
 import br.senac.pi06.model.Category;
@@ -21,10 +24,12 @@ import br.senac.pi06.validator.CategoryValidator;
 
 @Path("/category")
 public class CategoryService {
+	@Context SecurityContext securityContext;
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response create(Category c) {
+	@Secured
+	public Response create(Category c, @Context SecurityContext securityContext) {
 		try {
 			CategoryException ex = CategoryValidator.validate(c);
 			if (ex != null)
@@ -68,7 +73,8 @@ public class CategoryService {
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(Category c) {
+	@Secured
+	public Response update(Category c, @Context SecurityContext securityContext) {
 		try {
 			CategoryException ex = CategoryValidator.validate(c);
 			if (ex != null)
@@ -86,7 +92,8 @@ public class CategoryService {
 	}
 
 	@DELETE
-	public Response delete(Category c) {
+	@Secured
+	public Response delete(Category c, @Context SecurityContext securityContext) {
 		try {
 			CategoryDao.getInstance().remove(c);
 			return Util.printOk();
@@ -98,7 +105,8 @@ public class CategoryService {
 
 	@DELETE
 	@Path("/{id}")
-	public Response deleteById(@PathParam("id") int id) {
+	@Secured
+	public Response deleteById(@PathParam("id") int id, @Context SecurityContext securityContext) {
 		try {
 			CategoryDao.getInstance().removeById(id);
 			return Util.printOk();

@@ -72,9 +72,12 @@ public class CollegeService {
 		}
 	}
 
+	
+	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(College college) {
+	@Secured
+	public Response update(College college, @Context SecurityContext securityContext) {
 		try {
 			CollegeException ex = CollegeValidator.validate(college);
 			if (ex != null)
@@ -92,7 +95,8 @@ public class CollegeService {
 	}
 
 	@DELETE
-	public Response delete(College college) {
+	@Secured
+	public Response delete(College college, @Context SecurityContext securityContext) {
 		try {
 			CollegeDao.getInstance().remove(college);
 			return Util.printOk();
@@ -104,7 +108,8 @@ public class CollegeService {
 
 	@DELETE
 	@Path("/{id}")
-	public Response deleteById(@PathParam("id") int id) {
+	@Secured
+	public Response deleteById(@PathParam("id") int id, @Context SecurityContext securityContext) {
 		try {
 			CollegeDao.getInstance().removeById(id);
 			return Util.printOk();

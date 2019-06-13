@@ -10,9 +10,12 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
+import br.senac.pi06.annotation.Secured;
 import br.senac.pi06.dao.CourseDao;
 import br.senac.pi06.exception.CourseException;
 import br.senac.pi06.model.Course;
@@ -21,10 +24,12 @@ import br.senac.pi06.validator.CourseValidator;
 
 @Path("/course")
 public class CourseService {
+	@Context SecurityContext securityContext;
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response create(Course course) {
+	@Secured
+	public Response create(Course course, @Context SecurityContext securityContext) {
 		try {
 			CourseException ex = CourseValidator.validate(course);
 			if (ex != null)
@@ -69,7 +74,8 @@ public class CourseService {
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(Course course) {
+	@Secured
+	public Response update(Course course, @Context SecurityContext securityContext) {
 		try {
 			CourseException ex = CourseValidator.validate(course);
 			if (ex != null)
@@ -88,7 +94,8 @@ public class CourseService {
 	}
 
 	@DELETE
-	public Response delete(Course course) {
+	@Secured
+	public Response delete(Course course, @Context SecurityContext securityContext) {
 		try {
 			CourseDao.getInstance().remove(course);
 			return Util.printOk();
@@ -100,7 +107,8 @@ public class CourseService {
 
 	@DELETE
 	@Path("/{id}")
-	public Response deleteById(@PathParam("id") int id) {
+	@Secured
+	public Response deleteById(@PathParam("id") int id, @Context SecurityContext securityContext) {
 		try {
 			CourseDao.getInstance().removeById(id);
 			return Util.printOk();

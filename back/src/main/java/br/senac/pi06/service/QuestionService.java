@@ -10,9 +10,12 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
+import br.senac.pi06.annotation.Secured;
 import br.senac.pi06.dao.QuestionDao;
 import br.senac.pi06.exception.QuestionException;
 import br.senac.pi06.model.Question;
@@ -21,10 +24,12 @@ import br.senac.pi06.validator.QuestionValidator;
 
 @Path("/question")
 public class QuestionService {
+	@Context SecurityContext securityContext;
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response create(Question q) {
+	@Secured
+	public Response create(Question q, @Context SecurityContext securityContext) {
 		try {
 			QuestionException ex = QuestionValidator.validate(q);
 			if (ex != null)
@@ -68,7 +73,8 @@ public class QuestionService {
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(Question q) {
+	@Secured
+	public Response update(Question q, @Context SecurityContext securityContext) {
 		try {
 			QuestionException ex = QuestionValidator.validate(q);
 			if (ex != null)
@@ -86,7 +92,8 @@ public class QuestionService {
 	}
 
 	@DELETE
-	public Response delete(Question q) {
+	@Secured
+	public Response delete(Question q, @Context SecurityContext securityContext) {
 		try {
 			QuestionDao.getInstance().remove(q);
 			return Util.printOk();
@@ -98,7 +105,8 @@ public class QuestionService {
 
 	@DELETE
 	@Path("/{id}")
-	public Response deleteById(@PathParam("id") int id) {
+	@Secured
+	public Response deleteById(@PathParam("id") int id, @Context SecurityContext securityContext) {
 		try {
 			QuestionDao.getInstance().removeById(id);
 			return Util.printOk();
