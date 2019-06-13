@@ -1,20 +1,23 @@
 <div class="container">
-  <div class="d-flex p-2 col-example">
+  <div class="row">
+    <div class="col-12 col-md-auto" id="centered">
 
-      <form  [formGroup]="loginForm" (ngSubmit)="login()" class="text-center border border-light p-5">
+      <form id="form" [formGroup]="loginForm" (ngSubmit)="login()" class="text-center border border-light p-5">
 
-          <p class="h4 mb-4">Login!</p>
+        <p class="h4 mb-4">Login!</p>
 
-          <!-- Email -->
-          <input type="username" id="defaultLoginForm" class="form-control mb-4" placeholder="Username" formControlName="username">
-  
-          <!-- Password -->
-          <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password" formControlName="password">
-  
-          <!-- Sign in button -->
-          <button mdbBtn color="success" block="true" class="my-4" type="submit">Entrar</button>
-  
+        <!-- Email -->
+        <input type="username" id="defaultLoginForm" class="form-control mb-4" placeholder="Username"
+          formControlName="username">
+
+        <!-- Password -->
+        <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password"
+          formControlName="password">
+
+        <!-- Sign in button -->
+        <button mdbBtn color="success" block="true" class="my-4" type="submit">Entrar</button>
+
       </form>
-
+    </div>
   </div>
 </div>

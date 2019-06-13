@@ -1,0 +1,13 @@
+body, html {
+    height: 100%;
+}
+
+#centered {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+#form{
+    box-shadow: 0 0 1em grey;
+}
