@@ -7,6 +7,7 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { Question } from 'src/app/models/question';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-question',
@@ -123,16 +124,10 @@ export class QuestionComponent implements OnInit {
         this.updateTable();
         this.success = true;
         this.addForm.reset();
+        this.showSucessAlert('save');
       });
       this.submitted = false;
     }
-  }
-
-  closeAlert() {
-    this.alert.nativeElement.classList.remove('show');
-    this.addForm.reset();
-    this.editForm.reset();
-    this.success = false;
   }
 
   removeQuestion(id: any) {
@@ -152,6 +147,7 @@ export class QuestionComponent implements OnInit {
 
       this.questionService.remove(q).subscribe(() => {
         this.updateTable();
+        this.showSucessAlert('delete');
       });
       this.hideDeleteModal();
     }
@@ -188,6 +184,7 @@ export class QuestionComponent implements OnInit {
         this.updateTable();
         this.editForm.reset();
         this.hideEditModal();
+        this.showSucessAlert('save');
       });
       this.submitted = false;
     }
@@ -215,6 +212,34 @@ export class QuestionComponent implements OnInit {
     this.submitted = false;
     this.success = false;
     this.deleteModal.hide();
+  }
+
+  showSucessAlert(type) {
+    this.addForm.reset();
+    this.editForm.reset();
+    this.success = false;
+    this.submitted = false;
+
+    let alert = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 4000,
+    });
+
+    if (type == 'save') {
+      alert.fire({
+        type: 'success',
+        title: '<span style="color:#ffffff">Pergunta salva com sucesso</span>',
+        background: '#00C851'
+      });
+    } else if (type == 'delete') {
+      alert.fire({
+        type: 'success',
+        title: '<span style="color:#ffffff">Pergunta removida com sucesso</span>',
+        background: '#00C851'
+      });
+    }
   }
 
   get fadd() {

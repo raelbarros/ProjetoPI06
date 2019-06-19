@@ -5,6 +5,7 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { Category } from 'src/app/models/category';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-category',
@@ -111,16 +112,10 @@ export class CategoryComponent implements OnInit {
         this.updateTable();
         this.success = true;
         this.addForm.reset();
+        this.showSucessAlert('save');
       });
       this.submitted = false;
     }
-  }
-
-  closeAlert() {
-    this.alert.nativeElement.classList.remove('show');
-    this.addForm.reset();
-    this.editForm.reset();
-    this.success = false;
   }
 
   removeCategory(id: any) {
@@ -140,6 +135,7 @@ export class CategoryComponent implements OnInit {
 
       this.categoryService.remove(c).subscribe(() => {
         this.updateTable();
+        this.showSucessAlert('delete');
       });
       this.hideDeleteModal();
     }
@@ -174,6 +170,7 @@ export class CategoryComponent implements OnInit {
         this.updateTable();
         this.editForm.reset();
         this.hideEditModal();
+        this.showSucessAlert('save');
       });
       this.submitted = false;
     }
@@ -197,6 +194,34 @@ export class CategoryComponent implements OnInit {
     this.submitted = false;
     this.success = false;
     this.deleteModal.hide();
+  }
+
+  showSucessAlert(type) {
+    this.addForm.reset();
+    this.editForm.reset();
+    this.success = false;
+    this.submitted = false;
+
+    let alert = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 4000,
+    });
+
+    if (type == 'save') {
+      alert.fire({
+        type: 'success',
+        title: '<span style="color:#ffffff">Categoria salva com sucesso</span>',
+        background: '#00C851'
+      });
+    } else if (type == 'delete') {
+      alert.fire({
+        type: 'success',
+        title: '<span style="color:#ffffff">Categoria removida com sucesso</span>',
+        background: '#00C851'
+      });
+    }
   }
 
   get fadd() {

@@ -7,6 +7,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -139,17 +140,11 @@ export class CollegeComponent implements OnInit {
         this.updateTable();
         this.success = true;
         this.addForm.reset();
+        this.showSucessAlert('save');
       });
       this.submitted = false;
 
     }
-  }
-
-  closeAlert() {
-    this.alert.nativeElement.classList.remove('show');
-    this.addForm.reset();
-    this.editForm.reset();
-    this.success = false;
   }
 
   removeCollege(id: any) {
@@ -167,6 +162,7 @@ export class CollegeComponent implements OnInit {
 
       this.collegeService.remove(c).subscribe(() => {
         this.updateTable();
+        this.showSucessAlert('delete');
       })
       this.idRemove = null;
       this.deleteModal.hide();
@@ -174,7 +170,6 @@ export class CollegeComponent implements OnInit {
   }
 
   editCollege(id: any) {
-
     this.indexEdit = id;
 
     let aux = new College();
@@ -222,6 +217,7 @@ export class CollegeComponent implements OnInit {
         this.updateTable();
         this.editForm.reset();
         this.hideEditModal();
+        this.showSucessAlert('save');
       });
       this.submitted = false;
     }
@@ -253,6 +249,34 @@ export class CollegeComponent implements OnInit {
     this.submitted = false;
     this.success = false;
     this.deleteModal.hide();
+  }
+
+  showSucessAlert(type) {
+    this.addForm.reset();
+    this.editForm.reset();
+    this.success = false;
+    this.submitted = false;
+
+    let alert = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 4000,
+    });
+
+    if (type == 'save') {
+      alert.fire({
+        type: 'success',
+        title: '<span style="color:#ffffff">Instituição salva com sucesso</span>',
+        background: '#00C851'
+      });
+    } else if (type == 'delete') {
+      alert.fire({
+        type: 'success',
+        title: '<span style="color:#ffffff">Instituição removida com sucesso</span>',
+        background: '#00C851'
+      });
+    }
   }
 
   get fadd() {

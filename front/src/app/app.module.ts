@@ -22,10 +22,9 @@ import { LoginComponent } from './views/admin/login/login.component';
 import { PageNotFoundComponent } from './views/student/page-not-found/page-not-found.component';
 import { FooterComponent } from './views/student/footer/footer.component';
 
-import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { ToastrModule } from 'ngx-toastr';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 
 @NgModule({
@@ -53,9 +52,14 @@ import { ToastrModule } from 'ngx-toastr';
     HttpClientModule,
     NgxUiLoaderModule,
     NgxUiLoaderHttpModule,
-    CommonModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    SweetAlert2Module.forRoot({
+      buttonsStyling: false,
+      customClass: 'modal-content',
+      confirmButtonClass: 'btn btn-primary',
+      cancelButtonClass: 'btn'
+  })
+
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }

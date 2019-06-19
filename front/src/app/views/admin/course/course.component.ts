@@ -6,8 +6,8 @@ import { Course } from 'src/app/models/course';
 import { ActivatedRoute } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { ToastrService } from 'ngx-toastr';
 
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-course',
@@ -20,7 +20,6 @@ export class CourseComponent implements OnInit {
   @ViewChild('addModal') addModal: ModalDirective;
   @ViewChild('editModal') editModal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
-  @ViewChild('alert') alert: ElementRef;
   @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective;
   @ViewChild(MdbTablePaginationComponent) mdbTablePagination: MdbTablePaginationComponent;
 
@@ -40,7 +39,7 @@ export class CourseComponent implements OnInit {
   indexEdit = null;
   idRemove = null;
 
-  constructor(private toastr: ToastrService, private auth: AuthService, private loadService: NgxUiLoaderService, private courseService: CourseService, private formBuild: FormBuilder, private route: ActivatedRoute) {
+  constructor(private auth: AuthService, private loadService: NgxUiLoaderService, private courseService: CourseService, private formBuild: FormBuilder, private route: ActivatedRoute) {
   }
 
   @HostListener('input') oninput() {
@@ -108,17 +107,11 @@ export class CourseComponent implements OnInit {
         this.updateTable();
         this.success = true;
         this.addForm.reset();
-        this.toastr.success('Hello world!', 'Toastr fun!');
+        this.hideAddModal();
+        this.showSucessAlert('save');
       });
       this.submitted = false;
     }
-  }
-
-  closeAlert() {
-    this.alert.nativeElement.classList.remove('show');
-    this.addForm.reset();
-    this.editForm.reset();
-    this.success = false;
   }
 
   removeCourse(id: any) {
@@ -137,8 +130,8 @@ export class CourseComponent implements OnInit {
 
       this.courseService.remove(c).subscribe(() => {
         this.updateTable();
-        console.log(c)
-      })
+        this.showSucessAlert('delete');
+      });
       this.deleteModal.hide();
     }
   }
@@ -167,6 +160,7 @@ export class CourseComponent implements OnInit {
         this.updateTable();
         this.editForm.reset();
         this.hideEditModal();
+        this.showSucessAlert('save');
       });
       this.submitted = false;
     }
@@ -190,6 +184,34 @@ export class CourseComponent implements OnInit {
     this.submitted = false;
     this.success = false;
     this.deleteModal.hide();
+  }
+
+  showSucessAlert(type) {
+    this.addForm.reset();
+    this.editForm.reset();
+    this.success = false;
+    this.submitted = false;
+
+    let alert = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 4000,
+    });
+
+    if (type == 'save') {
+      alert.fire({
+        type: 'success',
+        title: '<span style="color:#ffffff">Curso salvo com sucesso</span>',
+        background: '#00C851'
+      });
+    } else if (type == 'delete') {
+      alert.fire({
+        type: 'success',
+        title: '<span style="color:#ffffff">Curso removido com sucesso</span>',
+        background: '#00C851'
+      });
+    }
   }
 
   get fadd() {
