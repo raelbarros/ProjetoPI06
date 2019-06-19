@@ -20,6 +20,7 @@ import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from  'ngx-ui-loader';
 import { HttpConfigInterceptor } from './interceptor/http.interceptor';
 import { LoginComponent } from './views/admin/login/login.component';
 import { PageNotFoundComponent } from './views/student/page-not-found/page-not-found.component';
+import { FooterComponent } from './views/student/footer/footer.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { PageNotFoundComponent } from './views/student/page-not-found/page-not-f
     SurveyComponent,
     LoginComponent,
     PageNotFoundComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

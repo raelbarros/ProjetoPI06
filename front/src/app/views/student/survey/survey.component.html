@@ -16,8 +16,8 @@
 
 
 </mdb-navbar>
-<!--/.Navbar--><br>
-
+<!--/.Navbar-->
+<br>
 
 <div class="container">
     <div class="row" *ngIf="!styleFinal">
@@ -109,36 +109,24 @@
 
 </div>
 <br>
-<!-- Footer -->
 
-<footer class="page-footer font-small blue pt-4">
+<!-- Contador -->
+<div class="container" *ngIf="!styleFinal">
+    <!-- Call to action -->
+    <ul class="list-unstyled list-inline text-center py-2">
+        <li class="list-inline-item" *ngIf="!checkQuestionsMissing()">
+            <h5 class="mb-1">Faltam {{questionsMissing.length}} perguntas. </h5>
+        </li>
+        <li class="list-inline-item" *ngIf="checkQuestionsMissing()">
+            <button type="button" (click)="checkStyle()" mdbBtn color="success" mdbWavesEffect>
+                Finalizar</button>
+        </li>
+    </ul>
+    <!-- Call to action -->
+</div>
 
-    <!-- Footer Elements -->
-    <div class="container" *ngIf="!styleFinal">
+<app-footer></app-footer>
 
-        <!-- Call to action -->
-        <ul class="list-unstyled list-inline text-center py-2">
-            <li class="list-inline-item" *ngIf="!checkQuestionsMissing()">
-                <h5 class="mb-1">Faltam {{questionsMissing.length}} perguntas. </h5>
-            </li>
-            <li class="list-inline-item" *ngIf="checkQuestionsMissing()">
-                <button type="button" (click)="checkStyle()" mdbBtn color="success" mdbWavesEffect>
-                    Finalizar</button>
-            </li>
-        </ul>
-        <!-- Call to action -->
-
-    </div>
-    <!-- Footer Elements -->
-
-    <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">© 2019 Copyright:
-        <a href="https://www.sp.senac.br/"> Israel, Leandro, Mauro e Paulo</a>
-    </div>
-    <!-- Copyright -->
-
-</footer>
-<!-- Footer -->
 
 
 <ngx-ui-loader></ngx-ui-loader>

@@ -38,7 +38,7 @@
           <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
             {{course.id}}</th>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">
-            {{course.name | slice:0:20}}</td>
+            {{course.name}}</td>
 
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
             <!-- btn edit -->
@@ -178,6 +178,6 @@
   </div>
 </div>
 
-<app-footer-admin></app-footer-admin>
+<!--<app-footer-admin></app-footer-admin>-->
 
 <ngx-ui-loader></ngx-ui-loader>

@@ -37,11 +37,11 @@
           <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
             {{college.id}}</th>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">
-            {{college.name | slice:0:20}}</td>
+            {{college.name}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">
             {{college.tipo}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">
-            {{college.city.name | slice:0:20}}</td>
+            {{college.city.name}}</td>
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">
             {{college.state.uf}}</td>
 
@@ -245,6 +245,6 @@
   </div>
 </div>
 
-<app-footer-admin></app-footer-admin>
+<!--<app-footer-admin></app-footer-admin>-->
 
 <ngx-ui-loader></ngx-ui-loader>
