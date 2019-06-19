@@ -112,6 +112,7 @@ export class CategoryComponent implements OnInit {
         this.updateTable();
         this.success = true;
         this.addForm.reset();
+        this.hideAddModal();
         this.showSucessAlert('save');
       });
       this.submitted = false;
@@ -152,7 +153,7 @@ export class CategoryComponent implements OnInit {
       description: aux.description
     }),
 
-      this.editModal.show();
+    this.editModal.show();
   }
 
   updateCategory() {

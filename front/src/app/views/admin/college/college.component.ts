@@ -140,6 +140,7 @@ export class CollegeComponent implements OnInit {
         this.updateTable();
         this.success = true;
         this.addForm.reset();
+        this.hideAddModal();
         this.showSucessAlert('save');
       });
       this.submitted = false;
