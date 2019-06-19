@@ -19,10 +19,8 @@ export class CategoryComponent implements OnInit {
   @ViewChild('addModal') addModal: ModalDirective;
   @ViewChild('editModal') editModal: ModalDirective;
   @ViewChild('deleteModal') deleteModal: ModalDirective;
-  @ViewChild('alert') alert: ElementRef;
   @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective;
-  @ViewChild(MdbTablePaginationComponent)
-  mdbTablePagination: MdbTablePaginationComponent;
+  @ViewChild(MdbTablePaginationComponent) mdbTablePagination: MdbTablePaginationComponent;
 
   categoryList: any = [];
   columns = ['id', 'name', 'ferramentas'];
