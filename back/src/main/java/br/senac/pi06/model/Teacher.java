@@ -21,7 +21,7 @@ public class Teacher {
 	@Column
 	private String email;
 	@Column
-	private String password;
+	private String passwd;
 	@Column
 	private String nickname;
 
@@ -56,10 +56,11 @@ public class Teacher {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getPassword() {
-		return password;
+	public String getPasswd() {
+		return passwd;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPasswd(String passwd) {
+		this.passwd = passwd;
 	}
+
 }

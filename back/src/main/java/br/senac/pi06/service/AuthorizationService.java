@@ -27,25 +27,17 @@ public class AuthorizationService {
 			// Authenticate the user using the credentials provided
 			Teacher user = authenticate(auth.getUsername(), auth.getPassword());
 
-			String userId = user.getId()+"";
+			String userId = user.getId() + "";
 
 			// Issue a token for the user
 			String token = issueToken(userId);
 
 			pojo.setToken(token);
-			//if (user != null)
+			// if (user != null)
 			pojo.setUser(user);
 
 			// Return the token on the response
-			return Response
-					.status(Response.Status.OK)
-					.entity(pojo)
-					/*.entity("{"
-							+ "\"token\": \""+token+"\", "
-							+ "\"user\": \""+userJson+"\" "
-							+ "}")*/
-					.type(MediaType.APPLICATION_JSON)
-					.build();
+			return Response.status(Response.Status.OK).entity(pojo).type(MediaType.APPLICATION_JSON).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.FORBIDDEN).build();
 		}
@@ -54,7 +46,7 @@ public class AuthorizationService {
 	private Teacher authenticate(String username, String password) throws Exception {
 		Teacher user = null;
 		user = TeacherDao.getInstance().getByUserName(username);
-		if(user != null && user.getPassword().equals((password)))
+		if (user != null && user.getPasswd().equals((password)))
 			return user;
 		else
 			throw new Exception();
