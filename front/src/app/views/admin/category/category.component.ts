@@ -3,7 +3,7 @@ import { MdbTableDirective, MdbTablePaginationComponent, ModalDirective } from "
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { Category } from 'src/app/models/category';
-import { NgxUiLoaderService } from 'ngx-ui-loader'; 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 })
 
 export class CategoryComponent implements OnInit {
-  
+
   @ViewChild('row') row: ElementRef;
   @ViewChild('addModal') addModal: ModalDirective;
   @ViewChild('editModal') editModal: ModalDirective;
@@ -49,9 +49,9 @@ export class CategoryComponent implements OnInit {
     this.updateTable();
 
     // Verifica se eh um adm
-      this.auth.isAdmin();
+    this.auth.isAdmin();
 
-    //----
+    // Forms
     this.addForm = this.formBuild.group({
       name: ['', Validators.required],
       description: ['', Validators.required]
@@ -101,10 +101,9 @@ export class CategoryComponent implements OnInit {
 
   saveCategory() {
     this.submitted = true;
-    console.log(this.addForm.value)
     if (!this.addForm.invalid) {
       const c = new Category();
-      
+
       c.name = this.addForm.value.name;
       c.description = this.addForm.value.description;
 
@@ -141,7 +140,7 @@ export class CategoryComponent implements OnInit {
 
       this.categoryService.remove(c).subscribe(() => {
         this.updateTable();
-      })
+      });
       this.hideDeleteModal();
     }
   }
@@ -152,12 +151,12 @@ export class CategoryComponent implements OnInit {
     let aux = new Category();
     aux = this.categoryList[this.indexEdit];
 
-    this.editForm.setValue({ 
-      name: aux.name, 
-      description: aux.description 
+    this.editForm.setValue({
+      name: aux.name,
+      description: aux.description
     }),
 
-    this.editModal.show();
+      this.editModal.show();
   }
 
   updateCategory() {
@@ -180,21 +179,21 @@ export class CategoryComponent implements OnInit {
     }
   }
 
-  hideAddModal(){
+  hideAddModal() {
     this.submitted = false;
     this.success = false;
     this.addForm.reset();
     this.addModal.hide();
   }
 
-  hideEditModal(){
+  hideEditModal() {
     this.submitted = false;
     this.success = false;
     this.editForm.reset();
     this.editModal.hide();
   }
 
-  hideDeleteModal(){
+  hideDeleteModal() {
     this.submitted = false;
     this.success = false;
     this.deleteModal.hide();

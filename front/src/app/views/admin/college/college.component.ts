@@ -3,7 +3,7 @@ import { MdbTableDirective, MdbTablePaginationComponent, ModalDirective } from "
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CollegeService } from 'src/app/services/college/college.service';
 import { College } from 'src/app/models/college';
-import { NgxUiLoaderService } from 'ngx-ui-loader'; 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -54,7 +54,7 @@ export class CollegeComponent implements OnInit {
   onChange(uf: string) {
     this.collegeService.readCity(uf).subscribe((list) => {
       this.listCity = list;
-    })
+    });
   }
 
   ngOnInit() {
@@ -67,9 +67,9 @@ export class CollegeComponent implements OnInit {
 
     this.collegeService.readState().subscribe((list) => {
       this.listState = list;
-    })
+    });
 
-    //----
+    // Forms
     this.addForm = this.formBuild.group({
       name: ['', Validators.required],
       tipo: ['', Validators.required],
@@ -163,7 +163,7 @@ export class CollegeComponent implements OnInit {
 
       let c = new College();
       c.id = this.collegeList[id].id;
-      c.name = this.collegeList[id].name
+      c.name = this.collegeList[id].name;
 
       this.collegeService.remove(c).subscribe(() => {
         this.updateTable();
@@ -186,19 +186,18 @@ export class CollegeComponent implements OnInit {
       tipoedit: aux.tipo,
       state: [aux.state.uf],
       city: null
-    })
+    });
 
     this.collegeService.readCity(aux.state.uf).subscribe((list) => {
       this.listCity = list;
-    })
+    });
+
     this.editForm.setValue({
       name: aux.name,
       tipoedit: aux.tipo,
       state: [aux.state.uf],
       city: [aux.city.name]
-    })
-
-
+    });
     this.editModal.show();
   }
 
@@ -229,11 +228,11 @@ export class CollegeComponent implements OnInit {
   }
 
   findItemState(item: string) {
-    return this.listState.find(x => x.uf == item)
+    return this.listState.find(x => x.uf == item);
   }
 
   findItemCity(item: string) {
-    return this.listCity.find(x => x.name == item)
+    return this.listCity.find(x => x.name == item);
   }
 
   hideAddModal() {

@@ -5,7 +5,7 @@ import { Category } from 'src/app/models/category';
 import { QuestionService } from 'src/app/services/question/question.service';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { Question } from 'src/app/models/question';
-import { NgxUiLoaderService } from 'ngx-ui-loader'; 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 })
 
 export class QuestionComponent implements OnInit {
- 
+
   @ViewChild('row') row: ElementRef;
   @ViewChild('addModal') addModal: ModalDirective;
   @ViewChild('editModal') editModal: ModalDirective;
@@ -51,7 +51,7 @@ export class QuestionComponent implements OnInit {
   ngOnInit() {
     this.categoryService.read().subscribe((list) => {
       this.categoryList = list;
-    })
+    });
 
     // Verifica se eh um adm
     this.auth.isAdmin();
@@ -61,13 +61,13 @@ export class QuestionComponent implements OnInit {
       question: ['', Validators.required],
       category: [null, Validators.required]
     });
-    
+
     /* formulary edit question */
     this.editForm = this.formBuild.group({
       question: ['', Validators.required],
       category: [null, Validators.required]
     });
-  
+
     this.updateTable();
   }
 
@@ -113,11 +113,11 @@ export class QuestionComponent implements OnInit {
 
     if (!this.addForm.invalid) {
       let category = new Category();
-      category = this.findItemCategory(this.addForm.value.category)
-  
+      category = this.findItemCategory(this.addForm.value.category);
+
       let q = new Question();
       q.question = this.addForm.value.question;
-      q.category = category
+      q.category = category;
 
       this.questionService.persist(q).subscribe(() => {
         this.updateTable();
@@ -147,14 +147,13 @@ export class QuestionComponent implements OnInit {
       let q = new Question();
 
       q.id = this.questionList[id].id;
-      q.question = this.questionList[id].question
-      q.category = this.questionList[id].category
+      q.question = this.questionList[id].question;
+      q.category = this.questionList[id].category;
 
       this.questionService.remove(q).subscribe(() => {
         this.updateTable();
-      }) 
+      });
       this.hideDeleteModal();
-      
     }
   }
 
@@ -163,10 +162,10 @@ export class QuestionComponent implements OnInit {
 
     let aux = new Question();
     aux = this.questionList[this.indexEdit];
-    this.editForm.setValue({ 
-      question: aux.question, 
-      category: aux.category.name 
-    })
+    this.editForm.setValue({
+      question: aux.question,
+      category: aux.category.name
+    });
 
     this.editModal.show();
   }
@@ -191,28 +190,28 @@ export class QuestionComponent implements OnInit {
         this.hideEditModal();
       });
       this.submitted = false;
-    } 
-  } 
-
-  findItemCategory(item: string) {
-    return this.categoryList.find(x => x.name == item)
+    }
   }
 
-  hideAddModal(){
+  findItemCategory(item: string) {
+    return this.categoryList.find(x => x.name == item);
+  }
+
+  hideAddModal() {
     this.submitted = false;
     this.success = false;
     this.addForm.reset();
     this.addModal.hide();
   }
 
-  hideEditModal(){
+  hideEditModal() {
     this.submitted = false;
     this.success = false;
     this.editForm.reset();
     this.editModal.hide();
   }
 
-  hideDeleteModal(){
+  hideDeleteModal() {
     this.submitted = false;
     this.success = false;
     this.deleteModal.hide();

@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CourseService } from 'src/app/services/course/course.service';
 import { Course } from 'src/app/models/course';
 import { ActivatedRoute } from '@angular/router';
-import { NgxUiLoaderService } from 'ngx-ui-loader'; 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 
@@ -69,7 +69,7 @@ export class CourseComponent implements OnInit {
       this.mdbTable.setDataSource(this.courseList);
       this.courseList = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
-      
+
       this.loadService.stop();
     });
 
@@ -131,7 +131,7 @@ export class CourseComponent implements OnInit {
       let c = new Course();
 
       c.id = this.courseList[id].id;
-      c.name = this.courseList[id].name
+      c.name = this.courseList[id].name;
 
       this.courseService.remove(c).subscribe(() => {
         this.updateTable();
@@ -146,7 +146,7 @@ export class CourseComponent implements OnInit {
 
     let aux = new Course();
     aux = this.courseList[this.indexEdit];
-    this.editForm.setValue({ name: aux.name })
+    this.editForm.setValue({ name: aux.name });
 
     this.editModal.show();
   }
