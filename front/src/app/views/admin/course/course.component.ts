@@ -6,6 +6,7 @@ import { Course } from 'src/app/models/course';
 import { ActivatedRoute } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -39,7 +40,7 @@ export class CourseComponent implements OnInit {
   indexEdit = null;
   idRemove = null;
 
-  constructor(private auth: AuthService, private loadService: NgxUiLoaderService, private courseService: CourseService, private formBuild: FormBuilder, private route: ActivatedRoute) {
+  constructor(private toastr: ToastrService, private auth: AuthService, private loadService: NgxUiLoaderService, private courseService: CourseService, private formBuild: FormBuilder, private route: ActivatedRoute) {
   }
 
   @HostListener('input') oninput() {
@@ -107,6 +108,7 @@ export class CourseComponent implements OnInit {
         this.updateTable();
         this.success = true;
         this.addForm.reset();
+        this.toastr.success('Hello world!', 'Toastr fun!');
       });
       this.submitted = false;
     }

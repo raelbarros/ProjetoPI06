@@ -5,7 +5,7 @@ package br.senac.pi06.model;
 public class Authorization {
 
 	private String username;
-	private String password;
+	private String passwd;
 
 	
 	public String getUsername() {
@@ -14,11 +14,11 @@ public class Authorization {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getPassword() {
-		return password;
+	public String getPasswd() {
+		return passwd;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPasswd(String passwd) {
+		this.passwd = passwd;
 	}
 	
 }

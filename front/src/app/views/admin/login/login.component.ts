@@ -26,16 +26,16 @@ export class LoginComponent implements OnInit {
   login(){
     let user:any = {
       username: null,
-      password: null,
+      passwd: null,
     };
 
     user.username = this.loginForm.value.username;
-    user.password = this.loginForm.value.password;
+    user.passwd = this.loginForm.value.password;
 
     this.auth.login(user).subscribe((user) => {
       localStorage.setItem('token', user.token);
       this.router.navigate(['/admin']);
-    })
+    });
   }
 
 }

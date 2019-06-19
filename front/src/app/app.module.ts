@@ -16,11 +16,16 @@ import { CategoryComponent } from './views/admin/category/category.component';
 import { QuestionComponent } from './views/admin/question/question.component';
 import { SurveyComponent } from './views/student/survey/survey.component';
 
-import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from  'ngx-ui-loader';
+import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
 import { HttpConfigInterceptor } from './interceptor/http.interceptor';
 import { LoginComponent } from './views/admin/login/login.component';
 import { PageNotFoundComponent } from './views/student/page-not-found/page-not-found.component';
 import { FooterComponent } from './views/student/footer/footer.component';
+
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -47,7 +52,10 @@ import { FooterComponent } from './views/student/footer/footer.component';
     ReactiveFormsModule,
     HttpClientModule,
     NgxUiLoaderModule,
-    NgxUiLoaderHttpModule
+    NgxUiLoaderHttpModule,
+    CommonModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }

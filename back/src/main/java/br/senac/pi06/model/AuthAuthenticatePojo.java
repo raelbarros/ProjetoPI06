@@ -14,7 +14,7 @@ public class AuthAuthenticatePojo {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	@JsonIgnoreProperties({"password"})
+	@JsonIgnoreProperties({"passwd"})
 	public Teacher getUser() {
 		return user;
 	}

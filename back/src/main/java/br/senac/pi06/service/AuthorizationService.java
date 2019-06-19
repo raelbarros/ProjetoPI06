@@ -25,7 +25,7 @@ public class AuthorizationService {
 			AuthAuthenticatePojo pojo = new AuthAuthenticatePojo();
 
 			// Authenticate the user using the credentials provided
-			Teacher user = authenticate(auth.getUsername(), auth.getPassword());
+			Teacher user = authenticate(auth.getUsername(), auth.getPasswd());
 
 			String userId = user.getId() + "";
 
