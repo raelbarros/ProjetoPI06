@@ -24,7 +24,7 @@ export class CourseComponent implements OnInit {
   @ViewChild(MdbTablePaginationComponent) mdbTablePagination: MdbTablePaginationComponent;
 
   courseList: any = [];
-  columns = ['id', 'name', 'edit', 'remove'];
+  columns = ['id', 'name', 'ferramentas'];
 
   searchText: string = '';
   previous: string;

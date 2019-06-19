@@ -4,6 +4,8 @@
 
 <div class="container">
   <div class="row justify-content-md-center">
+    
+    <!-- Barra de pesquisa -->
     <div class="col-md-9">
       <div class="md-form">
         <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input"
@@ -11,62 +13,57 @@
         <label for="search-input">Pesquisar</label>
       </div>
     </div>
-    <div class="align-right col-md-3">
+
+    <!-- btn add -->
+    <div class="align-right col-md-3 col-sm-12">
       <div class="md-form float-right">
         <button mdbBtn type="button" color="success" (click)="addModal.show()" mdbWavesEffect>Adicionar</button>
-        <!-- <span class="table-add ">
-          <a class="text-success" (click)="addModal.show()" mdbWavesEffect>
-            <mdb-icon fas icon="plus" size="2x"></mdb-icon>
-          </a>
-        </span> -->
       </div>
     </div>
+
+
+    <table mdbTable #tableEl="mdbTable" stickyHeader="true"  hover="true" striped="true" class="z-depth-1">
+      <!-- Coluna da Tabela-->
+      <thead class="sticky-top">
+        <tr>
+          <th *ngFor="let item of columns; let i = index" [mdbTableSort]="courseList" [sortBy]="columns[i]" scope="col">
+            {{item | titlecase}} <mdb-icon *ngIf="item !== 'ferramentas'" fas icon="sort"></mdb-icon>
+          </th>
+        </tr>
+      </thead>
+
+      <!-- itens tabela -->
+      <tbody #row>
+        <tr mdbTableCol (rowCreated)="onRowCreate($event)" (rowRemoved)="onRowRemove($event)" *ngFor="let course of courseList; let i = index">
+          <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
+            {{course.id}}</th>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">
+            {{course.name | slice:0:20}}</td>
+
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+            <!-- btn edit -->
+            <span class="icons">
+              <mdb-icon fas icon="pen"(click)="editCourse(i)"></mdb-icon>
+            </span>
+
+            <!-- btn delete-->
+            <span class="icons">
+              <mdb-icon fas icon="trash-alt" class="btn-delete" (click)="removeCourse(i)"></mdb-icon>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+
+      <tfoot class="grey lighten-5 w-100">
+        <tr>
+          <td colspan="5">
+            <mdb-table-pagination [tableEl]="tableEl" paginationAlign="" [searchDataSource]="courseList"></mdb-table-pagination>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+
   </div>
-
-</div>
-
-<div class="container">
-  <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" class="z-depth-1">
-    <thead class="sticky-top">
-      <tr>
-        <th *ngFor="let item of columns; let i = index" [mdbTableSort]="courseList" [sortBy]="columns[i]" scope="col">
-          {{item | titlecase}} <mdb-icon fas icon="sort"></mdb-icon>
-        </th>
-      </tr>
-    </thead>
-
-    <tbody #row>
-      <tr mdbTableCol (rowCreated)="onRowCreate($event)" (rowRemoved)="onRowRemove($event)"
-        *ngFor="let course of courseList; let i = index">
-        <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">
-          {{course.id}}</th>
-        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">
-          {{course.name | slice:0:20}}</td>
-
-        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-          <span class="table-remove">
-            <button type="button" mdbBtn color="info" size="sm" class="my-0" (click)="editCourse(i)">Editar</button>
-          </span>
-        </td>
-
-        <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-          <span class="table-remove">
-            <button type="button" mdbBtn color="danger" size="sm" class="my-0" (click)="removeCourse(i)">Remove</button>
-          </span>
-        </td>
-      </tr>
-    </tbody>
-
-    <tfoot class="grey lighten-5 w-100">
-      <tr>
-        <td colspan="5">
-          <mdb-table-pagination [tableEl]="tableEl" paginationAlign="" [searchDataSource]="courseList">
-          </mdb-table-pagination>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
-
 
 </div>
 
@@ -99,15 +96,12 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" mdbBtn color="danger" class="waves-light" outline="true" aria-label="Close"
-            (click)="hideAddModal()" mdbWavesEffect>Cancelar</button>
-          <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
-            type="submit">Salvar</button>
+          <button type="button" mdbBtn color="danger" class="waves-light" outline="true" aria-label="Close" (click)="hideAddModal()" mdbWavesEffect>Cancelar</button>
+          <button type="button" mdbBtn color="success" class="relative waves-light" mdbWavesEffect type="submit">Salvar</button>
         </div>
 
         <div #alert class="alert alert-success fade show" role="alert" *ngIf="success">
-          <button type="button" class="close" aria-label="Close" (click)="closeAlert()"><span
-              aria-hidden="true">&times;</span></button>
+          <button type="button" class="close" aria-label="Close" (click)="closeAlert()"><span aria-hidden="true">&times;</span></button>
           <strong>Sucesso!</strong> Curso inserido.
         </div>
 
@@ -148,13 +142,12 @@
         <div class="modal-footer">
           <button type="button" mdbBtn color="danger" class="waves-light" outline="true" aria-label="Close"
             (click)="hideEditModal()" mdbWavesEffect>Cancelar</button>
-          <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+          <button type="button" mdbBtn color="success" class="relative waves-light" mdbWavesEffect
             type="submit">Salvar</button>
         </div>
 
         <div #alert class="alert alert-success fade show" role="alert" *ngIf="success">
-          <button type="button" class="close" aria-label="Close" (click)="closeAlert()"><span
-              aria-hidden="true">&times;</span></button>
+          <button type="button" class="close" aria-label="Close" (click)="closeAlert()"><span aria-hidden="true">&times;</span></button>
           <strong>Sucesso!</strong> Curso editado.
         </div>
 
@@ -178,10 +171,8 @@
         Confirmar Exclusão?
       </div>
       <div class="modal-footer">
-        <button type="button" mdbBtn color="info" outline="true" class="waves-light" aria-label="Close"
-          (click)="hideDeleteModal()" mdbWavesEffect>Cancelar</button>
-        <button type="button" mdbBtn color="warning" class="relative waves-light"
-          (click)="confirmDelete()">Excluir</button>
+        <button type="button" mdbBtn color="info" outline="true" class="waves-light" aria-label="Close" (click)="hideDeleteModal()" mdbWavesEffect>Cancelar</button>
+        <button type="button" mdbBtn color="danger" outline="true" class="relative waves-light" (click)="confirmDelete()">Excluir</button>
       </div>
     </div>
   </div>

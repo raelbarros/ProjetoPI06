@@ -1,23 +1,32 @@
 @media all and (min-width: 768px) {
-    tr  {
-      td {
-        vertical-align: middle !important;
-      }
-      span {
-        &:not([class]) {
-          padding: 1rem 1rem;
-        }
+  tr  {
+    td {
+      vertical-align: middle !important;
+    }
+    span {
+      &:not([class]) {
+        padding: 1rem 1rem;
       }
     }
   }
+}
 
 .invalidFeedback {
     color: red;
 }
 
-.btnadd{
-    margin-top: 3%;
+button{
+  border-radius: 5px;
 }
+
+.icons {
+  padding: 10px;
+
+  .btn-delete{
+    color: red;
+  }
+}
+
 
 $grid-columns: 12;
 $grid-gutter-width: 30px;

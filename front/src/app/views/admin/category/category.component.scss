@@ -15,9 +15,18 @@
     color: red;
 }
 
-.btnadd{
-    margin-top: 3%;
+button{
+  border-radius: 5px;
 }
+
+.icons {
+  padding: 10px;
+
+  .btn-delete{
+    color: red;
+  }
+}
+
 
 $grid-columns: 12;
 $grid-gutter-width: 30px;

@@ -30,7 +30,7 @@ export class CollegeComponent implements OnInit {
   listCity: any = [];
   listState: any = [];
 
-  columns = ['id', 'name', 'tipo', 'city', 'state', 'edit', 'remove'];
+  columns = ['id', 'name', 'tipo', 'city', 'state', 'ferramentas'];
 
   searchText: string = '';
   previous: string;

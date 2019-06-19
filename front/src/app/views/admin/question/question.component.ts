@@ -27,7 +27,7 @@ export class QuestionComponent implements OnInit {
 
   questionList: Array<Question> = [];
   categoryList: Array<Category> = [];
-  columns = ['id', 'name', 'category', 'edit', 'remove'];
+  columns = ['id', 'name', 'category', 'ferramentas'];
 
   searchText: string = '';
   previous: string;
@@ -158,7 +158,7 @@ export class QuestionComponent implements OnInit {
     }
   }
 
-  editCategory(id: any) {
+  editQuestion(id: any) {
     this.indexEdit = id;
 
     let aux = new Question();

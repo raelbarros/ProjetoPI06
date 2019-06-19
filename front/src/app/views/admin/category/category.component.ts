@@ -24,7 +24,7 @@ export class CategoryComponent implements OnInit {
   mdbTablePagination: MdbTablePaginationComponent;
 
   categoryList: any = [];
-  columns = ['id', 'name', 'edit', 'remove'];
+  columns = ['id', 'name', 'ferramentas'];
 
   searchText: string = '';
   previous: string;

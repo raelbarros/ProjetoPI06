@@ -32,8 +32,16 @@
                     <a class="nav-link" mdbWavesEffect routerLink="/admin/question" routerLinkActive="active">Perguntas</a>
                 </li>
 
+            </ul>
+
+            <!-- btn sair -->
+            <ul class="navbar-nav ml-auto nav-flex-icons">
                 <li class="nav-item">
-                    <a class="nav-link" id="logout" (click)="logout()">logout</a>
+                    <a class="nav-link">
+                        <a class="nav-link" id="logout" (click)="logout()">
+                            <mdb-icon fas icon="sign-out-alt"></mdb-icon>Sair
+                       </a>
+                    </a>
                 </li>
             </ul>
             <!-- Links -->
