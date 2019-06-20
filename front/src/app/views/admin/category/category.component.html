@@ -3,29 +3,30 @@
 <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Categorias de Perguntas Cadastradas</h3>
 
 <div class="container">
-    <div class="row justify-content-md-center">
-        
-      <!-- Barra de pesquisa -->
-      <div class="col-md-9">
-          <div class="md-form">
-            <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input"
-              mdbInput>
-            <label for="search-input">Pesquisar</label>
-          </div>
-        </div>
+  <div class="row justify-content-md-center">
 
-        <!-- btn add -->
-        <div class="align-right col-md-3">
-          <div class="md-form float-right">
-            <button mdbBtn type="button" color="success" (click)="addModal.show()" mdbWavesEffect>Adicionar</button>
-          </div>
-        </div>
+    <!-- Barra de pesquisa -->
+    <div class="col-7">
+      <div class="md-form">
+        <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input"
+          mdbInput>
+        <label for="search-input">Pesquisar</label>
+      </div>
+    </div>
+
+    <!-- btn add -->
+    <div class="align-right col-3">
+      <div class="md-form float">
+        <button mdbBtn type="button" color="success" (click)="addModal.show()" mdbWavesEffect>Adicionar</button>
+      </div>
+    </div>
 
     <!-- Coluna da Tabela-->
     <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" class="z-depth-1">
       <thead class="sticky-top">
         <tr>
-          <th *ngFor="let item of columns; let i = index" [mdbTableSort]="categoryList" [sortBy]="columns[i]" scope="col">
+          <th *ngFor="let item of columns; let i = index" [mdbTableSort]="categoryList" [sortBy]="columns[i]"
+            scope="col">
             {{item | titlecase}} <mdb-icon *ngIf="item !== 'ferramentas'" fas icon="sort"></mdb-icon>
           </th>
         </tr>
@@ -43,9 +44,9 @@
           <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
             <!-- btn edit -->
             <span class="icons">
-              <mdb-icon fas icon="pen"(click)="editCategory(i)"></mdb-icon>
+              <mdb-icon fas icon="pen" (click)="editCategory(i)"></mdb-icon>
             </span>
-    
+
             <!-- btn delete-->
             <span class="icons">
               <mdb-icon fas icon="trash-alt" class="btn-delete" (click)="removeCategory(i)"></mdb-icon>
@@ -57,7 +58,8 @@
       <tfoot class="grey lighten-5 w-100">
         <tr>
           <td colspan="4">
-            <mdb-table-pagination [tableEl]="tableEl" paginationAlign="" [searchDataSource]="categoryList"></mdb-table-pagination>
+            <mdb-table-pagination [tableEl]="tableEl" paginationAlign="" [searchDataSource]="categoryList">
+            </mdb-table-pagination>
           </td>
         </tr>
       </tfoot>
@@ -84,7 +86,7 @@
 
           <div class="md-form">
             <input mdbInput type="text" id="name" class="form-control" formControlName="name">
-              <label for="name">Nome da Categoria</label>
+            <label for="name">Nome da Categoria</label>
 
             <div *ngIf="submitted && fadd.name.errors" class="invalidFeedback">
               <div *ngIf="fadd.name.errors.required">Nome é obrigatorio</div>
@@ -92,19 +94,22 @@
           </div>
 
           <div class="md-form">
-            <textarea id="description" class="md-textarea form-control" formControlName="description" mdbInput></textarea>
-              <label for="description">Descricao</label>
+            <textarea id="description" class="md-textarea form-control" formControlName="description"
+              mdbInput></textarea>
+            <label for="description">Descrição</label>
 
             <div *ngIf="submitted && fadd.description.errors" class="invalidFeedback">
-              <div *ngIf="fadd.description.errors.required">Descricao é obrigatorio</div>
+              <div *ngIf="fadd.description.errors.required">Descrição é obrigatorio</div>
             </div>
           </div>
 
         </div>
 
         <div class="modal-footer">
-          <button type="button" mdbBtn color="danger" class="waves-light" outline="true" aria-label="Close" (click)="hideAddModal()" mdbWavesEffect>Cancelar</button>
-          <button type="button" mdbBtn color="success" class="relative waves-light" mdbWavesEffect type="submit">Salvar</button>
+          <button type="button" mdbBtn color="danger" class="waves-light" outline="true" aria-label="Close"
+            (click)="hideAddModal()" mdbWavesEffect>Cancelar</button>
+          <button type="button" mdbBtn color="success" class="relative waves-light" mdbWavesEffect
+            type="submit">Salvar</button>
         </div>
 
       </form>
@@ -132,7 +137,7 @@
 
           <div class="md-form">
             <input mdbInput type="text" id="name" class="form-control" formControlName="name">
-              <label for="name">Nome da Categoria</label>
+            <label for="name">Nome da Categoria</label>
 
             <div *ngIf="submitted && fedit.name.errors" class="invalidFeedback">
               <div *ngIf="fedit.name.errors.required">Nome é obrigatorio</div>
@@ -140,19 +145,22 @@
           </div>
 
           <div class="md-form">
-            <textarea id="description" class="md-textarea form-control" formControlName="description" mdbInput></textarea>
-              <label for="description">Descricao</label>
+            <textarea id="description" class="md-textarea form-control" formControlName="description"
+              mdbInput></textarea>
+            <label for="description">Descrição</label>
 
             <div *ngIf="submitted && fedit.description.errors" class="invalidFeedback">
-              <div *ngIf="fedit.description.errors.required">Descricao é obrigatorio</div>
+              <div *ngIf="fedit.description.errors.required">Descrição é obrigatorio</div>
             </div>
           </div>
 
         </div>
 
         <div class="modal-footer">
-          <button type="button" mdbBtn color="danger" class="waves-light" outline="true" aria-label="Close" (click)="hideEditModal()" mdbWavesEffect>Cancelar</button>
-          <button type="button" mdbBtn color="success" class="relative waves-light" mdbWavesEffect type="submit">Salvar</button>
+          <button type="button" mdbBtn color="danger" class="waves-light" outline="true" aria-label="Close"
+            (click)="hideEditModal()" mdbWavesEffect>Cancelar</button>
+          <button type="button" mdbBtn color="success" class="relative waves-light" mdbWavesEffect
+            type="submit">Salvar</button>
         </div>
 
       </form>
@@ -177,8 +185,10 @@
         Confirmar Exclusão?
       </div>
       <div class="modal-footer">
-        <button type="button" mdbBtn color="info" outline="true" class="waves-light" aria-label="Close" (click)="hideDeleteModal()" mdbWavesEffect>Cancelar</button>
-        <button type="button" mdbBtn color="danger" outline="true" class="relative waves-light" (click)="confirmDelete()">Excluir</button>
+        <button type="button" mdbBtn color="info" outline="true" class="waves-light" aria-label="Close"
+          (click)="hideDeleteModal()" mdbWavesEffect>Cancelar</button>
+        <button type="button" mdbBtn color="danger" outline="true" class="relative waves-light"
+          (click)="confirmDelete()">Excluir</button>
       </div>
     </div>
   </div>

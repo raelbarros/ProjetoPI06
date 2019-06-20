@@ -9,7 +9,7 @@ import { Category } from 'src/app/models/category';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { Survey } from 'src/app/models/survet';
 import { SurveyService } from 'src/app/services/survey/survey.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader'; 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 
 @Component({
@@ -25,7 +25,7 @@ export class SurveyComponent implements OnInit {
   questionList: Array<Question> = [];
   categoryList: Array<Category> = [];
 
-  columns = ['numero', 'pergunta', 'concordo', 'descordo'];
+  columns = ['numero', 'pergunta', 'concordo', 'discordo'];
   previous: string;
 
   maxVisibleItems: number = 10;
@@ -128,8 +128,6 @@ export class SurveyComponent implements OnInit {
     }
 
     // Categoria do aluno
-    console.log(max)
-
     let survey = new Survey();
     survey.category = max;
     survey.student = this.student
@@ -137,8 +135,5 @@ export class SurveyComponent implements OnInit {
     this.surveyService.persist(survey).subscribe();
     this.styleFinal = survey;
   }
-
-
-
 
 }

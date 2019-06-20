@@ -19,23 +19,27 @@ export class LoginComponent implements OnInit {
 
     this.loginForm = this.fb.group({
       username: [null, Validators.required],
-      password: [null, Validators.required],
+      passwd: [null, Validators.required],
     });
   }
 
-  login(){
-    let user:any = {
+  login() {
+    let user: any = {
       username: null,
       passwd: null,
     };
 
     user.username = this.loginForm.value.username;
-    user.passwd = this.loginForm.value.password;
+    user.passwd = this.loginForm.value.passwd;
 
     this.auth.login(user).subscribe((user) => {
       localStorage.setItem('token', user.token);
       this.router.navigate(['/admin']);
     });
+  }
+
+  get formLogin() {
+    return this.loginForm.controls;
   }
 
 }
