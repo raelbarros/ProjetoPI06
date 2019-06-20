@@ -7,23 +7,27 @@
         <p class="h4 mb-4">Login!</p>
 
         <!-- Username -->
-        <input type="username" id="defaultLoginForm" class="form-control mb-4" placeholder="Username"
+        <input type="username" id="defaultLoginForm" class="form-control mb-4" placeholder="Usuário"
           formControlName="username">
 
         <div *ngIf="submitted && formLogin.username.errors" class="invalidFeedback">
-          <div *ngIf="formLogin.username.errors.required">Username é obrigatorio</div>
+          <div *ngIf="formLogin.username.errors.required">Usuário é obrigatorio</div>
         </div>
 
         <!-- Password -->
-        <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password"
+        <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Senha"
           formControlName="passwd">
 
-          <div *ngIf="submitted && formLogin.passwd.errors" class="invalidFeedback">
-              <div *ngIf="formLogin.passwd.errors.required">Username é obrigatorio</div>
-            </div>
+        <div *ngIf="submitted && formLogin.passwd.errors" class="invalidFeedback">
+          <div *ngIf="formLogin.passwd.errors.required">Senha é obrigatorio</div>
+        </div>
 
         <!-- Sign in button -->
         <button mdbBtn color="success" block="true" class="my-4" type="submit">Entrar</button>
+
+        <div *ngIf="erroMsg" class="invalidFeedback">
+          <strong>{{erroMsg}}</strong> 
+        </div>
 
       </form>
     </div>
