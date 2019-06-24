@@ -1,9 +1,12 @@
 package br.senac.pi06.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -34,7 +37,9 @@ public class Student {
 	@Column(name = "enabled", nullable = false)
 	boolean enabled = true;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="college_id",
+			referencedColumnName = "college_id")
 	private College college;
 	
 	@ManyToOne

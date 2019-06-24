@@ -4,6 +4,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import br.senac.pi06.model.City;
 import br.senac.pi06.model.Student;
 
 public class StudentDao {
@@ -25,6 +26,8 @@ public class StudentDao {
 		return em.find(Student.class, id);
 	}
 
+	
+	
 	public Student getByEmail(String email) {
 		Query query = em.createQuery("FROM Student WHERE enabled = 1 AND email=:email");
 		query.setParameter("email", email);
@@ -35,6 +38,21 @@ public class StudentDao {
 			return null;
 		}
 	}
+	
+	//
+	
+	@SuppressWarnings("unchecked")
+	public List<Student> getBytipoinst(String tipo) {
+		Query query = em.createQuery("SELECT firstName FROM Student s JOIN FETCH College c WHERE c.tipo =:tipo");
+		query.setParameter("tipo", tipo);
+
+		try {
+			return (List<Student>) query.getSingleResult();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
 
 	@SuppressWarnings("unchecked")
 	public List<Student> findAll() {
