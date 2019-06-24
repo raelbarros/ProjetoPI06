@@ -38,7 +38,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 return event;
             }),
             catchError((error: HttpErrorResponse) => {
-                console.log("error interceptor--->>>", error, request.body);
+                // console.log("error interceptor--->>>", error, request.body);
 
                 if (error.status == 401) {
                     this.auth.logout()

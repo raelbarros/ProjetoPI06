@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Student } from 'src/app/models/sudent';
 import { StudentService } from 'src/app/services/student/student.service';
 import { Router } from "@angular/router";
-import { NgxUiLoaderService } from 'ngx-ui-loader'; 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-main-page',
@@ -18,7 +18,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 export class MainPageComponent implements OnInit {
 
   @ViewChild('signup') signupModal: ModalDirective;
-  
+
   listCollege: Array<College> = [];
   listCourse: Array<Course> = [];
 
@@ -55,32 +55,34 @@ export class MainPageComponent implements OnInit {
 
   saveStudent() {
     this.submitted = true;
-    
-    let auxCourse = new Course();
-    auxCourse = this.listCourse.find((item) => {
-      return item.name == this.studentForm.value.course;
-    })
+    if (!this.studentForm.invalid) {
+      let auxCourse = new Course();
+      auxCourse = this.listCourse.find((item) => {
+        return item.name == this.studentForm.value.course;
+      })
 
-    let auxCollege = new College();
-    auxCollege = this.listCollege.find((item) => {
-      return item.name == this.studentForm.value.college;
-    })
+      let auxCollege = new College();
+      auxCollege = this.listCollege.find((item) => {
+        return item.name == this.studentForm.value.college;
+      })
 
-    let student = new Student();
-    student.firstName = this.studentForm.value.firstName;
-    student.lastName = this.studentForm.value.lastName;
-    student.email = this.studentForm.value.email;
-    student.college = auxCollege;
-    student.course = auxCourse;
-    student.periodo = this.studentForm.value.periodo
+      let student = new Student();
+      student.firstName = this.studentForm.value.firstName;
+      student.lastName = this.studentForm.value.lastName;
+      student.email = this.studentForm.value.email;
+      student.college = auxCollege;
+      student.course = auxCourse;
+      student.periodo = this.studentForm.value.periodo
 
-    this.studentService.persist(student).subscribe((studentid) => {
-      this.router.navigate(['/survey', studentid.id]);
-      this.studentForm.reset();
-    })
+      this.studentService.persist(student).subscribe((studentid) => {
+        this.router.navigate(['/survey', studentid.id]);
+        this.studentForm.reset();
+      });
+      this.submitted = false;
+    }
   }
 
-  hideSingUpModal(){
+  hideSingUpModal() {
     this.submitted = false;
     this.studentForm.reset();
     this.signupModal.hide();
