@@ -18,7 +18,6 @@ public class College {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Fetch(FetchMode.JOIN)
-	@Column(name="college_id")
 	private int id;
 	
 	@Column(name = "name", nullable = false, length = 100)
@@ -36,8 +35,6 @@ public class College {
 	@ManyToOne
 	private City city;
 	
-
-
 	public int getId() {
 		return id;
 	}

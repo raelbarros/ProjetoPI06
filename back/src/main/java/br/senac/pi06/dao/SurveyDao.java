@@ -49,17 +49,18 @@ public class SurveyDao {
 		}
 	}
 
-//	public Survey getByResult(final int id) {
-//		Query query = em.createQuery("FROM survey WHERE AND result=:id_student");
-//		query.setParameter("id_student", id);
-//
-//		try {
-//			return (Survey) query.getSingleResult();
-//		} catch (Exception e) {
-//			return null;
-//		}
-//	}
+	@SuppressWarnings("unchecked")
+	public List<Survey> getAllResultByMonth(final int month) {
+		Query query = em.createQuery("FROM Survey WHERE Month(date_survey)=:month");
+		query.setParameter("month", month);
 
+		try {
+			return query.getResultList();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Survey> findAll() {
 		return em.createQuery("FROM Survey WHERE enabled = 1").getResultList();

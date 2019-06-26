@@ -5,7 +5,7 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { Category } from 'src/app/models/category';
 import { ExcelService } from 'src/app/services/excel/excel.service';
 
-import { NgxUiLoaderService } from 'ngx-ui-loader'; 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 
@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
   dataExcel: any = [];
 
 
-  constructor(private auth: AuthService, private loadService: NgxUiLoaderService, private excelService: ExcelService, private surveyService: SurveyService, private categoryService: CategoryService) { 
+  constructor(private auth: AuthService, private loadService: NgxUiLoaderService, private excelService: ExcelService, private surveyService: SurveyService, private categoryService: CategoryService) {
   }
 
   ngOnInit() {
@@ -32,24 +32,26 @@ export class DashboardComponent implements OnInit {
 
     this.surveyService.read().subscribe((list) => {
       this.surveyList = list;
-      
+
       this.categoryService.read().subscribe((list) => {
         this.categoryList = list;
-  
 
-      this.createDataExcel();
-  
-      this.namesCategory();
-      this.countAnswers();
 
-      this.loadService.stop();
+        this.createDataExcel();
+
+        this.namesCategory();
+        this.countAnswers();
+
+        this.teste();
+
+        this.loadService.stop();
       });
     });
   }
 
   // Data Excel
-  createDataExcel(){
-    for (const item of this.surveyList){
+  createDataExcel() {
+    for (const item of this.surveyList) {
 
       let auxData = new Date(item.date);
       let years = auxData.getFullYear();
@@ -58,10 +60,10 @@ export class DashboardComponent implements OnInit {
       let finalData = years + '-' + month + '-' + day;
 
       this.dataExcel.push({
-        Aluno:item.student.firstName,
+        Aluno: item.student.firstName,
         Sobrenome: item.student.lastName,
         Email: item.student.email,
-        Curso:item.student.course.name,
+        Curso: item.student.course.name,
         Periodo: item.student.periodo,
         Faculdade: item.student.college.name,
         Tipo: item.student.college.tipo,
@@ -73,40 +75,62 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  downloadExcel(){
+  downloadExcel() {
     this.excelService.exportAsExcelFile(this.dataExcel, new Date().toLocaleDateString());
   }
 
   //Config Grafico 02
-  namesCategory(){
+  namesCategory() {
     for (const item of this.categoryList) {
       this.chartLabels02.push(item.name)
     }
   }
 
-  countAnswers(){
+  countAnswers() {
     for (const item of this.surveyList) {
-      for (const c of this.categoryList){
-        if (item.category.id == c.id){
+      for (const c of this.categoryList) {
+        if (item.category.id == c.id) {
           c.answer += 1;
         }
       }
 
       let data = [];
-      for (const item of this.categoryList){
+      for (const item of this.categoryList) {
         data.push(item.answer);
       }
-      this.chartDatasets02 = [{data: data, label: 'Resposta'}]
+      this.chartDatasets02 = [{ data: data, label: 'Resposta' }]
     }
+  }
+
+  //Config Grafico 01
+  teste() {
+    let allMonth = []
+    for (const item of this.surveyList) {
+      let auxDate = new Date(item.date).getMonth() + 1;
+      allMonth.push(auxDate);
+    }
+
+    let month = allMonth.filter((x, y) => allMonth.indexOf(x) == y);
+
+    let teste = new Array();
+    for (const item of month) {
+      this.surveyService.readAllCategoryByMonth(item).subscribe((list) => {
+        if (list) {
+          teste.push(list.length)         
+    
+          console.log(teste)
+          console.log(month)
+          this.chartDatasets01 = [{ data: teste, label: 'Total de Respostas' }]
+        }
+      });
+    }
+    
   }
 
   // Grafico 01
   public chartType01: string = 'line';
 
-  public chartDatasets01: Array<any> = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'My First dataset' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'My Second dataset' }
-  ];
+  public chartDatasets01: Array<any> = [{}];
 
   public chartLabels01: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
@@ -137,7 +161,7 @@ export class DashboardComponent implements OnInit {
     data: [65, 59, 80, 81, 56, 55, 40], label: 'My First dataset'
   }];
 
-  public chartLabels02: Array<any>  = [];
+  public chartLabels02: Array<any> = [];
 
   public chartColors02: Array<any> = [
     {

@@ -10,7 +10,7 @@ export class QuestionService {
   url: string;
 
   constructor(private http: HttpClient) {
-    this.url = 'http://localhost:8080/pi06/servicos/question';
+    this.url = 'http://localhost:8085/pi06/servicos/question';
   }
 
   persist(q: Question): Observable<any> {

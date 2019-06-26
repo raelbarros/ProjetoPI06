@@ -43,11 +43,11 @@ public class StudentDao {
 	
 	@SuppressWarnings("unchecked")
 	public List<Student> getBytipoinst(String tipo) {
-		Query query = em.createQuery("SELECT firstName FROM Student s JOIN FETCH College c WHERE c.tipo =:tipo");
-		query.setParameter("tipo", tipo);
+		Query query = em.createQuery("FROM Student s LEFT JOIN s.college c WHERE c.tipo=:tipo");
+				query.setParameter("tipo", tipo);
 
 		try {
-			return (List<Student>) query.getSingleResult();
+			return (List<Student>) query.getResultList();
 		} catch (Exception e) {
 			return null;
 		}

@@ -68,6 +68,19 @@ public class SurveyService {
 			return Util.printBadRequest();
 		}
 	}
+	
+	@GET
+	@Path("/result_month/{month}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response readAllResultByMonth(@PathParam("month") int month) {
+		try {
+			List<Survey> list = SurveyDao.getInstance().getAllResultByMonth(month);
+			return Response.status(Response.Status.OK).entity(list).type(MediaType.APPLICATION_JSON).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Util.printBadRequest();
+		}
+	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)

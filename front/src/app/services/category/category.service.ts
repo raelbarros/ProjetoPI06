@@ -10,7 +10,7 @@ export class CategoryService {
   url: string;
 
   constructor(private http: HttpClient) { 
-    this.url = 'http://localhost:8080/pi06/servicos/category';
+    this.url = 'http://localhost:8085/pi06/servicos/category';
   }
 
   persist(c: Category): Observable<any> {

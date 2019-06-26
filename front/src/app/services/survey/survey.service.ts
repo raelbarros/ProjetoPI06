@@ -11,7 +11,7 @@ export class SurveyService {
   url: string;
 
   constructor(private http: HttpClient) { 
-    this.url = 'http://localhost:8080/pi06/servicos/survey';
+    this.url = 'http://localhost:8085/pi06/servicos/survey';
   }
 
   persist(s: Survey): Observable<any> {
@@ -20,5 +20,9 @@ export class SurveyService {
 
   read():Observable<Survey[]> {
     return this.http.get<Survey[]>(this.url);
+  }
+
+  readAllCategoryByMonth(month):Observable<Survey[]> {
+    return this.http.get<Survey[]>(this.url + '/result_month/' + month);
   }
 }

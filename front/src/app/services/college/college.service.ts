@@ -15,9 +15,9 @@ export class CollegeService {
   urlCity: string;
 
   constructor(private http: HttpClient) {
-    this.url = 'http://localhost:8080/pi06/servicos/college';
-    this.urlState = 'http://localhost:8080/pi06/servicos/state';
-    this.urlCity = 'http://localhost:8080/pi06/servicos/city?uf=';
+    this.url = 'http://localhost:8085/pi06/servicos/college';
+    this.urlState = 'http://localhost:8085/pi06/servicos/state';
+    this.urlCity = 'http://localhost:8085/pi06/servicos/city?uf=';
   }
 
   persist(c: College): Observable<any> {
