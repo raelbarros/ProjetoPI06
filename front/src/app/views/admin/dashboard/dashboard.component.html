@@ -3,6 +3,7 @@
 <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Dashboard</h3>
 
 <div class="container">
+
     <div class="row clearfix ">
 
         <!-- Grafico 1 -->
@@ -36,28 +37,12 @@
         </div>
 
     </div>
-    
-    <!-- Grafico 04 -->
+
     <div class="row margingraphic">
-        <div class="col-sm-6 margingraphic clearfix">
-            <mdb-card>
-                <mdb-card-body>
-                    <div class="radar">
-                        <canvas mdbChart [chartType]="chartType04" [datasets]="chartDatasets04" [labels]="chartLabels04"
-                            [colors]="chartColors04" [options]="chartOptions04" [legend]="true"
-                            (chartHover)="chartHovered04($event)" (chartClick)="chartClicked04($event)">
-                        </canvas>
-                    </div>
-                </mdb-card-body>
-            </mdb-card>
-        </div>
-        <br>
-
-
         <!-- Grafico 03 -->
-        <div class="col-sm-6 margingraphic clearfix">
+        <div class="col-sm-6 margingraphic">
 
-            <div class="pie">
+            <div class="radar">
                 <mdb-card>
                     <mdb-card-body>
                         <canvas mdbChart [chartType]="chartType03" [datasets]="chartDatasets03" [labels]="chartLabels03"
@@ -69,23 +54,16 @@
             </div>
 
         </div>
-
-
-
-    </div>
-
-    <!-- Download -->
-    <!--<div class="col-4">
+        <!-- Download -->
+        <div class="col-md-4">
             <mdb-card class="download-card">
                 <mdb-card-body>
 
-                    Title
                     <mdb-card-title>
                         <h4>Download</h4>
                     </mdb-card-title>
 
-                    Text
-                    <mdb-card-text>Download do arquivo em excel
+                    <mdb-card-text>Download do relatório - arquivo em excel
                         <span class="table-add float-right mb-3 mr-2">
                             <a class="text-success" (click)="downloadExcel()" mdbWavesEffect>
                                 <mdb-icon fas icon="arrow-alt-circle-down" size="2x"></mdb-icon>
@@ -94,7 +72,9 @@
                     </mdb-card-text>
                 </mdb-card-body>
             </mdb-card>
-    </div> -->
+        </div>
+    </div>
+
 
 
 </div>

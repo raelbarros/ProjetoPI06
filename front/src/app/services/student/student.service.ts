@@ -10,7 +10,7 @@ export class StudentService {
   url: string;
 
   constructor(private http: HttpClient) {
-    this.url = 'http://localhost:8085/pi06/servicos/student';
+    this.url = 'http://localhost:8080/pi06/servicos/student';
   }
 
   persist(c: Student): Observable<any> {
