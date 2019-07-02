@@ -6,7 +6,6 @@ import br.senac.pi06.util.Util;
 
 public class StudentValidator {
 	public static StudentException validate(Student s) {
-
 		// Email 
 		if (!Util.isValidEmailAddress(s.getEmail()))
 			return new StudentException("O endereco de e-mail esta invalido.");

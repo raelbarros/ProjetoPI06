@@ -4,7 +4,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import br.senac.pi06.model.City;
 import br.senac.pi06.model.Student;
 
 public class StudentDao {

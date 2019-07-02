@@ -35,7 +35,7 @@ public class Student {
 	@Column(name = "enabled", nullable = false)
 	boolean enabled = true;
 	
-	@ManyToOne (cascade=CascadeType.ALL)
+	@ManyToOne
 	private College college;
 	
 	@ManyToOne

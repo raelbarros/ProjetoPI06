@@ -7,7 +7,6 @@ import { ExcelService } from 'src/app/services/excel/excel.service';
 
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +18,6 @@ export class DashboardComponent implements OnInit {
   surveyList: Array<Survey> = [];
   categoryList: Array<Category> = [];
   dataExcel: any = [];
-
 
   constructor(private auth: AuthService, private loadService: NgxUiLoaderService, private excelService: ExcelService, private surveyService: SurveyService, private categoryService: CategoryService) {
   }
@@ -36,13 +34,14 @@ export class DashboardComponent implements OnInit {
       this.categoryService.read().subscribe((list) => {
         this.categoryList = list;
 
-
         this.createDataExcel();
+
+        this.dataGraph01();
 
         this.namesCategory();
         this.countAnswers();
 
-        this.teste();
+        this.typeCollege();
 
         this.loadService.stop();
       });
@@ -79,6 +78,27 @@ export class DashboardComponent implements OnInit {
     this.excelService.exportAsExcelFile(this.dataExcel, new Date().toLocaleDateString());
   }
 
+  //Config Grafico 01
+  dataGraph01() {
+    let allMonth = [];
+    for (const item of this.surveyList) {
+      let auxDate = new Date(item.date).getMonth() + 1;
+      allMonth.push(auxDate);
+    }
+
+    let month = allMonth.filter((x, y) => allMonth.indexOf(x) == y);
+
+    let dataGraph = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    for (const item of month) {
+      this.surveyService.readAllCategoryByMonth(item).subscribe((list) => {
+        if (list) {
+          dataGraph[item - 1] = list.length;
+          this.chartDatasets01 = [{ data: dataGraph, label: 'Total de Respostas' }]
+        }
+      });
+    }
+  }
+
   //Config Grafico 02
   namesCategory() {
     for (const item of this.categoryList) {
@@ -98,48 +118,41 @@ export class DashboardComponent implements OnInit {
       for (const item of this.categoryList) {
         data.push(item.answer);
       }
-      this.chartDatasets02 = [{ data: data, label: 'Resposta' }]
+      this.chartDatasets02 = [{ data: data, label: 'Resposta' }];
     }
   }
 
-  //Config Grafico 01
-  teste() {
-    let allMonth = []
-    for (const item of this.surveyList) {
-      let auxDate = new Date(item.date).getMonth() + 1;
-      allMonth.push(auxDate);
-    }
 
-    let month = allMonth.filter((x, y) => allMonth.indexOf(x) == y);
+  //Config Grafico 03
+  typeCollege() {
+    let dataGraph = [0, 0];
 
-    let teste = new Array();
-    for (const item of month) {
-      this.surveyService.readAllCategoryByMonth(item).subscribe((list) => {
-        if (list) {
-          teste.push(list.length)         
-    
-          console.log(teste)
-          console.log(month)
-          this.chartDatasets01 = [{ data: teste, label: 'Total de Respostas' }]
-        }
-      });
-    }
-    
+    this.surveyService.readByTypeCollege('publica').subscribe((list) => {
+      if (list) {
+        dataGraph[0] = list.length;
+        this.chartDatasets03 = [{ data: dataGraph, label: 'Instituicao' }]
+      }
+    });
+
+    this.surveyService.readByTypeCollege('privada').subscribe((list) => {
+      if (list) {
+        dataGraph[1] = list.length;
+        this.chartDatasets03 = [{ data: dataGraph, label: 'Instituicao' }]
+
+      }
+    });
+
   }
+
 
   // Grafico 01
   public chartType01: string = 'line';
 
   public chartDatasets01: Array<any> = [{}];
 
-  public chartLabels01: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  public chartLabels01: Array<any> = ['Jan', 'Fev', 'Marc', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 
   public chartColors01: Array<any> = [
-    {
-      backgroundColor: 'rgba(105, 0, 132, .2)',
-      borderColor: 'rgba(200, 99, 132, .7)',
-      borderWidth: 2,
-    },
     {
       backgroundColor: 'rgba(0, 137, 132, .2)',
       borderColor: 'rgba(0, 10, 130, .7)',
@@ -157,9 +170,7 @@ export class DashboardComponent implements OnInit {
   // Grafico 02
   public chartType02: string = 'horizontalBar';
 
-  public chartDatasets02: Array<any> = [{
-    data: [65, 59, 80, 81, 56, 55, 40], label: 'My First dataset'
-  }];
+  public chartDatasets02: Array<any> = [{}];
 
   public chartLabels02: Array<any> = [];
 
@@ -194,11 +205,9 @@ export class DashboardComponent implements OnInit {
   // Grafico 03
   public chartType03: string = 'pie';
 
-  public chartDatasets03: Array<any> = [
-    { data: [300, 50, 100, 40, 120], label: 'My First dataset' }
-  ];
+  public chartDatasets03: Array<any> = [{}];
 
-  public chartLabels03: Array<any> = ['Red', 'Green', 'Yellow', 'Grey', 'Dark Grey'];
+  public chartLabels03: Array<any> = ['Publica', 'Privada'];
 
   public chartColors03: Array<any> = [
     {

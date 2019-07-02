@@ -14,10 +14,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import br.senac.pi06.dao.CityDao;
 import br.senac.pi06.dao.StudentDao;
 import br.senac.pi06.exception.StudentException;
-import br.senac.pi06.model.City;
 import br.senac.pi06.model.Student;
 import br.senac.pi06.util.Util;
 import br.senac.pi06.validator.StudentValidator;
@@ -69,20 +67,7 @@ public class StudentService {
 			return Util.printBadRequest();
 		}
 	}
-	
-	@GET
-	@Path("/instituicao")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response tipoinst(@QueryParam("tipo") String tipo) {
-		try {
-			List<Student> list = StudentDao.getInstance().getBytipoinst(tipo);
-			return Response.status(Response.Status.OK).entity(list).type(MediaType.APPLICATION_JSON).build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Util.printBadRequest();
-		}
-	}
-
+		
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response update(Student s) {

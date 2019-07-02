@@ -59,12 +59,12 @@ export class MainPageComponent implements OnInit {
       let auxCourse = new Course();
       auxCourse = this.listCourse.find((item) => {
         return item.name == this.studentForm.value.course;
-      })
+      });
 
       let auxCollege = new College();
       auxCollege = this.listCollege.find((item) => {
         return item.name == this.studentForm.value.college;
-      })
+      });
 
       let student = new Student();
       student.firstName = this.studentForm.value.firstName;
@@ -72,12 +72,12 @@ export class MainPageComponent implements OnInit {
       student.email = this.studentForm.value.email;
       student.college = auxCollege;
       student.course = auxCourse;
-      student.periodo = this.studentForm.value.periodo
+      student.periodo = this.studentForm.value.periodo;
 
-      this.studentService.persist(student).subscribe((studentid) => {
-        this.router.navigate(['/survey', studentid.id]);
+      this.studentService.persist(student).subscribe((persist) => {
+        this.router.navigate(['/survey', persist.id]);
         this.studentForm.reset();
-      });
+      })
       this.submitted = false;
     }
   }

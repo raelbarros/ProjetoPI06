@@ -11,11 +11,14 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import br.senac.pi06.dao.StudentDao;
 import br.senac.pi06.dao.SurveyDao;
 import br.senac.pi06.exception.SurveyException;
+import br.senac.pi06.model.Student;
 import br.senac.pi06.model.Survey;
 import br.senac.pi06.util.Util;
 import br.senac.pi06.validator.SurveyValidator;
@@ -75,6 +78,19 @@ public class SurveyService {
 	public Response readAllResultByMonth(@PathParam("month") int month) {
 		try {
 			List<Survey> list = SurveyDao.getInstance().getAllResultByMonth(month);
+			return Response.status(Response.Status.OK).entity(list).type(MediaType.APPLICATION_JSON).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Util.printBadRequest();
+		}
+	}
+	
+	@GET
+	@Path("/college")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response tipoinst(@QueryParam("type") String tipo) {
+		try {
+			List<Student> list = StudentDao.getInstance().getBytipoinst(tipo);
 			return Response.status(Response.Status.OK).entity(list).type(MediaType.APPLICATION_JSON).build();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -25,4 +25,8 @@ export class SurveyService {
   readAllCategoryByMonth(month):Observable<Survey[]> {
     return this.http.get<Survey[]>(this.url + '/result_month/' + month);
   }
+
+  readByTypeCollege(type):Observable<Survey[]> {
+    return this.http.get<Survey[]>(this.url + '/college?type=' + type);
+  }
 }
