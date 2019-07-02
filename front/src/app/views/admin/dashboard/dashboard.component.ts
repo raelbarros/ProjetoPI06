@@ -138,10 +138,8 @@ export class DashboardComponent implements OnInit {
       if (list) {
         dataGraph[1] = list.length;
         this.chartDatasets03 = [{ data: dataGraph, label: 'Instituicao' }]
-
       }
     });
-
   }
 
 
