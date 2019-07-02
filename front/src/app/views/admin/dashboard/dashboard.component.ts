@@ -134,7 +134,7 @@ export class DashboardComponent implements OnInit {
       }
     });
 
-    this.surveyService.readByTypeCollege('privada').subscribe((list) => {
+    this.surveyService.readByTypeCollege('privado').subscribe((list) => {
       if (list) {
         dataGraph[1] = list.length;
         this.chartDatasets03 = [{ data: dataGraph, label: 'Instituicao' }]
